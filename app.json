@@ -1,0 +1,17 @@
+{
+  "name": "trackbasketFE",
+  "displayName": "trackbasketFE",
+  "expo": {
+    "name": "trackbasketFE",
+    "slug": "trackbasketFE",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
