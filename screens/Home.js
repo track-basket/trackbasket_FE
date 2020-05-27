@@ -1,5 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  Button,
+} from 'react-native';
 import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
 const Home = ({ navigation, route }) => {
@@ -27,13 +34,20 @@ const Home = ({ navigation, route }) => {
         </View>
       )}
       {!!user && (
-        <View>
+        <View style={styles.container}>
           <Logo />
           <Text style={styles.greeting}>
             <TimeOfDay />, {user}
           </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('LoginModal')}>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>View/Edit Profile</Text>
+            </View>
+          </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('AtRiskTabs')}>
-            <Text>Start Shopping</Text>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>Start Shopping</Text>
+            </View>
           </TouchableOpacity>
         </View>
       )}
@@ -63,6 +77,8 @@ const styles = StyleSheet.create({
   greeting: {
     fontFamily: 'Helvetica-Bold',
     fontSize: 28,
+    marginTop: 30,
+    textAlign: 'center',
   },
 });
 
