@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import QuantityPicker from '../components/QuantityPicker';
+import ShoppingCart from '../shopping-cart';
 
 const sampleData = {
   id: 'searchItems',
@@ -29,7 +30,15 @@ const sampleData = {
 const GroceryItem = () => {
   const { attributes } = sampleData;
   const { items } = attributes;
-  console.log(items);
+  const { cart, addToCart } = useContext(ShoppingCart);
+
+  const [upc, setUpc] = useState(null);
+  const [aisle, setAisle] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [image, setImage] = useState(null);
+  const [price, setPrice] = useState(null);
+
+
   return items.map((item) => (
     <View style={styles.container}>
       <View style={styles.descriptionArea}>
@@ -46,7 +55,7 @@ const GroceryItem = () => {
         style={styles.itemImage}
       />
       <QuantityPicker key={Math.random()} />
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={() => addToCart(item)}>
         <Text style={styles.buttonText}>Add To Cart</Text>
       </TouchableOpacity>
     </View>
