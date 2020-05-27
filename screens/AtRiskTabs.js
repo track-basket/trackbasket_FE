@@ -14,15 +14,20 @@ const AtRiskTabs = () => {
         name="Shop"
         options={{
           tabBarLabel: 'Shop',
-          tabBarIcon: ({ color, size }) => {
-            <MaterialIcons name="home" color={color} size={size} />;
-          },
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="shopping-basket" color={color} size={size} />
+          ),
         }}
       />
       <Tab.Screen
         component={Cart}
         name="Cart"
-        options={{ tabBarLabel: 'Cart' }}
+        options={{
+          tabBarLabel: 'Cart',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="shopping-cart" color={color} size={size} />
+          ),
+        }}
       />
     </Tab.Navigator>
   );

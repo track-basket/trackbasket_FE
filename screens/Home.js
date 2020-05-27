@@ -1,17 +1,11 @@
-import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  Button,
-} from 'react-native';
+import React, { useContext } from 'react';
+import UserContext from '../user-context';
+
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
 const Home = ({ navigation, route }) => {
-  const user = route.params ? route.params.name : undefined;
-
+  const { user } = useContext(UserContext);
   return (
     <View>
       {!user && (
@@ -37,7 +31,7 @@ const Home = ({ navigation, route }) => {
         <View style={styles.container}>
           <Logo />
           <Text style={styles.greeting}>
-            <TimeOfDay />, {user}
+            <TimeOfDay />, {user.name}
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate('LoginModal')}>
             <View style={styles.button}>
