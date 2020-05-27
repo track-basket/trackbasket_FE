@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,16 +7,30 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
+import UserContext from '../user-context';
 
 const LoginModal = ({ navigation }) => {
-  const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [zip, setZip] = useState('');
-  const [phone, setPhone] = useState('');
+  const { user, cart, addToCart, setNewUser, location } = useContext(
+    UserContext,
+  );
+
+  const [name, setName] = useState(handleNameValue('name'));
+  const [address, setAddress] = useState(handleNameValue('address'));
+  const [city, setCity] = useState(handleNameValue('city'));
+  const [zip, setZip] = useState(handleNameValue('zip'));
+  const [phone, setPhone] = useState(handleNameValue('phone'));
+
   const handleSubmit = () => {
     if (!name) {
-      Alert.alert('Please Enter Your Name');
+      Alert.alert('Please enter your name');
+    } else if (!address) {
+      Alert.alert('Please enter your address');
+    } else if (!city) {
+      Alert.alert('Please enter your city');
+    } else if (!zip) {
+      Alert.alert('Please enter your zip');
+    } else if (!phone) {
+      Alert.alert('Please enter your phone');
     } else {
       const info = {
         name,
@@ -25,16 +39,28 @@ const LoginModal = ({ navigation }) => {
         zip,
         phone,
       };
+      setNewUser(info);
       navigation.navigate('Home', { info });
     }
   };
 
+  function handleNameValue(type) {
+    if (!user) {
+      return '';
+    } else {
+      return user[type];
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.containerInner}>
-        <Text style={styles.introtext}>
-          Sign up to order groceries and have them delivered by a volunteer
-        </Text>
+        {!user && (
+          <Text style={styles.introtext}>
+            Sign up to order groceries and have them delivered by a volunteer
+          </Text>
+        )}
+        {user && <Text style={styles.introtext}>Update your info</Text>}
         <Text style={styles.label}>Name</Text>
         <TextInput
           placeholder="Name"
