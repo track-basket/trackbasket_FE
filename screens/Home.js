@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import Logo from '../components/Logo';
+import TimeOfDay from '../components/TimeOfDay';
 const Home = ({ navigation, route }) => {
   const user = route.params ? route.params.name : undefined;
 
@@ -8,10 +9,7 @@ const Home = ({ navigation, route }) => {
     <View>
       {!user && (
         <View style={styles.container}>
-          <View style={styles.logoContainer}>
-            <Logo style={styles.logo} />
-            <Text style={styles.logoText}>Trackbasket</Text>
-          </View>
+          <Logo />
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('LoginModal');
@@ -30,15 +28,12 @@ const Home = ({ navigation, route }) => {
       )}
       {!!user && (
         <View>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('LoginModal');
-            }}
-          >
-            <Text>Hello {user}</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('AtRiskTabs')}>
-              <Text>Start Shopping</Text>
-            </TouchableOpacity>
+          <Logo />
+          <Text style={styles.greeting}>
+            <TimeOfDay />, {user}
+          </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('AtRiskTabs')}>
+            <Text>Start Shopping</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -49,14 +44,6 @@ const Home = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-  },
-  logoContainer: {
-    alignItems: 'center',
-  },
-  logoText: {
-    color: '#59DE7E',
-    fontFamily: 'HelveticaNeue-Bold',
-    fontSize: 24,
   },
   button: {
     alignItems: 'center',
@@ -72,6 +59,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Helvetica-Bold',
     fontSize: 18,
     textAlign: 'center',
+  },
+  greeting: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 28,
   },
 });
 
