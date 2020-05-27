@@ -1,65 +1,45 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
+import UserContext from '../user-context';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import QuantityPicker from '../components/QuantityPicker';
-import ShoppingCart from '../shopping-cart';
 
-const sampleData = {
-  id: 'searchItems',
-  attributes: {
-    items: [
-      {
-        upc: '0001111042852',
-        aisleNumber: 7,
-        description: 'Simple Truth Organic™ 2% Reduced Fat Milk',
-        image_url:
-          'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
-        price: 3.29,
-      },
-      {
-        upc: '8305729934',
-        aisleNumber: 3,
-        description: 'Nutella',
-        image_url:
-          'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
-        price: 4.59,
-      },
-    ],
-  },
-};
-
-const GroceryItem = () => {
-  const { attributes } = sampleData;
-  const { items } = attributes;
-  const { cart, addToCart } = useContext(ShoppingCart);
-
-  const [upc, setUpc] = useState(null);
-  const [aisle, setAisle] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [image, setImage] = useState(null);
-  const [price, setPrice] = useState(null);
-
-
-  return items.map((item) => (
+const GroceryItem = ({
+  upc,
+  price,
+  image_url,
+  description,
+  aisleNumber,
+  clickHandler,
+}) => {
+  const { cart } = useContext(UserContext);
+  const getButtonText = () => {
+    if (cart.find((item) => item.upc === upc)) {
+      return 'Remove From Cart';
+    } else {
+      return 'Add To Cart';
+    }
+  };
+  return (
     <View style={styles.container}>
       <View style={styles.descriptionArea}>
-        <Text key={item.description} style={styles.description}>
-          {item.description}
+        <Text key={description} style={styles.description}>
+          {description}
         </Text>
-        <Text key={item.description + 'price'} style={styles.description}>
-          ${item.price}
+        <Text key={description + 'price'} style={styles.description}>
+          ${price}
         </Text>
       </View>
       <Image
-        key={item.description + 'url'}
-        source={{ uri: item.image_url }}
+        key={description + 'url'}
+        source={{ uri: image_url }}
         style={styles.itemImage}
       />
       <QuantityPicker key={Math.random()} />
-      <TouchableOpacity style={styles.button} onPress={() => addToCart(item)}>
-        <Text style={styles.buttonText}>Add To Cart</Text>
+      <TouchableOpacity style={styles.button} onPress={() => clickHandler(upc)}>
+        <Text style={styles.buttonText}>{getButtonText()}</Text>
       </TouchableOpacity>
     </View>
-  ));
+  );
 };
 
 const styles = StyleSheet.create({
