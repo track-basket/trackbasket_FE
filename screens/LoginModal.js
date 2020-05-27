@@ -8,6 +8,8 @@ import {
   Alert,
 } from 'react-native';
 import UserContext from '../user-context';
+import { TextField } from '../components/Form';
+import { Button } from '../components/Button';
 
 const LoginModal = ({ navigation }) => {
   const { user, setNewUser } = useContext(UserContext);
@@ -59,44 +61,37 @@ const LoginModal = ({ navigation }) => {
           </Text>
         )}
         {user && <Text style={styles.introtext}>Update your info</Text>}
-        <Text style={styles.label}>Name</Text>
-        <TextInput
+        <TextField
+          label="Name"
           placeholder="Name"
-          value={name}
           onChangeText={setName}
-          style={styles.textbox}
+          value={name}
         />
-        <Text style={styles.label}>Delivery address</Text>
-        <TextInput
-          placeholder="Delivery address"
-          style={styles.textbox}
-          value={address}
+        <TextField
+          label="Delivery address"
+          placeholder="Name"
           onChangeText={setAddress}
+          value={address}
         />
-        <Text style={styles.label}>City</Text>
-        <TextInput
+        <TextField
+          label="City"
           placeholder="City"
-          style={styles.textbox}
-          value={city}
           onChangeText={setCity}
+          value={city}
         />
-        <Text style={styles.label}>Zip code</Text>
-        <TextInput
+        <TextField
+          label="Zip Code"
           placeholder="Zip Code"
-          style={styles.textbox}
-          value={zip}
           onChangeText={setZip}
+          value={zip}
         />
-        <Text style={styles.label}>Phone number</Text>
-        <TextInput
-          placeholder="Phone Number"
-          style={styles.textbox}
-          value={phone}
+        <TextField
+          label="Phone Number"
+          placeholder="Phone number"
           onChangeText={setPhone}
+          value={phone}
         />
-        <TouchableOpacity onPress={handleSubmit} style={styles.submitBtn}>
-          <Text style={styles.submitBtnText}>SUBMIT</Text>
-        </TouchableOpacity>
+        <Button onPress={handleSubmit} text="SUBMIT" />
       </View>
     </View>
   );
@@ -114,33 +109,10 @@ const styles = StyleSheet.create({
     width: 300,
     marginTop: 75,
   },
-  textbox: {
-    borderWidth: 1,
-    borderColor: 'black',
-    padding: 5,
-    fontSize: 18,
-    marginBottom: 20,
-    height: 40,
-  },
   introtext: {
     fontSize: 30,
     marginBottom: 20,
     textAlign: 'center',
-  },
-  submitBtn: {
-    backgroundColor: '#59DE7E',
-    padding: 10,
-    width: 150,
-    alignItems: 'center',
-    alignSelf: 'center',
-  },
-  submitBtnText: {
-    fontSize: 24,
-    color: 'white',
-  },
-  label: {
-    fontSize: 18,
-    marginBottom: 5,
   },
 });
 
