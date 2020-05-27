@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
+import UserContext from '../user-context';
+
 import {
   StyleSheet,
   Text,
@@ -10,8 +12,12 @@ import {
 import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
 const Home = ({ navigation, route }) => {
-  const user = route.params ? route.params.name : undefined;
+  // const newUser = route.params ? route.params.info : undefined;
+  const { user, cart, addToCart, setNewUser, location } = useContext(
+    UserContext,
+  );
 
+  console.log(user);
   return (
     <View>
       {!user && (
@@ -37,7 +43,7 @@ const Home = ({ navigation, route }) => {
         <View style={styles.container}>
           <Logo />
           <Text style={styles.greeting}>
-            <TimeOfDay />, {user}
+            <TimeOfDay />, {user.name}
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate('LoginModal')}>
             <View style={styles.button}>
