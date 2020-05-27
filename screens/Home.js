@@ -1,23 +1,11 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import UserContext from '../user-context';
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  Button,
-} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
 const Home = ({ navigation, route }) => {
-  // const newUser = route.params ? route.params.info : undefined;
-  const { user, cart, addToCart, setNewUser, location } = useContext(
-    UserContext,
-  );
-
-  console.log(user);
+  const { user } = useContext(UserContext);
   return (
     <View>
       {!user && (
