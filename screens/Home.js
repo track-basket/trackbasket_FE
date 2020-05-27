@@ -7,7 +7,7 @@ const Home = ({ navigation, route }) => {
   return (
     <View>
       {!user && (
-        <View>
+        <View style={styles.container}>
           <View style={styles.logoContainer}>
             <Logo style={styles.logo} />
             <Text style={styles.logoText}>Trackbasket</Text>
@@ -17,11 +17,15 @@ const Home = ({ navigation, route }) => {
               navigation.navigate('LoginModal');
             }}
           >
-            <Text style={styles.button}>I need groceries</Text>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>I need groceries</Text>
+            </View>
           </TouchableOpacity>
           <Text>Set up an account and shop</Text>
-          <Text style={styles.button}>I'm a volunteer</Text>
-          <Text style={styles.login}>Login</Text>
+          <View style={styles.button}>
+            <Text style={styles.buttonText}>I'm a volunteer</Text>
+          </View>
+          <Text>Choose a grocery list to shop</Text>
         </View>
       )}
       {!!user && (
@@ -43,12 +47,11 @@ const Home = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+  },
   logoContainer: {
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-  logo: {
-    flex: 1,
   },
   logoText: {
     color: '#59DE7E',
@@ -56,9 +59,19 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   button: {
+    alignItems: 'center',
     backgroundColor: '#59DE7E',
-    width: 120,
-    height: 65,
+    borderRadius: 5,
+    marginTop: 60,
+    marginBottom: 10,
+    height: 75,
+    width: 160,
+  },
+  buttonText: {
+    color: '#EEEEEE',
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 18,
+    textAlign: 'center',
   },
 });
 
