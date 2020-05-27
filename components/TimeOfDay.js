@@ -8,10 +8,10 @@ const TimeOfDay = () => {
   if (hour < 12) {
     greeting = 'Good morning';
   }
-  if (hour < 18) {
-    greeting = 'Good afternoon';
-  } else {
+  if (hour > 18) {
     greeting = 'Good evening';
+  } else {
+    greeting = 'Good afternoon';
   }
   return greeting;
 };
