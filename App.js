@@ -19,7 +19,7 @@ const MainStackScreen = () => {
 
 const App = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer style={styles.container}>
       <RootStack.Navigator mode="modal">
         <RootStack.Screen
           name="Main"
@@ -35,7 +35,7 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
   },
