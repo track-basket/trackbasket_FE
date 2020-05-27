@@ -10,8 +10,8 @@ export const Button = ({ text, onPress }) => (
 const styles = StyleSheet.create({
   submitBtn: {
     backgroundColor: '#59DE7E',
-    padding: 10,
-    width: 150,
+    paddingVertical: 10,
+    paddingHorizontal: 40,
     alignItems: 'center',
     alignSelf: 'center',
   },

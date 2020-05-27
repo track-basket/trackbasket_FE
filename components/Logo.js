@@ -8,7 +8,7 @@ const Logo = () => {
         style={styles.logo}
         source={require('../assets/trackbasket.png')}
       />
-      <Text style={styles.logoText}>Trackbasket</Text>
+      <Text style={styles.logoText}>trackbasket</Text>
     </View>
   );
 };
@@ -19,13 +19,13 @@ const styles = StyleSheet.create({
   },
   logo: {
     marginTop: 20,
-    height: 99,
-    width: 105,
+    height: 140,
+    width: 150,
   },
   logoText: {
     color: '#59DE7E',
     fontFamily: 'HelveticaNeue-Bold',
-    fontSize: 24,
+    fontSize: 42,
   },
 });
 

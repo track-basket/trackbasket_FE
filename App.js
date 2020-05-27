@@ -15,7 +15,11 @@ const MainStack = createStackNavigator();
 const MainStackScreen = () => {
   return (
     <MainStack.Navigator>
-      <MainStack.Screen name="Home" component={Home} />
+      <MainStack.Screen
+        name="Home"
+        component={Home}
+        options={{ headerShown: false }}
+      />
       <MainStack.Screen name="AtRiskTabs" component={AtRiskTabs} />
     </MainStack.Navigator>
   );
@@ -28,7 +32,8 @@ const App = () => {
   const setNewUser = (user) => setUser(user);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-
+  const [installationId, setInstallationId] = useState(null);
+  console.log(installationId);
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
@@ -48,16 +53,18 @@ const App = () => {
         addToCart,
         setNewUser,
         location,
+        installationId,
+        setInstallationId,
       }}
     >
-      <NavigationContainer style={styles.container}>
+      <NavigationContainer>
         <RootStack.Navigator mode="modal">
           <RootStack.Screen
             name="Main"
             component={MainStackScreen}
             options={{ headerShown: false }}
           />
-          <RootStack.Screen name="LoginModal" component={LoginModal} />
+          <RootStack.Screen name="Your profile" component={LoginModal} />
         </RootStack.Navigator>
       </NavigationContainer>
     </UserProvider>

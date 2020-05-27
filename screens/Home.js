@@ -7,40 +7,53 @@ import TimeOfDay from '../components/TimeOfDay';
 const Home = ({ navigation, route }) => {
   const { user } = useContext(UserContext);
   return (
-    <View>
+    <View style={styles.container}>
       {!user && (
-        <View style={styles.container}>
+        <View style={styles.innerContainer}>
           <Logo />
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('LoginModal');
-            }}
-          >
-            <View style={styles.button}>
-              <Text style={styles.buttonText}>I need groceries</Text>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Your profile');
+              }}
+            >
+              <View style={styles.button}>
+                <Text style={styles.buttonText}>I need groceries</Text>
+              </View>
+            </TouchableOpacity>
+            <View style={styles.secondaryTextContainer}>
+              <Text style={styles.secondaryText}>
+                Set up an account and shop
+              </Text>
             </View>
-          </TouchableOpacity>
-          <Text>Set up an account and shop</Text>
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>I'm a volunteer</Text>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>I'm a volunteer</Text>
+            </View>
+            <View style={styles.secondaryTextContainer}>
+              <Text style={styles.secondaryText}>
+                Choose a grocery list to shop
+              </Text>
+            </View>
           </View>
-          <Text>Choose a grocery list to shop</Text>
         </View>
       )}
       {!!user && (
-        <View style={styles.container}>
+        <View style={styles.innerContainer}>
           <Logo />
           <Text style={styles.greeting}>
             <TimeOfDay />, {user.name}
           </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('LoginModal')}>
-            <View style={styles.button}>
-              <Text style={styles.buttonText}>View/Edit Profile</Text>
-            </View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Your profile')}
+            style={styles.editProfile}
+          >
+            <Text style={styles.editProfileText}>EDIT PROFILE</Text>
           </TouchableOpacity>
+          <Text style={styles.orders}>No current orders</Text>
+
           <TouchableOpacity onPress={() => navigation.navigate('AtRiskTabs')}>
             <View style={styles.button}>
-              <Text style={styles.buttonText}>Start Shopping</Text>
+              <Text style={styles.buttonText}>Start shopping</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -52,27 +65,72 @@ const Home = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    backgroundColor: 'white',
   },
   button: {
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#59DE7E',
-    borderRadius: 5,
-    marginTop: 60,
+    marginTop: 45,
     marginBottom: 10,
-    height: 75,
-    width: 160,
+    height: 90,
+    width: 200,
+    shadowOffset: {
+      width: 3,
+      height: 5,
+    },
+    shadowRadius: 15,
+    shadowOpacity: 0.2,
+    shadowColor: 'black',
   },
   buttonText: {
-    color: '#EEEEEE',
-    fontFamily: 'Helvetica-Bold',
-    fontSize: 18,
+    fontFamily: 'Helvetica',
+    fontSize: 26,
     textAlign: 'center',
+    width: 150,
+    color: 'white',
   },
   greeting: {
-    fontFamily: 'Helvetica-Bold',
+    fontFamily: 'Helvetica',
     fontSize: 28,
     marginTop: 30,
     textAlign: 'center',
+  },
+  innerContainer: {
+    marginBottom: 68,
+    alignItems: 'center',
+  },
+  secondaryText: {
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  secondaryTextContainer: {
+    width: 150,
+  },
+  editProfile: {
+    backgroundColor: 'white',
+    borderColor: '#59DE7E',
+    borderWidth: 2,
+    color: '#59DE7E',
+    paddingVertical: 14,
+    paddingHorizontal: 18,
+    marginTop: 15,
+    width: 200,
+    alignItems: 'center',
+  },
+  editProfileText: {
+    color: '#59DE7E',
+    fontSize: 26,
+  },
+  orders: {
+    fontSize: 26,
+    marginTop: 50,
+  },
+  buttonContainer: {
+    alignItems: 'center',
+    marginTop: 10,
   },
 });
 
