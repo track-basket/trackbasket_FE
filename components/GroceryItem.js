@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import QuantityPicker from '../components/QuantityPicker';
 
 const sampleData = {
   id: 'searchItems',
@@ -31,12 +32,23 @@ const GroceryItem = () => {
   console.log(items);
   return items.map((item) => (
     <View style={styles.container}>
-      <Text key={item.description} style={styles.description}>{item.description}</Text>
+      <View style={styles.descriptionArea}>
+        <Text key={item.description} style={styles.description}>
+          {item.description}
+        </Text>
+        <Text key={item.description + 'price'} style={styles.description}>
+          ${item.price}
+        </Text>
+      </View>
       <Image
         key={item.description + 'url'}
         source={{ uri: item.image_url }}
         style={styles.itemImage}
       />
+      <QuantityPicker key={Math.random()} />
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Add To Cart</Text>
+      </TouchableOpacity>
     </View>
   ));
 };
@@ -47,11 +59,29 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
   },
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#59DE7E',
+    borderRadius: 5,
+    marginTop: 60,
+    marginBottom: 10,
+    height: 25,
+    width: 160,
+  },
+  buttonText: {
+    color: '#EEEEEE',
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 18,
+    textAlign: 'center',
+  },
   itemImage: {
     marginTop: 15,
     marginBottom: 15,
     height: 100,
     width: 110,
+  },
+  description: {
+    textAlign: 'right',
   },
 });
 
