@@ -10,9 +10,7 @@ import {
 import UserContext from '../user-context';
 
 const LoginModal = ({ navigation }) => {
-  const { user, cart, addToCart, setNewUser, location } = useContext(
-    UserContext,
-  );
+  const { user, setNewUser } = useContext(UserContext);
 
   const [name, setName] = useState(handleNameValue('name'));
   const [address, setAddress] = useState(handleNameValue('address'));
@@ -40,7 +38,7 @@ const LoginModal = ({ navigation }) => {
         phone,
       };
       setNewUser(info);
-      navigation.navigate('Home', { info });
+      navigation.navigate('Home');
     }
   };
 
