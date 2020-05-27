@@ -1,10 +1,19 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+/* eslint-disable no-shadow */
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
+import GroceryItem from '../components/GroceryItem';
 
 const Shop = ({ navigation, route }) => {
+  const [text, setText] = useState('');
   return (
     <View>
-      <Text>Shop</Text>
+      <TextInput
+        placeholder="Search Items..."
+        style={styles.searchBar}
+        onChangeText={(text) => setText(text)}
+        onSubmitEditing={() => console.log(text)}
+      />
+      <GroceryItem />
     </View>
   );
 };
@@ -15,6 +24,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  searchBar: {
+    borderWidth: 1,
+    fontSize: 18,
+    height: 50,
+    margin: 10,
+    padding: 5,
   },
 });
 
