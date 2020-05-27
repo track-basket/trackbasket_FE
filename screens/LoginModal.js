@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,15 +10,20 @@ import {
 import UserContext from '../user-context';
 import { TextField } from '../components/Form';
 import { Button } from '../components/Button';
+import Constants from 'expo-constants';
 
 const LoginModal = ({ navigation }) => {
-  const { user, setNewUser } = useContext(UserContext);
+  const { user, setNewUser, setInstallationId } = useContext(UserContext);
 
   const [name, setName] = useState(handleNameValue('name'));
   const [address, setAddress] = useState(handleNameValue('address'));
   const [city, setCity] = useState(handleNameValue('city'));
   const [zip, setZip] = useState(handleNameValue('zip'));
   const [phone, setPhone] = useState(handleNameValue('phone'));
+
+  useEffect(() => {
+    setInstallationId(Constants.deviceId);
+  }, []);
 
   const handleSubmit = () => {
     if (!name) {
@@ -80,18 +85,20 @@ const LoginModal = ({ navigation }) => {
           value={city}
         />
         <TextField
-          label="Zip Code"
+          label="Zip code"
           placeholder="Zip Code"
           onChangeText={setZip}
           value={zip}
         />
         <TextField
-          label="Phone Number"
+          label="Phone number"
           placeholder="Phone number"
           onChangeText={setPhone}
           value={phone}
         />
-        <Button onPress={handleSubmit} text="SUBMIT" />
+        <View style={styles.btnContainer}>
+          <Button onPress={handleSubmit} text="SUBMIT" />
+        </View>
       </View>
     </View>
   );
@@ -106,13 +113,17 @@ const styles = StyleSheet.create({
   },
   containerInner: {
     flex: 1,
+    justifyContent: 'center',
     width: 300,
-    marginTop: 75,
+    marginBottom: 55,
   },
   introtext: {
     fontSize: 30,
     marginBottom: 20,
     textAlign: 'center',
+  },
+  btnContainer: {
+    marginTop: 10,
   },
 });
 
