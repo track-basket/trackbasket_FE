@@ -1,20 +1,27 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import Logo from '../components/Logo';
 const Home = ({ navigation, route }) => {
   const user = route.params ? route.params.name : undefined;
 
   return (
-    <View style={styles.container}>
+    <View>
       {!user && (
         <View>
+          <View style={styles.logoContainer}>
+            <Logo style={styles.logo} />
+            <Text style={styles.logoText}>Trackbasket</Text>
+          </View>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('LoginModal');
             }}
           >
-            <Text>Login</Text>
+            <Text style={styles.button}>I need groceries</Text>
           </TouchableOpacity>
+          <Text>Set up an account and shop</Text>
+          <Text style={styles.button}>I'm a volunteer</Text>
+          <Text style={styles.login}>Login</Text>
         </View>
       )}
       {!!user && (
@@ -36,11 +43,22 @@ const Home = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
+  logoContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  logo: {
+    flex: 1,
+  },
+  logoText: {
+    color: '#59DE7E',
+    fontFamily: 'HelveticaNeue-Bold',
+    fontSize: 24,
+  },
+  button: {
+    backgroundColor: '#59DE7E',
+    width: 120,
+    height: 65,
   },
 });
 
