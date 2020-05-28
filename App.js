@@ -28,7 +28,10 @@ const MainStackScreen = () => {
 const App = () => {
   const [user, setUser] = useState(null);
   const [cart, setCart] = useState([]);
-  const addToCart = (newItem) => setCart([...cart, newItem]);
+  const addToCart = (newItem) =>
+    setCart(cart.length ? [...cart, newItem] : [newItem]);
+  const removeFromCart = (selectedItem) =>
+    setCart([cart.filter((item) => item.upc !== selectedItem.upc)].flat());
   const setNewUser = (user) => setUser(user);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -50,6 +53,7 @@ const App = () => {
         user,
         cart,
         addToCart,
+        removeFromCart,
         setNewUser,
         location,
         installationId,
