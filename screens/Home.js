@@ -79,7 +79,9 @@ const Home = ({ navigation, route }) => {
                 </TouchableOpacity>
               </View>
               <View style={styles.details}>
-                <Text style={styles.detailsText}>Items: {cart.length} </Text>
+                <Text style={styles.detailsText}>
+                  Items: {cart.items.length}
+                </Text>
                 <Text style={styles.detailsText}>Submitted: May 21, 2020 </Text>
               </View>
             </View>
