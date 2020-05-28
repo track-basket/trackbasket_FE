@@ -38,7 +38,7 @@ const Cart = ({ navigation, route }) => {
                   image_url={item.image_url}
                   price={item.price}
                   clickHandler={toggleCartItem}
-                  quantity={1}
+                  quantity={item.quantity}
                   key={item.upc + 'cart'}
                 />
               );
