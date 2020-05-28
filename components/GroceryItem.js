@@ -17,6 +17,7 @@ const GroceryItem = ({
   description,
   aisleNumber,
   clickHandler,
+  quantity,
 }) => {
   const { cart } = useContext(UserContext);
   const getButtonText = () => {

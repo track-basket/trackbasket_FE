@@ -15,6 +15,7 @@ const sampleData = {
         image_url:
           'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
         price: 3.29,
+        quantity: 1,
       },
       {
         upc: '8305729934',
@@ -23,6 +24,7 @@ const sampleData = {
         image_url:
           'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
         price: 4.59,
+        quantity: 1,
       },
     ],
   },
@@ -58,6 +60,7 @@ const Shop = () => {
               image_url={item.image_url}
               price={item.price}
               clickHandler={toggleCartItem}
+              quantity={item.quantity}
               key={item.upc}
             />
           );

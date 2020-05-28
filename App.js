@@ -31,7 +31,7 @@ const MainStackScreen = () => {
 
 const App = () => {
   const [user, setUser] = useState(null);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState([{ status: 'pending' }]);
   const addToCart = (newItem) =>
     setCart(cart.length ? [...cart, newItem] : [newItem]);
   const removeFromCart = (selectedItem) =>
