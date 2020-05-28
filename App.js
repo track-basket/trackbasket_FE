@@ -20,7 +20,11 @@ const MainStackScreen = () => {
         component={Home}
         options={{ headerShown: false }}
       />
-      <MainStack.Screen name="AtRiskTabs" component={AtRiskTabs} />
+      <MainStack.Screen
+        name="AtRiskTabs"
+        component={AtRiskTabs}
+        options={{ title: '' }}
+      />
     </MainStack.Navigator>
   );
 };
