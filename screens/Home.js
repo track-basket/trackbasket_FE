@@ -9,7 +9,9 @@ import { Button } from '../components/Button';
 const Home = ({ navigation, route }) => {
   const { user, cart } = useContext(UserContext);
   const handleEditOrder = () => {
-    navigation.navigate('AtRiskTabs', { screen: 'Cart', anotherThing: 'here' });
+    navigation.navigate('AtRiskTabs', {
+      screen: 'Cart',
+    });
   };
   return (
     <View style={styles.container}>
@@ -54,8 +56,10 @@ const Home = ({ navigation, route }) => {
           >
             <Text style={styles.editProfileText}>EDIT PROFILE</Text>
           </TouchableOpacity>
-          {!cart.length && <Text style={styles.orders}>No current orders</Text>}
-          {!!cart.length && (
+          {!cart.items.length && (
+            <Text style={styles.orders}>No current orders</Text>
+          )}
+          {!!cart.items.length && (
             <View style={styles.currentOrder}>
               <Text style={styles.submitted}>
                 {route.params ? route.params.msg : ''}
@@ -64,7 +68,9 @@ const Home = ({ navigation, route }) => {
 
               <View style={styles.orderStatus}>
                 <View style={styles.orderBadge}>
-                  <Text style={styles.orderBadgeText}>PENDING</Text>
+                  <Text style={styles.orderBadgeText}>
+                    {cart.status.toUpperCase()}
+                  </Text>
                 </View>
                 <TouchableOpacity style={styles.editBtn}>
                   <Text style={styles.editBtnText} onPress={handleEditOrder}>
@@ -78,7 +84,7 @@ const Home = ({ navigation, route }) => {
               </View>
             </View>
           )}
-          {!cart.length && (
+          {!cart.items.length && (
             <TouchableOpacity onPress={() => navigation.navigate('AtRiskTabs')}>
               <View style={styles.button}>
                 <Text style={styles.buttonText}>Start shopping</Text>
