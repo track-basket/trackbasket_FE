@@ -61,51 +61,49 @@ const LoginModal = ({ navigation }) => {
   }
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={styles.containerInner}>
-          {!user && (
-            <Text style={styles.introtext}>
-              Sign up to order groceries and have them delivered by a volunteer
-            </Text>
-          )}
-          {user && <Text style={styles.introtext}>Update your info</Text>}
-          <TextField
-            label="Name"
-            placeholder="Name"
-            onChangeText={setName}
-            value={name}
-          />
-          <TextField
-            label="Delivery address"
-            placeholder="Name"
-            onChangeText={setAddress}
-            value={address}
-          />
-          <TextField
-            label="City"
-            placeholder="City"
-            onChangeText={setCity}
-            value={city}
-          />
-          <TextField
-            label="Zip code"
-            placeholder="Zip Code"
-            onChangeText={setZip}
-            value={zip}
-          />
-          <TextField
-            label="Phone number"
-            placeholder="Phone number"
-            onChangeText={setPhone}
-            value={phone}
-          />
-          <View style={styles.btnContainer}>
-            <Button onPress={handleSubmit} text="SUBMIT" />
-          </View>
+    <View style={styles.container}>
+      <View style={styles.containerInner}>
+        {!user && (
+          <Text style={styles.introtext}>
+            Sign up to order groceries and have them delivered by a volunteer
+          </Text>
+        )}
+        {user && <Text style={styles.introtext}>Update your info</Text>}
+        <TextField
+          label="Name"
+          placeholder="Name"
+          onChangeText={setName}
+          value={name}
+        />
+        <TextField
+          label="Delivery address"
+          placeholder="Name"
+          onChangeText={setAddress}
+          value={address}
+        />
+        <TextField
+          label="City"
+          placeholder="City"
+          onChangeText={setCity}
+          value={city}
+        />
+        <TextField
+          label="Zip code"
+          placeholder="Zip Code"
+          onChangeText={setZip}
+          value={zip}
+        />
+        <TextField
+          label="Phone number"
+          placeholder="Phone number"
+          onChangeText={setPhone}
+          value={phone}
+        />
+        <View style={styles.btnContainer}>
+          <Button onPress={handleSubmit} text="SUBMIT" />
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -115,12 +113,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 1,
   },
   containerInner: {
-    flex: 1,
     justifyContent: 'center',
     width: 300,
-    marginBottom: 55,
+    marginBottom: 50,
   },
   introtext: {
     fontSize: 30,
