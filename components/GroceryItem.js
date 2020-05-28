@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import UserContext from '../user-context';
 import {
   StyleSheet,
@@ -20,6 +20,15 @@ const GroceryItem = ({
   quantity,
 }) => {
   const { cart } = useContext(UserContext);
+  const [itemCount, setItemCount] = useState(quantity);
+  const quantityController = (operator) => {
+    if (operator === 'add') {
+      setItemCount(itemCount + 1);
+    }
+    if (operator === 'subtract' && itemCount > 1) {
+      setItemCount(itemCount - 1);
+    }
+  };
   const getButtonText = () => {
     if (cart.items.find((item) => item.upc === upc)) {
       return 'Remove from cart';
@@ -48,10 +57,14 @@ const GroceryItem = ({
       </View>
 
       <View style={styles.quantityBtnRow}>
-        <QuantityPicker key={Math.random()} />
+        <QuantityPicker
+          quantity={itemCount}
+          upc={upc}
+          quantityController={quantityController}
+        />
         <TouchableOpacity
           style={styles.button}
-          onPress={() => clickHandler(upc)}
+          onPress={() => clickHandler(upc, itemCount)}
         >
           <Text style={styles.buttonText}>{getButtonText()}</Text>
         </TouchableOpacity>
@@ -59,6 +72,11 @@ const GroceryItem = ({
     </View>
   );
 };
+
+//hold the quantity in here
+// on press for the quantity picker, update the quantity
+// then on add to cart press, pass the quantity from here
+// into
 
 const styles = StyleSheet.create({
   imgDescriptionContainer: {
