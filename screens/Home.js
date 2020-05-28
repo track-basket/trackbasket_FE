@@ -9,7 +9,7 @@ import { Button } from '../components/Button';
 const Home = ({ navigation, route }) => {
   const { user, cart } = useContext(UserContext);
   const handleEditOrder = () => {
-    navigation.navigate('AtRiskTabs', { destination: 'cart' });
+    navigation.navigate('AtRiskTabs', { screen: 'Cart', anotherThing: 'here' });
   };
   return (
     <View style={styles.container}>
