@@ -32,10 +32,13 @@ const Shop = () => {
   const [text, setText] = useState('');
   const { attributes } = sampleData;
   const { items } = attributes;
-  const { user, addToCart } = useContext(UserContext);
-  const addItem = (upc) => {
+  const { removeFromCart, addToCart, cart } = useContext(UserContext);
+  const toggleCartItem = (upc) => {
     let selectedItem = items.find((item) => item.upc === upc);
     addToCart(selectedItem);
+    if (cart.find((item) => item.upc === upc)) {
+      removeFromCart(selectedItem);
+    }
   };
   return (
     <View>
@@ -53,7 +56,7 @@ const Shop = () => {
             description={item.description}
             image_url={item.image_url}
             price={item.price}
-            clickHandler={addItem}
+            clickHandler={toggleCartItem}
           />
         );
       })}
