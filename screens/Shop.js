@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import React, { useState, useContext } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView } from 'react-native';
 import GroceryItem from '../components/GroceryItem';
 import UserContext from '../user-context';
 
@@ -15,6 +15,7 @@ const sampleData = {
         image_url:
           'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
         price: 3.29,
+        quantity: 1,
       },
       {
         upc: '8305729934',
@@ -23,6 +24,7 @@ const sampleData = {
         image_url:
           'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
         price: 4.59,
+        quantity: 1,
       },
     ],
   },
@@ -41,27 +43,30 @@ const Shop = () => {
     }
   };
   return (
-    <View>
-      <TextInput
-        placeholder="Search Items..."
-        style={styles.searchBar}
-        onChangeText={(text) => setText(text)}
-        onSubmitEditing={() => console.log(text)}
-      />
-      {items.map((item) => {
-        return (
-          <GroceryItem
-            upc={item.upc}
-            aisleNumber={item.aisleNumber}
-            description={item.description}
-            image_url={item.image_url}
-            price={item.price}
-            clickHandler={toggleCartItem}
-            key={item.upc}
-          />
-        );
-      })}
-    </View>
+    <ScrollView>
+      <View>
+        <TextInput
+          placeholder="Search Items..."
+          style={styles.searchBar}
+          onChangeText={(text) => setText(text)}
+          onSubmitEditing={() => console.log(text)}
+        />
+        {items.map((item) => {
+          return (
+            <GroceryItem
+              upc={item.upc}
+              aisleNumber={item.aisleNumber}
+              description={item.description}
+              image_url={item.image_url}
+              price={item.price}
+              clickHandler={toggleCartItem}
+              quantity={item.quantity}
+              key={item.upc}
+            />
+          );
+        })}
+      </View>
+    </ScrollView>
   );
 };
 
