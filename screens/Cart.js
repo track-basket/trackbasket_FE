@@ -25,6 +25,7 @@ const Cart = () => {
               image_url={item.image_url}
               price={item.price}
               clickHandler={toggleCartItem}
+              key={item.upc}
             />
           );
         })}
