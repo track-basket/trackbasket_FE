@@ -45,6 +45,9 @@ const App = () => {
       ].flat(),
       status: 'not submitted',
     });
+  const changeQuantity = (upc, operator) => {
+    console.log(operator, 'hi');
+  };
   const setNewUser = (user) => setUser(user);
   const submitOrder = () => {
     setCart({ items: cart.items, status: 'pending' });
@@ -75,6 +78,7 @@ const App = () => {
         installationId,
         setInstallationId,
         submitOrder,
+        changeQuantity,
       }}
     >
       <NavigationContainer>
