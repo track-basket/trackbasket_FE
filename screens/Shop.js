@@ -65,7 +65,7 @@ const Shop = () => {
   const toggleCartItem = (upc) => {
     let selectedItem = items.find((item) => item.upc === upc);
     addToCart(selectedItem);
-    if (cart.find((item) => item.upc === upc)) {
+    if (cart.items.find((item) => item.upc === upc)) {
       removeFromCart(selectedItem);
     }
   };
