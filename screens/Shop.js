@@ -1,10 +1,45 @@
 /* eslint-disable no-shadow */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 import GroceryItem from '../components/GroceryItem';
+import UserContext from '../user-context';
 
-const Shop = ({ navigation, route }) => {
+const sampleData = {
+  id: 'searchItems',
+  attributes: {
+    items: [
+      {
+        upc: '0001111042852',
+        aisleNumber: 7,
+        description: 'Simple Truth Organic™ 2% Reduced Fat Milk',
+        image_url:
+          'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
+        price: 3.29,
+      },
+      {
+        upc: '8305729934',
+        aisleNumber: 3,
+        description: 'Nutella',
+        image_url:
+          'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
+        price: 4.59,
+      },
+    ],
+  },
+};
+
+const Shop = () => {
   const [text, setText] = useState('');
+  const { attributes } = sampleData;
+  const { items } = attributes;
+  const { removeFromCart, addToCart, cart } = useContext(UserContext);
+  const toggleCartItem = (upc) => {
+    let selectedItem = items.find((item) => item.upc === upc);
+    addToCart(selectedItem);
+    if (cart.find((item) => item.upc === upc)) {
+      removeFromCart(selectedItem);
+    }
+  };
   return (
     <View>
       <TextInput
@@ -13,7 +48,19 @@ const Shop = ({ navigation, route }) => {
         onChangeText={(text) => setText(text)}
         onSubmitEditing={() => console.log(text)}
       />
-      <GroceryItem />
+      {items.map((item) => {
+        return (
+          <GroceryItem
+            upc={item.upc}
+            aisleNumber={item.aisleNumber}
+            description={item.description}
+            image_url={item.image_url}
+            price={item.price}
+            clickHandler={toggleCartItem}
+            key={item.upc}
+          />
+        );
+      })}
     </View>
   );
 };

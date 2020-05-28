@@ -27,13 +27,15 @@ const MainStackScreen = () => {
 
 const App = () => {
   const [user, setUser] = useState(null);
-  const [cart, setCart] = useState(['item 1', 'item 2', 'apples', 'bananas']);
-  const addToCart = (newItem) => setCart([...cart, newItem]);
+  const [cart, setCart] = useState([]);
+  const addToCart = (newItem) =>
+    setCart(cart.length ? [...cart, newItem] : [newItem]);
+  const removeFromCart = (selectedItem) =>
+    setCart([cart.filter((item) => item.upc !== selectedItem.upc)].flat());
   const setNewUser = (user) => setUser(user);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [installationId, setInstallationId] = useState(null);
-  console.log(installationId);
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
@@ -51,6 +53,7 @@ const App = () => {
         user,
         cart,
         addToCart,
+        removeFromCart,
         setNewUser,
         location,
         installationId,

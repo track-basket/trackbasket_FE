@@ -20,6 +20,7 @@ const LoginModal = ({ navigation }) => {
   const [city, setCity] = useState(handleNameValue('city'));
   const [zip, setZip] = useState(handleNameValue('zip'));
   const [phone, setPhone] = useState(handleNameValue('phone'));
+  const [cart] = useState();
 
   useEffect(() => {
     setInstallationId(Constants.deviceId);
@@ -43,6 +44,7 @@ const LoginModal = ({ navigation }) => {
         city,
         zip,
         phone,
+        cart,
       };
       setNewUser(info);
       navigation.navigate('Home');
