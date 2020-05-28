@@ -21,7 +21,7 @@ const GroceryItem = ({
 }) => {
   const { cart } = useContext(UserContext);
   const getButtonText = () => {
-    if (cart.find((item) => item.upc === upc)) {
+    if (cart.items.find((item) => item.upc === upc)) {
       return 'Remove from cart';
     } else {
       return 'Add to cart';
