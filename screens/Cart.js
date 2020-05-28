@@ -5,7 +5,7 @@ import GroceryItem from '../components/GroceryItem';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Button } from '../components/Button';
 
-const Cart = ({ navigation }) => {
+const Cart = ({ navigation, route }) => {
   const { removeFromCart, addToCart, cart } = useContext(UserContext);
   const toggleCartItem = (upc) => {
     let selectedItem = cart.find((item) => item.upc === upc);
@@ -17,7 +17,7 @@ const Cart = ({ navigation }) => {
   const submitShoppingList = () => {
     console.log(cart);
     //apicalls method to post shopping list
-    navigation.navigate('Home', { info: 'Your order has been submitted!' });
+    navigation.navigate('Home', { msg: 'Your order has been submitted!' });
   };
   if (cart.length > 0) {
     return (
