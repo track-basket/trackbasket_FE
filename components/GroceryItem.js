@@ -66,10 +66,11 @@ const styles = StyleSheet.create({
   },
   imgBorder: {
     borderWidth: 1,
-    marginRight: 10,
+    marginRight: 20,
+    backgroundColor: 'white',
   },
   container: {
-    marginBottom: 50,
+    marginBottom: 40,
     alignItems: 'stretch',
   },
   button: {
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     width: 110,
   },
   description: {
-    fontSize: 18,
+    fontSize: 22,
   },
   descriptionArea: {
     flexShrink: 1,
@@ -100,9 +101,10 @@ const styles = StyleSheet.create({
   },
   quantityBtnRow: {
     flexDirection: 'row',
-    marginTop: 20,
+    marginTop: 10,
     alignItems: 'center',
     justifyContent: 'space-around',
+    marginHorizontal: 20,
   },
 });
 
