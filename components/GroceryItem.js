@@ -10,6 +10,7 @@ const GroceryItem = ({
   description,
   aisleNumber,
   clickHandler,
+  quantity,
 }) => {
   const { cart } = useContext(UserContext);
   const getButtonText = () => {
@@ -34,7 +35,7 @@ const GroceryItem = ({
         source={{ uri: image_url }}
         style={styles.itemImage}
       />
-      <QuantityPicker key={Math.random()} />
+      <QuantityPicker />
       <TouchableOpacity style={styles.button} onPress={() => clickHandler(upc)}>
         <Text style={styles.buttonText}>{getButtonText()}</Text>
       </TouchableOpacity>
