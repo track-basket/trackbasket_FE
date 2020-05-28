@@ -4,8 +4,15 @@ import UserContext from '../user-context';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
+import { Button } from '../components/Button';
+
 const Home = ({ navigation, route }) => {
-  const { user } = useContext(UserContext);
+  const { user, cart } = useContext(UserContext);
+  const handleEditOrder = () => {
+    navigation.navigate('AtRiskTabs', {
+      screen: 'Cart',
+    });
+  };
   return (
     <View style={styles.container}>
       {!user && (
@@ -49,13 +56,43 @@ const Home = ({ navigation, route }) => {
           >
             <Text style={styles.editProfileText}>EDIT PROFILE</Text>
           </TouchableOpacity>
-          <Text style={styles.orders}>No current orders</Text>
+          {!cart.items.length && (
+            <Text style={styles.orders}>No current orders</Text>
+          )}
+          {!!cart.items.length && (
+            <View style={styles.currentOrder}>
+              <Text style={styles.submitted}>
+                {route.params ? route.params.msg : ''}
+              </Text>
+              <Text style={styles.orders}>Current order</Text>
 
-          <TouchableOpacity onPress={() => navigation.navigate('AtRiskTabs')}>
-            <View style={styles.button}>
-              <Text style={styles.buttonText}>Start shopping</Text>
+              <View style={styles.orderStatus}>
+                <View style={styles.orderBadge}>
+                  <Text style={styles.orderBadgeText}>
+                    {cart.status.toUpperCase()}
+                  </Text>
+                </View>
+                <TouchableOpacity style={styles.editBtn}>
+                  <Text style={styles.editBtnText} onPress={handleEditOrder}>
+                    EDIT ORDER
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.details}>
+                <Text style={styles.detailsText}>
+                  Items: {cart.items.length}
+                </Text>
+                <Text style={styles.detailsText}>Submitted: May 21, 2020 </Text>
+              </View>
             </View>
-          </TouchableOpacity>
+          )}
+          {!cart.items.length && (
+            <TouchableOpacity onPress={() => navigation.navigate('AtRiskTabs')}>
+              <View style={styles.button}>
+                <Text style={styles.buttonText}>Start shopping</Text>
+              </View>
+            </TouchableOpacity>
+          )}
         </View>
       )}
     </View>
@@ -126,11 +163,50 @@ const styles = StyleSheet.create({
   },
   orders: {
     fontSize: 26,
-    marginTop: 50,
+    marginTop: 30,
   },
   buttonContainer: {
     alignItems: 'center',
     marginTop: 10,
+  },
+  orderStatus: {
+    flexDirection: 'row',
+    marginTop: 20,
+  },
+  orderBadge: {
+    backgroundColor: '#DEE078',
+    borderRadius: 30,
+    padding: 10,
+    marginRight: 10,
+  },
+  orderBadgeText: {
+    color: 'white',
+    fontSize: 26,
+  },
+  currentOrder: {
+    alignItems: 'center',
+  },
+  editBtn: {
+    backgroundColor: 'lightgray',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  editBtnText: {
+    fontSize: 24,
+  },
+  details: {
+    alignSelf: 'flex-start',
+    marginTop: 15,
+  },
+  detailsText: {
+    fontSize: 18,
+    marginTop: 2,
+  },
+  submitted: {
+    fontSize: 24,
+    marginTop: 20,
   },
 });
 

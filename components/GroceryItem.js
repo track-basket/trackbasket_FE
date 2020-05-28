@@ -1,6 +1,13 @@
 import React, { useContext } from 'react';
 import UserContext from '../user-context';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import QuantityPicker from '../components/QuantityPicker';
 
 const GroceryItem = ({
@@ -14,55 +21,69 @@ const GroceryItem = ({
 }) => {
   const { cart } = useContext(UserContext);
   const getButtonText = () => {
-    if (cart.find((item) => item.upc === upc)) {
-      return 'Remove From Cart';
+    if (cart.items.find((item) => item.upc === upc)) {
+      return 'Remove from cart';
     } else {
-      return 'Add To Cart';
+      return 'Add to cart';
     }
   };
   return (
     <View style={styles.container}>
-      <View style={styles.descriptionArea}>
-        <Text key={description} style={styles.description}>
-          {description}
-        </Text>
-        <Text key={description + 'price'} style={styles.description}>
-          ${price}
-        </Text>
+      <View style={styles.imgDescriptionContainer}>
+        <View style={styles.imgBorder}>
+          <Image
+            key={description + 'url'}
+            source={{ uri: image_url }}
+            style={styles.itemImage}
+          />
+        </View>
+        <View style={styles.descriptionArea}>
+          <Text key={description} style={styles.description}>
+            {description}
+          </Text>
+          <Text key={description + 'price'} style={styles.description}>
+            ${price}
+          </Text>
+        </View>
       </View>
-      <Image
-        key={description + 'url'}
-        source={{ uri: image_url }}
-        style={styles.itemImage}
-      />
-      <QuantityPicker />
-      <TouchableOpacity style={styles.button} onPress={() => clickHandler(upc)}>
-        <Text style={styles.buttonText}>{getButtonText()}</Text>
-      </TouchableOpacity>
+
+      <View style={styles.quantityBtnRow}>
+        <QuantityPicker key={Math.random()} />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => clickHandler(upc)}
+        >
+          <Text style={styles.buttonText}>{getButtonText()}</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  imgDescriptionContainer: {
+    flexDirection: 'row',
+  },
+  imgBorder: {
+    borderWidth: 1,
+    marginRight: 20,
+    backgroundColor: 'white',
+  },
   container: {
-    borderBottomWidth: 1,
-    marginLeft: 10,
-    marginRight: 10,
+    marginBottom: 40,
+    alignItems: 'stretch',
   },
   button: {
     alignItems: 'center',
-    backgroundColor: '#59DE7E',
-    borderRadius: 5,
-    marginTop: 60,
-    marginBottom: 10,
-    height: 25,
-    width: 160,
+    backgroundColor: 'lightgray',
+    padding: 10,
+    // borderRadius: 5,
+    // height: 25,
   },
   buttonText: {
-    color: '#EEEEEE',
-    fontFamily: 'Helvetica-Bold',
+    color: 'black',
+    fontFamily: 'Helvetica',
     fontSize: 18,
-    textAlign: 'center',
   },
   itemImage: {
     marginTop: 15,
@@ -71,7 +92,19 @@ const styles = StyleSheet.create({
     width: 110,
   },
   description: {
-    textAlign: 'right',
+    fontSize: 22,
+  },
+  descriptionArea: {
+    flexShrink: 1,
+    flexGrow: 1,
+    justifyContent: 'space-between',
+  },
+  quantityBtnRow: {
+    flexDirection: 'row',
+    marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginHorizontal: 20,
   },
 });
 

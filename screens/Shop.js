@@ -20,10 +20,37 @@ const sampleData = {
       {
         upc: '8305729934',
         aisleNumber: 3,
-        description: 'Nutella',
+        description: "Nature's Own Honey Wheat Sliced Bread",
         image_url:
-          'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
-        price: 4.59,
+          'https://user-images.githubusercontent.com/4350550/83094330-b3ac3980-a05e-11ea-97fb-9dfb29bc817b.png',
+        price: 2.99,
+        quantity: 1,
+      },
+      {
+        upc: '3842389434',
+        aisleNumber: 12,
+        description: 'Klondike The Original Ice Cream Bars',
+        image_url:
+          'https://user-images.githubusercontent.com/4350550/83094526-17cefd80-a05f-11ea-9856-7a5c8c3566e5.png',
+        price: 3.49,
+        quantity: 1,
+      },
+      {
+        upc: '9128485812',
+        aisleNumber: 2,
+        description: 'Kroger® Restaurant Style Tortilla Chips',
+        image_url:
+          'https://user-images.githubusercontent.com/4350550/83095102-dc80fe80-a05f-11ea-9027-73ae65963359.png',
+        price: 1.25,
+        quantity: 1,
+      },
+      {
+        upc: '1592384912',
+        aisleNumber: 4,
+        description: 'Simple Truth Organic™ Gala Apples Pouch',
+        image_url:
+          'https://user-images.githubusercontent.com/4350550/83095372-6fba3400-a060-11ea-91fc-f646038c2dfd.png',
+        price: 3.99,
         quantity: 1,
       },
     ],
@@ -38,35 +65,37 @@ const Shop = () => {
   const toggleCartItem = (upc) => {
     let selectedItem = items.find((item) => item.upc === upc);
     addToCart(selectedItem);
-    if (cart.find((item) => item.upc === upc)) {
+    if (cart.items.find((item) => item.upc === upc)) {
       removeFromCart(selectedItem);
     }
   };
   return (
-    <ScrollView>
-      <View>
+    <View style={styles.container}>
+      <View style={styles.innercontainer}>
         <TextInput
           placeholder="Search Items..."
           style={styles.searchBar}
           onChangeText={(text) => setText(text)}
           onSubmitEditing={() => console.log(text)}
         />
-        {items.map((item) => {
-          return (
-            <GroceryItem
-              upc={item.upc}
-              aisleNumber={item.aisleNumber}
-              description={item.description}
-              image_url={item.image_url}
-              price={item.price}
-              clickHandler={toggleCartItem}
-              quantity={item.quantity}
-              key={item.upc}
-            />
-          );
-        })}
+        <ScrollView>
+          {items.map((item) => {
+            return (
+              <GroceryItem
+                upc={item.upc}
+                aisleNumber={item.aisleNumber}
+                description={item.description}
+                image_url={item.image_url}
+                price={item.price}
+                clickHandler={toggleCartItem}
+                quantity={item.quantity}
+                key={item.upc}
+              />
+            );
+          })}
+        </ScrollView>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -75,13 +104,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+  },
+  innercontainer: {
+    width: 350,
   },
   searchBar: {
     borderWidth: 1,
     fontSize: 18,
     height: 50,
-    margin: 10,
+    marginTop: 10,
+    marginBottom: 40,
     padding: 5,
   },
 });

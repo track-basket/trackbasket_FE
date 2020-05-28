@@ -20,19 +20,35 @@ const MainStackScreen = () => {
         component={Home}
         options={{ headerShown: false }}
       />
-      <MainStack.Screen name="AtRiskTabs" component={AtRiskTabs} />
+      <MainStack.Screen
+        name="AtRiskTabs"
+        component={AtRiskTabs}
+        options={{ title: '' }}
+      />
     </MainStack.Navigator>
   );
 };
 
 const App = () => {
   const [user, setUser] = useState(null);
-  const [cart, setCart] = useState([{ status: 'pending' }]);
+  const [cart, setCart] = useState({ items: [], status: 'not submitted' });
   const addToCart = (newItem) =>
-    setCart(cart.length ? [...cart, newItem] : [newItem]);
+    setCart(
+      cart.items.length
+        ? { items: [...cart.items, newItem], status: 'not submitted' }
+        : { items: [newItem], status: 'not submitted' },
+    );
   const removeFromCart = (selectedItem) =>
-    setCart([cart.filter((item) => item.upc !== selectedItem.upc)].flat());
+    setCart({
+      items: [
+        cart.items.filter((item) => item.upc !== selectedItem.upc),
+      ].flat(),
+      status: 'not submitted',
+    });
   const setNewUser = (user) => setUser(user);
+  const submitOrder = () => {
+    setCart({ items: cart.items, status: 'pending' });
+  };
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [installationId, setInstallationId] = useState(null);
@@ -58,6 +74,7 @@ const App = () => {
         location,
         installationId,
         setInstallationId,
+        submitOrder,
       }}
     >
       <NavigationContainer>

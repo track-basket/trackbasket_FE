@@ -14,19 +14,19 @@ const QuantityPicker = () => {
   };
   return (
     <View style={styles.quantity}>
-      <Text>Quantity:</Text>
+      <MaterialIcons
+        name="remove-circle-outline"
+        color="black"
+        size={30}
+        onPress={() => quantityController('subtract')}
+      />
+
       <TextInput style={styles.textInput} value={itemCount.toString()} />
       <MaterialIcons
         name="control-point"
         color="black"
         size={30}
         onPress={() => quantityController('add')}
-      />
-      <MaterialIcons
-        name="remove-circle-outline"
-        color="black"
-        size={30}
-        onPress={() => quantityController('subtract')}
       />
     </View>
   );
@@ -36,7 +36,12 @@ const styles = StyleSheet.create({
   textInput: {
     borderWidth: 1,
     textAlign: 'center',
-    width: 20,
+    width: 40,
+    fontSize: 20,
+    marginHorizontal: 10,
+  },
+  quantity: {
+    flexDirection: 'row',
   },
 });
 
