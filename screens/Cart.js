@@ -2,18 +2,28 @@ import React, { useContext } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import UserContext from '../user-context';
 import GroceryItem from '../components/GroceryItem';
-import { ScrollView } from 'react-native-gesture-handler';
 import { Button } from '../components/Button';
 
 const Cart = ({ navigation, route }) => {
   const { removeFromCart, addToCart, cart, submitOrder } = useContext(
     UserContext,
   );
-  const toggleCartItem = (upc) => {
+  const toggleCartItem = (upc, quantity) => {
     let selectedItem = cart.items.find((item) => item.upc === upc);
-    addToCart(selectedItem);
     if (cart.items.find((item) => item.upc === upc)) {
       removeFromCart(selectedItem);
+      selectedItem.quantity = quantity;
+    } else {
+      selectedItem.quantity = quantity;
+      addToCart(selectedItem);
+    }
+  };
+  const checkForCart = (upc) => {
+    if (cart.items.find((item) => item.upc === upc)) {
+      console.log(cart.items.find((item) => item.upc === upc).quantity);
+      return cart.items.find((item) => item.upc === upc).quantity;
+    } else {
+      return 6;
     }
   };
   const submitShoppingList = () => {
@@ -37,7 +47,7 @@ const Cart = ({ navigation, route }) => {
                   image_url={item.image_url}
                   price={item.price}
                   clickHandler={toggleCartItem}
-                  quantity={1}
+                  quantity={checkForCart(item.upc)}
                   key={item.upc + 'cart'}
                 />
               );
@@ -50,7 +60,7 @@ const Cart = ({ navigation, route }) => {
           )}
           {cart.status === 'pending' && (
             <TouchableOpacity onPress={() => submitShoppingList()}>
-              <Button text="EDIT ORDER" onPress={submitShoppingList} />
+              <Button text="SAVE ORDER" onPress={submitShoppingList} />
             </TouchableOpacity>
           )}
         </View>

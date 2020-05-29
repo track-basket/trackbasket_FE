@@ -1,13 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  TextInput,
-  Alert,
-  ScrollView,
-} from 'react-native';
+import { StyleSheet, Text, View, Alert } from 'react-native';
 import UserContext from '../user-context';
 import { TextField } from '../components/Form';
 import { Button } from '../components/Button';

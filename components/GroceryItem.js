@@ -1,13 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import UserContext from '../user-context';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import QuantityPicker from '../components/QuantityPicker';
 
 const GroceryItem = ({
@@ -18,8 +11,33 @@ const GroceryItem = ({
   aisleNumber,
   clickHandler,
   quantity,
+  qc,
 }) => {
-  const { cart } = useContext(UserContext);
+  const { cart, updateCart } = useContext(UserContext);
+  const [itemCount, setItemCount] = useState(quantity);
+  const determineIfInCart = () => {
+    if (cart.items.find((item) => item.upc === upc)) {
+      return quantity;
+    } else {
+      return itemCount;
+    }
+  };
+  const quantityController = (operator) => {
+    if (operator === 'add') {
+      setItemCount(itemCount + 1);
+      let selectedItem = cart.items.find((item) => item.upc === upc);
+      if (selectedItem) {
+        updateCart(selectedItem, operator);
+      }
+    }
+    if (operator === 'subtract' && itemCount > 1) {
+      setItemCount(itemCount - 1);
+      let selectedItem = cart.items.find((item) => item.upc === upc);
+      if (selectedItem) {
+        updateCart(selectedItem, operator);
+      }
+    }
+  };
   const getButtonText = () => {
     if (cart.items.find((item) => item.upc === upc)) {
       return 'Remove from cart';
@@ -48,10 +66,14 @@ const GroceryItem = ({
       </View>
 
       <View style={styles.quantityBtnRow}>
-        <QuantityPicker key={Math.random()} />
+        <QuantityPicker
+          quantity={determineIfInCart()}
+          upc={upc}
+          quantityController={quantityController}
+        />
         <TouchableOpacity
           style={styles.button}
-          onPress={() => clickHandler(upc)}
+          onPress={() => clickHandler(upc, itemCount)}
         >
           <Text style={styles.buttonText}>{getButtonText()}</Text>
         </TouchableOpacity>

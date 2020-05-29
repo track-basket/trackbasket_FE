@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import React, { useState, useContext } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, View, TextInput, ScrollView } from 'react-native';
 import GroceryItem from '../components/GroceryItem';
 import UserContext from '../user-context';
 
@@ -15,7 +15,6 @@ const sampleData = {
         image_url:
           'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
         price: 3.29,
-        quantity: 1,
       },
       {
         upc: '8305729934',
@@ -24,7 +23,6 @@ const sampleData = {
         image_url:
           'https://user-images.githubusercontent.com/4350550/83094330-b3ac3980-a05e-11ea-97fb-9dfb29bc817b.png',
         price: 2.99,
-        quantity: 1,
       },
       {
         upc: '3842389434',
@@ -33,7 +31,6 @@ const sampleData = {
         image_url:
           'https://user-images.githubusercontent.com/4350550/83094526-17cefd80-a05f-11ea-9856-7a5c8c3566e5.png',
         price: 3.49,
-        quantity: 1,
       },
       {
         upc: '9128485812',
@@ -42,7 +39,6 @@ const sampleData = {
         image_url:
           'https://user-images.githubusercontent.com/4350550/83095102-dc80fe80-a05f-11ea-9027-73ae65963359.png',
         price: 1.25,
-        quantity: 1,
       },
       {
         upc: '1592384912',
@@ -51,7 +47,6 @@ const sampleData = {
         image_url:
           'https://user-images.githubusercontent.com/4350550/83095372-6fba3400-a060-11ea-91fc-f646038c2dfd.png',
         price: 3.99,
-        quantity: 1,
       },
     ],
   },
@@ -62,11 +57,21 @@ const Shop = () => {
   const { attributes } = sampleData;
   const { items } = attributes;
   const { removeFromCart, addToCart, cart } = useContext(UserContext);
-  const toggleCartItem = (upc) => {
+  const toggleCartItem = (upc, quantity) => {
     let selectedItem = items.find((item) => item.upc === upc);
-    addToCart(selectedItem);
     if (cart.items.find((item) => item.upc === upc)) {
+      selectedItem.quantity = 1;
       removeFromCart(selectedItem);
+    } else {
+      selectedItem.quantity = quantity;
+      addToCart(selectedItem);
+    }
+  };
+  const checkForCart = (upc) => {
+    if (cart.items.find((item) => item.upc === upc)) {
+      return cart.items.find((item) => item.upc === upc).quantity;
+    } else {
+      return 1;
     }
   };
   return (
@@ -88,7 +93,7 @@ const Shop = () => {
                 image_url={item.image_url}
                 price={item.price}
                 clickHandler={toggleCartItem}
-                quantity={item.quantity}
+                quantity={checkForCart(item.upc)}
                 key={item.upc}
               />
             );

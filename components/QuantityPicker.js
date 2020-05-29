@@ -1,17 +1,8 @@
-import React, { useState } from 'react';
-import { View, TextInput, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, TextInput, StyleSheet } from 'react-native';
 import { MaterialIcons } from 'react-native-vector-icons';
 
-const QuantityPicker = () => {
-  const [itemCount, setItemCount] = useState(1);
-  const quantityController = (operator) => {
-    if (operator === 'add') {
-      setItemCount(itemCount + 1);
-    }
-    if (operator === 'subtract' && itemCount > 1) {
-      setItemCount(itemCount - 1);
-    }
-  };
+const QuantityPicker = ({ quantity, upc, quantityController }) => {
   return (
     <View style={styles.quantity}>
       <MaterialIcons
@@ -21,7 +12,7 @@ const QuantityPicker = () => {
         onPress={() => quantityController('subtract')}
       />
 
-      <TextInput style={styles.textInput} value={itemCount.toString()} />
+      <TextInput style={styles.textInput} value={quantity.toString()} />
       <MaterialIcons
         name="control-point"
         color="black"

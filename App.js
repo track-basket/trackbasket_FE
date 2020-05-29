@@ -52,13 +52,33 @@ const App = () => {
         ? { items: [...cart.items, newItem], status: 'not submitted' }
         : { items: [newItem], status: 'not submitted' },
     );
-  const removeFromCart = (selectedItem) =>
+  const removeFromCart = (selectedItem) => {
+    let items = [...cart.items];
+    let desiredItem = items.find((item) => {
+      return item.upc === selectedItem.upc;
+    });
+    let index = items.indexOf(desiredItem);
+    items[index].quantity = 0;
     setCart({
-      items: [
-        cart.items.filter((item) => item.upc !== selectedItem.upc),
-      ].flat(),
+      items: items.filter((item) => item.upc !== selectedItem.upc),
       status: 'not submitted',
     });
+  };
+  const updateCart = (updatedItem, operator) => {
+    let items = [...cart.items];
+    let desiredItem = items.find((item) => {
+      return item.upc === updatedItem.upc;
+    });
+    if (operator === 'add') {
+      desiredItem.quantity = updatedItem.quantity + 1;
+    }
+    if (operator === 'subtract') {
+      desiredItem.quantity = updatedItem.quantity - 1;
+    }
+    let index = items.indexOf(desiredItem);
+    items[index].quantity = updatedItem.quantity;
+    setCart({ items: items, status: cart.status });
+  };
   const setNewUser = (user) => setUser(user);
   const submitOrder = () => {
     setCart({ items: cart.items, status: 'pending' });
@@ -90,6 +110,7 @@ const App = () => {
         setVolunteer,
         installationId,
         setInstallationId,
+        submitOrder,
         assignedLists,
         setAssignedLists,
         location,
@@ -109,6 +130,7 @@ const App = () => {
           installationId,
           setInstallationId,
           submitOrder,
+          updateCart,
         }}
       >
         <NavigationContainer>
