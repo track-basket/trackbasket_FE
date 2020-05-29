@@ -1,13 +1,6 @@
 import React, { useState, useContext } from 'react';
 import UserContext from '../user-context';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import QuantityPicker from '../components/QuantityPicker';
 
 const GroceryItem = ({
@@ -18,16 +11,22 @@ const GroceryItem = ({
   aisleNumber,
   clickHandler,
   quantity,
-  qc
+  qc,
 }) => {
   const { cart, updateCart } = useContext(UserContext);
   const [itemCount, setItemCount] = useState(quantity);
+  const determineIfInCart = () => {
+    if (cart.items.find((item) => item.upc === upc)) {
+      return quantity;
+    } else {
+      return itemCount;
+    }
+  };
   const quantityController = (operator) => {
     if (operator === 'add') {
       setItemCount(itemCount + 1);
       let selectedItem = cart.items.find((item) => item.upc === upc);
       if (selectedItem) {
-        // selectedItem.quantity = itemCount;
         updateCart(selectedItem, operator);
       }
     }
@@ -68,7 +67,7 @@ const GroceryItem = ({
 
       <View style={styles.quantityBtnRow}>
         <QuantityPicker
-          quantity={quantity}
+          quantity={determineIfInCart()}
           upc={upc}
           quantityController={quantityController}
         />
