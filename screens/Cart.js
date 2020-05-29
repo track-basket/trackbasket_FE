@@ -17,7 +17,6 @@ const Cart = ({ navigation, route }) => {
     }
   };
   const submitShoppingList = () => {
-    console.log(cart);
     //apicalls method to post shopping list
     submitOrder();
     navigation.navigate('Home', { msg: 'Your order has been submitted!' });
