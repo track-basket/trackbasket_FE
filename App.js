@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Home from './screens/Home';
 import VolunteerHome from './screens/VolunteerHome';
 import LoginModal from './screens/LoginModal';
+import ConfirmList from './screens/ConfirmList';
 import VolunteerLoginModal from './screens/VolunteerLoginModal';
 import AtRiskTabs from './screens/AtRiskTabs';
 import VolunteerTabs from './screens/VolunteerTabs';
@@ -87,7 +88,7 @@ const App = () => {
   const [errorMsg, setErrorMsg] = useState(null);
   const [installationId, setInstallationId] = useState(null);
   const [volunteer, setVolunteer] = useState(null);
-  const [assignedLists, setAssignedLists] = useState(null);
+  const [assignedLists, setAssignedLists] = useState([]);
   const [allLists, setAllLists] = useState(null);
   useEffect(() => {
     (async () => {
@@ -145,6 +146,7 @@ const App = () => {
               name="Volunteer profile"
               component={VolunteerLoginModal}
             />
+            <RootStack.Screen name="Confirm list" component={ConfirmList} />
           </RootStack.Navigator>
         </NavigationContainer>
       </UserProvider>
