@@ -40,13 +40,23 @@ const App = () => {
     );
   const removeFromCart = (selectedItem) =>
     setCart({
-      items: [
-        cart.items.filter((item) => item.upc !== selectedItem.upc),
-      ].flat(),
+      items: cart.items.filter((item) => item.upc !== selectedItem.upc),
       status: 'not submitted',
     });
-  const changeQuantity = (upc, operator) => {
-    console.log(operator, 'hi');
+  const updateCart = (updatedItem, operator) => {
+    let items = [...cart.items];
+    let desiredItem = items.find((item) => {
+      return item.upc === updatedItem.upc;
+    });
+    if (operator === 'add') {
+      desiredItem.quantity = updatedItem.quantity + 1;
+    }
+    if (operator === 'subtract') {
+      desiredItem.quantity = updatedItem.quantity - 1;
+    }
+    let index = items.indexOf(desiredItem);
+    items[index].quantity = updatedItem.quantity;
+    setCart({ items: items, status: cart.status });
   };
   const setNewUser = (user) => setUser(user);
   const submitOrder = () => {
@@ -78,7 +88,7 @@ const App = () => {
         installationId,
         setInstallationId,
         submitOrder,
-        changeQuantity,
+        updateCart,
       }}
     >
       <NavigationContainer>
