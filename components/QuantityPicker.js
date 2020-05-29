@@ -1,6 +1,5 @@
-import React, { useState, useContext } from 'react';
-import UserContext from '../user-context';
-import { View, TextInput, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, TextInput, StyleSheet } from 'react-native';
 import { MaterialIcons } from 'react-native-vector-icons';
 
 const QuantityPicker = ({ quantity, upc, quantityController }) => {
