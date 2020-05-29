@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import VolunteerContext from '../volunteer-context';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import moment from 'moment';
 
 import {
   StyleSheet,
@@ -8,16 +9,17 @@ import {
   View,
   TouchableOpacity,
   FlatList,
+  Picker,
 } from 'react-native';
 import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
-import { AsyncStorage } from 'react-native';
+// import { AsyncStorage } from 'react-native';
 
 const data = [
   {
     listId: 1,
     storeId: '94738291',
-    created_at: 'Jan 20 2020',
+    created_at: '2020-01-20',
     number_items: 24,
     lat: '39.716350',
     lng: '-104.932437',
@@ -25,7 +27,7 @@ const data = [
   {
     listId: 2,
     storeId: '9284093',
-    created_at: 'Apr 15 2020',
+    created_at: '2020-04-15',
     number_items: 16,
     lat: '39.743810',
     lng: '-104.999385',
@@ -33,10 +35,34 @@ const data = [
   {
     listId: 3,
     storeId: '9284098',
-    created_at: 'May 1 2020',
+    created_at: '2020-05-22',
     number_items: 11,
     lat: '39.674611',
     lng: '-104.938273',
+  },
+  {
+    listId: 4,
+    storeId: '3434958',
+    created_at: '2020-04-22',
+    number_items: 17,
+    lat: '39.732540',
+    lng: '-104.973261',
+  },
+  {
+    listId: 5,
+    storeId: '9284098',
+    created_at: '2020-02-22',
+    number_items: 2,
+    lat: '39.674611',
+    lng: '-104.938273',
+  },
+  {
+    listId: 6,
+    storeId: '3434958',
+    created_at: '2020-05-01',
+    number_items: 55,
+    lat: '39.732540',
+    lng: '-104.973261',
   },
 ];
 
@@ -60,34 +86,35 @@ function toRad(Value) {
   return (Value * Math.PI) / 180;
 }
 
-const storeData = async () => {
-  try {
-    await AsyncStorage.setItem(
-      '@MySuperStore:key',
-      JSON.stringify({
-        lists: ['list1', 'list2', 'list3'],
-      }),
-    );
-  } catch (error) {
-    // Error saving data
-  }
-};
+// const storeData = async () => {
+//   try {
+//     await AsyncStorage.setItem(
+//       '@MySuperStore:key',
+//       JSON.stringify({
+//         lists: ['list1', 'list2', 'list3'],
+//       }),
+//     );
+//   } catch (error) {
+//     // Error saving data
+//   }
+// };
 
-const retrieveData = async () => {
-  try {
-    const value = await AsyncStorage.getItem('@MySuperStore:key');
-    if (value !== null) {
-      // We have data!!
-      console.log(JSON.parse(value));
-    }
-  } catch (error) {
-    // Error retrieving data
-  }
-};
+// const retrieveData = async () => {
+//   try {
+//     const value = await AsyncStorage.getItem('@MySuperStore:key');
+//     if (value !== null) {
+//       // We have data!!
+//       console.log(JSON.parse(value));
+//     }
+//   } catch (error) {
+//     // Error retrieving data
+//   }
+// };
 
 const VolunteerHome = ({ navigation }) => {
   const { volunteer } = useContext(VolunteerContext);
   const [listData, setListData] = useState([]);
+  const [sort, setSort] = useState('quantity-ascending');
   useEffect(() => {
     let newData = data.map((item) => {
       let distance = calcCrow(
@@ -96,12 +123,45 @@ const VolunteerHome = ({ navigation }) => {
         volunteer.location[0],
         volunteer.location[1],
       );
-      return { distance, ...item };
+      let daysOld = moment().diff(moment(item.created_at), 'days');
+      let age = moment(item.created_at).fromNow();
+      return { distance, age, daysOld, ...item };
     });
+
     setListData(newData);
-    console.log(newData);
-    console.log(listData);
   }, []);
+
+  let sortedData;
+  if (sort === 'distance-ascending') {
+    sortedData = listData.sort((a, b) => {
+      return a.distance < b.distance ? 1 : -1;
+    });
+  }
+  if (sort === 'distance-descending') {
+    sortedData = listData.sort((a, b) => {
+      return a.distance > b.distance ? 1 : -1;
+    });
+  }
+  if (sort === 'daysold-ascending') {
+    sortedData = listData.sort((a, b) => {
+      return a.daysOld < b.daysOld ? 1 : -1;
+    });
+  }
+  if (sort === 'daysold-descending') {
+    sortedData = listData.sort((a, b) => {
+      return a.daysOld > b.daysOld ? 1 : -1;
+    });
+  }
+  if (sort === 'quantity-ascending') {
+    sortedData = listData.sort((a, b) => {
+      return a.number_items < b.number_items ? 1 : -1;
+    });
+  }
+  if (sort === 'quantity-descending') {
+    sortedData = listData.sort((a, b) => {
+      return a.number_items > b.number_items ? 1 : -1;
+    });
+  }
 
   return (
     <View style={styles.container}>
@@ -116,25 +176,68 @@ const VolunteerHome = ({ navigation }) => {
         >
           <Text style={styles.editProfileText}>EDIT PROFILE</Text>
         </TouchableOpacity>
-        <FlatList
-          style={styles.list}
-          data={listData}
-          keyExtractor={(item) => item.listId.toString()}
-          renderItem={({ item }) => {
-            console.log(item);
-            return (
-              <View>
-                <Text style={styles.listtext}>
-                  Distance: {item.distance.toFixed(2)}
-                </Text>
-                <Text style={styles.listtext}>Items: {item.number_items}</Text>
-                <Text style={styles.listtext}>
-                  Days old: {item.number_items}
-                </Text>
-              </View>
-            );
-          }}
-        />
+        <View style={styles.volunteerOpportunitiesContainer}>
+          <Text style={styles.volunteerOpportunitiesSubtitle}>
+            Volunteer Opportunities
+          </Text>
+          <View style={styles.sortContainer}>
+            <Text style={styles.sortTitle}>Sort by:</Text>
+            <Picker
+              selectedValue={sort}
+              onValueChange={(itemValue, itemIndex) => setSort(itemValue)}
+              style={styles.onePicker}
+              itemStyle={styles.onePickerItem}
+            >
+              <Picker.Item
+                label="Items (most to least)"
+                value="quantity-ascending"
+              />
+              <Picker.Item
+                label="Items (least to most)"
+                value="quantity-descending"
+              />
+              <Picker.Item
+                label="Distance (farthest to closest)"
+                value="distance-ascending"
+              />
+              <Picker.Item
+                label="Distance (closest to farthest)"
+                value="distance-descending"
+              />
+              <Picker.Item
+                label="Days Old (oldest to newest)"
+                value="daysold-ascending"
+              />
+              <Picker.Item
+                label="Days Old (newest to oldest)"
+                value="daysold-descending"
+              />
+            </Picker>
+          </View>
+          <FlatList
+            style={styles.list}
+            data={sortedData}
+            keyExtractor={(item) => item.listId.toString()}
+            renderItem={({ item }) => {
+              return (
+                <View style={styles.listItem}>
+                  <View style={styles.listInfo}>
+                    <Text style={styles.listText}>
+                      Distance: {item.distance.toFixed(2)} miles
+                    </Text>
+                    <Text style={styles.listText}>
+                      Items: {item.number_items}
+                    </Text>
+                    <Text style={styles.listText}>Requested {item.age}</Text>
+                  </View>
+                  <TouchableOpacity style={styles.selectListBtn}>
+                    <Text style={styles.selectListBtnText}>SELECT</Text>
+                  </TouchableOpacity>
+                </View>
+              );
+            }}
+          />
+        </View>
       </View>
     </View>
   );
@@ -179,6 +282,7 @@ const styles = StyleSheet.create({
   innerContainer: {
     marginBottom: 68,
     alignItems: 'center',
+    width: 600,
   },
   secondaryText: {
     fontSize: 18,
@@ -224,9 +328,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 26,
   },
-  currentOrder: {
-    alignItems: 'center',
-  },
+
   editBtn: {
     backgroundColor: 'lightgray',
     paddingVertical: 10,
@@ -237,22 +339,61 @@ const styles = StyleSheet.create({
   editBtnText: {
     fontSize: 24,
   },
-  details: {
-    alignSelf: 'flex-start',
-    marginTop: 15,
-  },
-  detailsText: {
-    fontSize: 18,
-    marginTop: 2,
-  },
+
   submitted: {
     fontSize: 24,
     marginTop: 20,
   },
-  listtext: {
+  listText: {
+    fontSize: 18,
+  },
+  listItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 30,
+    alignItems: 'center',
+  },
+  selectListBtn: {
+    borderWidth: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    marginLeft: 20,
+  },
+  selectListBtnText: {
+    fontSize: 20,
+  },
+  list: {
+    flexGrow: 0,
+    width: 350,
+    height: 250,
+  },
+  volunteerOpportunitiesSubtitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  volunteerOpportunitiesContainer: {
+    marginTop: 20,
+  },
+  picker: {
+    width: 200,
+    height: 44,
+    borderColor: 'black',
+    borderWidth: 1,
+  },
+  onePickerItem: {
+    height: 44,
     color: 'black',
   },
-  list: {},
+  sortTitle: {
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  sortContainer: {
+    marginVertical: 20,
+  },
 });
 
 export default VolunteerHome;
