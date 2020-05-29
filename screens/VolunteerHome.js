@@ -112,8 +112,9 @@ function toRad(Value) {
 // };
 
 const VolunteerHome = ({ navigation }) => {
-  const { volunteer } = useContext(VolunteerContext);
+  const { volunteer, assignedLists } = useContext(VolunteerContext);
   const [listData, setListData] = useState([]);
+
   const [sort, setSort] = useState('quantity-ascending');
   useEffect(() => {
     let newData = data.map((item) => {
@@ -127,7 +128,6 @@ const VolunteerHome = ({ navigation }) => {
       let age = moment(item.created_at).fromNow();
       return { distance, age, daysOld, ...item };
     });
-
     setListData(newData);
   }, []);
 
@@ -162,7 +162,6 @@ const VolunteerHome = ({ navigation }) => {
       return a.number_items > b.number_items ? 1 : -1;
     });
   }
-
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
@@ -176,6 +175,39 @@ const VolunteerHome = ({ navigation }) => {
         >
           <Text style={styles.editProfileText}>EDIT PROFILE</Text>
         </TouchableOpacity>
+        {!!assignedLists.length && (
+          <View style={styles.assignedLists}>
+            <Text style={styles.volunteerOpportunitiesSubtitle}>My Lists</Text>
+            {assignedLists.map((item, i) => {
+              return (
+                <View key={i} style={[styles.listItem]}>
+                  <View style={styles.listInfo}>
+                    <Text style={styles.listText}>
+                      Distance: {item.distance.toFixed(2)} miles
+                    </Text>
+                    <Text style={styles.listText}>
+                      Items: {item.number_items}
+                    </Text>
+                    <Text style={styles.listText}>Requested {item.age}</Text>
+                  </View>
+                  <TouchableOpacity style={styles.selectListBtn}>
+                    <Text
+                      style={styles.selectListBtnText}
+                      onPress={() => navigation.navigate('VolunteerTabs')}
+                    >
+                      SHOP
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              );
+            })}
+          </View>
+        )}
+        {!assignedLists.length && (
+          <View style={styles.noListsContainer}>
+            <Text style={styles.listText}>You have no lists</Text>
+          </View>
+        )}
         <View style={styles.volunteerOpportunitiesContainer}>
           <Text style={styles.volunteerOpportunitiesSubtitle}>
             Volunteer Opportunities
@@ -216,7 +248,9 @@ const VolunteerHome = ({ navigation }) => {
           </View>
           <FlatList
             style={styles.list}
-            data={sortedData}
+            data={sortedData.filter(
+              (item) => assignedLists.indexOf(item) === -1,
+            )}
             keyExtractor={(item) => item.listId.toString()}
             renderItem={({ item }) => {
               return (
@@ -251,9 +285,10 @@ const VolunteerHome = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     flex: 1,
     backgroundColor: 'white',
+    marginTop: 50,
   },
   button: {
     alignItems: 'center',
@@ -377,7 +412,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   volunteerOpportunitiesContainer: {
     marginTop: 20,
@@ -398,6 +433,14 @@ const styles = StyleSheet.create({
   },
   sortContainer: {
     marginVertical: 20,
+  },
+  assignedLists: {
+    width: 350,
+    marginTop: 30,
+  },
+  noListsContainer: {
+    marginTop: 40,
+    marginBottom: 20,
   },
 });
 
