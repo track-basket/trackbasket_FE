@@ -18,15 +18,25 @@ const GroceryItem = ({
   aisleNumber,
   clickHandler,
   quantity,
+  qc
 }) => {
-  const { cart } = useContext(UserContext);
+  const { cart, updateCart } = useContext(UserContext);
   const [itemCount, setItemCount] = useState(quantity);
   const quantityController = (operator) => {
     if (operator === 'add') {
       setItemCount(itemCount + 1);
+      let selectedItem = cart.items.find((item) => item.upc === upc);
+      if (selectedItem) {
+        // selectedItem.quantity = itemCount;
+        updateCart(selectedItem, operator);
+      }
     }
     if (operator === 'subtract' && itemCount > 1) {
       setItemCount(itemCount - 1);
+      let selectedItem = cart.items.find((item) => item.upc === upc);
+      if (selectedItem) {
+        updateCart(selectedItem, operator);
+      }
     }
   };
   const getButtonText = () => {
@@ -58,7 +68,7 @@ const GroceryItem = ({
 
       <View style={styles.quantityBtnRow}>
         <QuantityPicker
-          quantity={itemCount}
+          quantity={quantity}
           upc={upc}
           quantityController={quantityController}
         />
@@ -72,11 +82,6 @@ const GroceryItem = ({
     </View>
   );
 };
-
-//hold the quantity in here
-// on press for the quantity picker, update the quantity
-// then on add to cart press, pass the quantity from here
-// into
 
 const styles = StyleSheet.create({
   imgDescriptionContainer: {
