@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import UserContext from '../user-context';
 import GroceryItem from '../components/GroceryItem';
-import { ScrollView } from 'react-native-gesture-handler';
 import { Button } from '../components/Button';
 
 const Cart = ({ navigation, route }) => {
@@ -48,7 +47,7 @@ const Cart = ({ navigation, route }) => {
                   image_url={item.image_url}
                   price={item.price}
                   clickHandler={toggleCartItem}
-                  quantity={checkForCart(item.upc) || 6}
+                  quantity={checkForCart(item.upc)}
                   key={item.upc + 'cart'}
                 />
               );

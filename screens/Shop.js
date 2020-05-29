@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import React, { useState, useContext } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, View, TextInput, ScrollView } from 'react-native';
 import GroceryItem from '../components/GroceryItem';
 import UserContext from '../user-context';
 
