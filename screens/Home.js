@@ -4,7 +4,6 @@ import UserContext from '../user-context';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
-import { Button } from '../components/Button';
 
 const Home = ({ navigation, route }) => {
   const { user, cart } = useContext(UserContext);
@@ -33,9 +32,15 @@ const Home = ({ navigation, route }) => {
                 Set up an account and shop
               </Text>
             </View>
-            <View style={styles.button}>
-              <Text style={styles.buttonText}>I'm a volunteer</Text>
-            </View>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Volunteer profile');
+              }}
+            >
+              <View style={styles.button}>
+                <Text style={styles.buttonText}>I'm a volunteer</Text>
+              </View>
+            </TouchableOpacity>
             <View style={styles.secondaryTextContainer}>
               <Text style={styles.secondaryText}>
                 Choose a grocery list to shop

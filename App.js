@@ -3,9 +3,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from './screens/Home';
+import VolunteerHome from './screens/VolunteerHome';
 import LoginModal from './screens/LoginModal';
+import VolunteerLoginModal from './screens/VolunteerLoginModal';
 import AtRiskTabs from './screens/AtRiskTabs';
+import VolunteerTabs from './screens/VolunteerTabs';
 import { UserProvider } from './user-context';
+import { VolunteerProvider } from './volunteer-context';
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 
@@ -23,6 +27,16 @@ const MainStackScreen = () => {
       <MainStack.Screen
         name="AtRiskTabs"
         component={AtRiskTabs}
+        options={{ title: '' }}
+      />
+      <MainStack.Screen
+        name="VolunteerHome"
+        component={VolunteerHome}
+        options={({ title: '' }, { headerShown: false })}
+      />
+      <MainStack.Screen
+        name="VolunteerTabs"
+        component={VolunteerTabs}
         options={{ title: '' }}
       />
     </MainStack.Navigator>
@@ -72,6 +86,9 @@ const App = () => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [installationId, setInstallationId] = useState(null);
+  const [volunteer, setVolunteer] = useState(null);
+  const [assignedLists, setAssignedLists] = useState(null);
+  const [allLists, setAllLists] = useState(null);
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
@@ -80,35 +97,58 @@ const App = () => {
       }
 
       let userLocation = await Location.getCurrentPositionAsync({});
-      setLocation(userLocation);
+      setLocation([
+        userLocation.coords.latitude,
+        userLocation.coords.longitude,
+      ]);
     })();
   }, []);
   return (
-    <UserProvider
+    <VolunteerProvider
       value={{
-        user,
-        cart,
-        addToCart,
-        removeFromCart,
-        setNewUser,
-        location,
+        volunteer,
+        setVolunteer,
         installationId,
         setInstallationId,
         submitOrder,
         updateCart,
+        assignedLists,
+        setAssignedLists,
+        location,
+        setLocation,
+        allLists,
+        setAllLists,
       }}
     >
-      <NavigationContainer>
-        <RootStack.Navigator mode="modal">
-          <RootStack.Screen
-            name="Main"
-            component={MainStackScreen}
-            options={{ headerShown: false }}
-          />
-          <RootStack.Screen name="Your profile" component={LoginModal} />
-        </RootStack.Navigator>
-      </NavigationContainer>
-    </UserProvider>
+      <UserProvider
+        value={{
+          user,
+          cart,
+          addToCart,
+          removeFromCart,
+          setNewUser,
+          location,
+          installationId,
+          setInstallationId,
+          submitOrder,
+        }}
+      >
+        <NavigationContainer>
+          <RootStack.Navigator mode="modal">
+            <RootStack.Screen
+              name="Main"
+              component={MainStackScreen}
+              options={{ headerShown: false }}
+            />
+            <RootStack.Screen name="Your profile" component={LoginModal} />
+            <RootStack.Screen
+              name="Volunteer profile"
+              component={VolunteerLoginModal}
+            />
+          </RootStack.Navigator>
+        </NavigationContainer>
+      </UserProvider>
+    </VolunteerProvider>
   );
 };
 
