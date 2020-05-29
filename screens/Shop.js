@@ -60,11 +60,18 @@ const Shop = () => {
   const toggleCartItem = (upc, quantity) => {
     let selectedItem = items.find((item) => item.upc === upc);
     if (cart.items.find((item) => item.upc === upc)) {
+      selectedItem.quantity = 1;
       removeFromCart(selectedItem);
-      selectedItem.quantity = quantity;
     } else {
       selectedItem.quantity = quantity;
       addToCart(selectedItem);
+    }
+  };
+  const checkForCart = (upc) => {
+    if (cart.items.find((item) => item.upc === upc)) {
+      return cart.items.find((item) => item.upc === upc).quantity;
+    } else {
+      return 1;
     }
   };
   return (
@@ -86,7 +93,7 @@ const Shop = () => {
                 image_url={item.image_url}
                 price={item.price}
                 clickHandler={toggleCartItem}
-                quantity={item.quantity || 1}
+                quantity={checkForCart(item.upc)}
                 key={item.upc}
               />
             );

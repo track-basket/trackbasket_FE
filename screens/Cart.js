@@ -9,15 +9,25 @@ const Cart = ({ navigation, route }) => {
   const { removeFromCart, addToCart, cart, submitOrder } = useContext(
     UserContext,
   );
-  const toggleCartItem = (upc) => {
+  const toggleCartItem = (upc, quantity) => {
     let selectedItem = cart.items.find((item) => item.upc === upc);
-    addToCart(selectedItem);
     if (cart.items.find((item) => item.upc === upc)) {
       removeFromCart(selectedItem);
+      selectedItem.quantity = quantity;
+    } else {
+      selectedItem.quantity = quantity;
+      addToCart(selectedItem);
+    }
+  };
+  const checkForCart = (upc) => {
+    if (cart.items.find((item) => item.upc === upc)) {
+      console.log(cart.items.find((item) => item.upc === upc).quantity);
+      return cart.items.find((item) => item.upc === upc).quantity;
+    } else {
+      return 6;
     }
   };
   const submitShoppingList = () => {
-    console.log(cart);
     //apicalls method to post shopping list
     submitOrder();
     navigation.navigate('Home', { msg: 'Your order has been submitted!' });
@@ -38,7 +48,7 @@ const Cart = ({ navigation, route }) => {
                   image_url={item.image_url}
                   price={item.price}
                   clickHandler={toggleCartItem}
-                  quantity={item.quantity}
+                  quantity={checkForCart(item.upc) || 6}
                   key={item.upc + 'cart'}
                 />
               );
@@ -51,7 +61,7 @@ const Cart = ({ navigation, route }) => {
           )}
           {cart.status === 'pending' && (
             <TouchableOpacity onPress={() => submitShoppingList()}>
-              <Button text="EDIT ORDER" onPress={submitShoppingList} />
+              <Button text="SAVE ORDER" onPress={submitShoppingList} />
             </TouchableOpacity>
           )}
         </View>
