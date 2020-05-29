@@ -1,21 +1,63 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Picker, StyleSheet } from 'react-native';
 
 const VolunteerTask = () => {
+  const [selectedValue, setSelectedValue] = useState('Change Status');
   return (
-    <View>
+    <View style={styles.container}>
       <Text>Task Details</Text>
-      <Text>Name: </Text>
-      <Text>Joe Smith</Text>
-      <Text>Delivery Address: </Text>
-      <Text>123 Main Street, Denver CO 80203</Text>
-      <Text>Store: </Text>
-      <Text>King Soopers, 333 Speer Blvd</Text>
-      <Text>Ordered at: 1:21 PM May 21</Text>
-      <Text>Items: </Text>
-      <Text>29</Text>
+      <View style={styles.infoField}>
+        <Text style={styles.infoKind}>Name: </Text>
+        <Text>Joe Smith</Text>
+      </View>
+      <View style={styles.infoField}>
+        <Text style={styles.infoKind}>Delivery Address: </Text>
+        <Text>123 Main Street, Denver CO 80203</Text>
+      </View>
+      <View style={styles.infoField}>
+        <Text style={styles.infoKind}>Store: </Text>
+        <Text>King Soopers, 333 Speer Blvd</Text>
+      </View>
+      <View style={styles.infoField}>
+        <Text style={styles.infoKind}>Ordered at: </Text>
+        <Text>1:21 PM May 21</Text>
+      </View>
+      <View style={styles.infoField}>
+        <Text style={styles.infoKind}>Items: </Text>
+        <Text>29</Text>
+      </View>
+
+      <Picker
+        selectedValue={selectedValue}
+        style={styles.picker}
+        onValueChange={(itemValue) => setSelectedValue(itemValue)}
+      >
+        <Picker.Item label="Change Status" value="Change Status" />
+        <Picker.Item label="Shopping" value="shopping" />
+        <Picker.Item label="On The Way" value="on the way" />
+        <Picker.Item label="Delivered" value="delivered" />
+      </Picker>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    // alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+  },
+  infoField: {
+    flexDirection: 'row',
+  },
+  infoKind: {
+    fontFamily: 'HelveticaNeue-Bold',
+  },
+  picker: {
+    alignSelf: 'center',
+    height: 90,
+    width: 200,
+  },
+});
 
 export default VolunteerTask;
