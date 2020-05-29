@@ -231,7 +231,12 @@ const VolunteerHome = ({ navigation }) => {
                     <Text style={styles.listText}>Requested {item.age}</Text>
                   </View>
                   <TouchableOpacity style={styles.selectListBtn}>
-                    <Text style={styles.selectListBtnText}>SELECT</Text>
+                    <Text
+                      style={styles.selectListBtnText}
+                      onPress={() => navigation.navigate('Confirm list', item)}
+                    >
+                      SELECT
+                    </Text>
                   </TouchableOpacity>
                 </View>
               );
