@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, Picker, StyleSheet } from 'react-native';
+import { View, Text, Picker, StyleSheet, Button } from 'react-native';
 
-const VolunteerTask = () => {
+const VolunteerTask = ({ navigation }) => {
   const [selectedValue, setSelectedValue] = useState('Change Status');
   return (
     <View style={styles.container}>
-      <Text>Task Details</Text>
+      <Text style={styles.header}>Task Details</Text>
       <View style={styles.infoField}>
         <Text style={styles.infoKind}>Name: </Text>
         <Text>Joe Smith</Text>
@@ -27,6 +27,11 @@ const VolunteerTask = () => {
         <Text>29</Text>
       </View>
 
+      <Button
+        title="Abandon Task"
+        style={styles.button}
+        onPress={() => navigation.navigate('VolunteerHome')}
+      />
       <Picker
         selectedValue={selectedValue}
         style={styles.picker}
@@ -44,11 +49,12 @@ const VolunteerTask = () => {
 const styles = StyleSheet.create({
   container: {
     // alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     backgroundColor: 'white',
   },
   infoField: {
     flexDirection: 'row',
+    padding: 15,
   },
   infoKind: {
     fontFamily: 'HelveticaNeue-Bold',
@@ -57,6 +63,15 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     height: 90,
     width: 200,
+  },
+  header: {
+    fontFamily: 'HelveticaNeue-Bold',
+    fontSize: 36,
+    textAlign: 'center',
+    paddingBottom: 45,
+  },
+  button: {
+    alignSelf: 'center',
   },
 });
 
