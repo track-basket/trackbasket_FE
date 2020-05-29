@@ -12,7 +12,7 @@ const ConfirmList = ({ navigation, route }) => {
     console.log(item);
     setAssignedLists([item, ...assignedLists]);
     console.log(assignedLists);
-    navigation.navigate('VolunteerHome');
+    navigation.navigate('VolunteerTabs');
   };
 
   return (
