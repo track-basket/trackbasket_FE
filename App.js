@@ -38,11 +38,18 @@ const App = () => {
         ? { items: [...cart.items, newItem], status: 'not submitted' }
         : { items: [newItem], status: 'not submitted' },
     );
-  const removeFromCart = (selectedItem) =>
+  const removeFromCart = (selectedItem) => {
+    let items = [...cart.items];
+    let desiredItem = items.find((item) => {
+      return item.upc === selectedItem.upc;
+    });
+    let index = items.indexOf(desiredItem);
+    items[index].quantity = 0;
     setCart({
-      items: cart.items.filter((item) => item.upc !== selectedItem.upc),
+      items: items.filter((item) => item.upc !== selectedItem.upc),
       status: 'not submitted',
     });
+  };
   const updateCart = (updatedItem, operator) => {
     let items = [...cart.items];
     let desiredItem = items.find((item) => {
