@@ -111,7 +111,6 @@ const App = () => {
         installationId,
         setInstallationId,
         submitOrder,
-        updateCart,
         assignedLists,
         setAssignedLists,
         location,
@@ -131,6 +130,7 @@ const App = () => {
           installationId,
           setInstallationId,
           submitOrder,
+          updateCart,
         }}
       >
         <NavigationContainer>
