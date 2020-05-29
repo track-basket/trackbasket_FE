@@ -1,10 +1,64 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import VolunteerContext from '../volunteer-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
 import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
 import { AsyncStorage } from 'react-native';
+
+const data = [
+  {
+    listId: 1,
+    storeId: '94738291',
+    created_at: 'Jan 20 2020',
+    number_items: 24,
+    lat: '39.716350',
+    lng: '-104.932437',
+  },
+  {
+    listId: 2,
+    storeId: '9284093',
+    created_at: 'Apr 15 2020',
+    number_items: 16,
+    lat: '39.743810',
+    lng: '-104.999385',
+  },
+  {
+    listId: 3,
+    storeId: '9284098',
+    created_at: 'May 1 2020',
+    number_items: 11,
+    lat: '39.674611',
+    lng: '-104.938273',
+  },
+];
+
+function calcCrow(lat1, lon1, lat2, lon2) {
+  var R = 6371; // km
+  var dLat = toRad(lat2 - lat1);
+  var dLon = toRad(lon2 - lon1);
+  var lat1 = toRad(lat1);
+  var lat2 = toRad(lat2);
+
+  var a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c;
+  return d;
+}
+
+// Converts numeric degrees to radians
+function toRad(Value) {
+  return (Value * Math.PI) / 180;
+}
 
 const storeData = async () => {
   try {
@@ -33,7 +87,22 @@ const retrieveData = async () => {
 
 const VolunteerHome = ({ navigation }) => {
   const { volunteer } = useContext(VolunteerContext);
-  console.log(volunteer);
+  const [listData, setListData] = useState([]);
+  useEffect(() => {
+    let newData = data.map((item) => {
+      let distance = calcCrow(
+        item.lat,
+        item.lng,
+        volunteer.location[0],
+        volunteer.location[1],
+      );
+      return { distance, ...item };
+    });
+    setListData(newData);
+    console.log(newData);
+    console.log(listData);
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
@@ -47,6 +116,25 @@ const VolunteerHome = ({ navigation }) => {
         >
           <Text style={styles.editProfileText}>EDIT PROFILE</Text>
         </TouchableOpacity>
+        <FlatList
+          style={styles.list}
+          data={listData}
+          keyExtractor={(item) => item.listId.toString()}
+          renderItem={({ item }) => {
+            console.log(item);
+            return (
+              <View>
+                <Text style={styles.listtext}>
+                  Distance: {item.distance.toFixed(2)}
+                </Text>
+                <Text style={styles.listtext}>Items: {item.number_items}</Text>
+                <Text style={styles.listtext}>
+                  Days old: {item.number_items}
+                </Text>
+              </View>
+            );
+          }}
+        />
       </View>
     </View>
   );
@@ -161,6 +249,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginTop: 20,
   },
+  listtext: {
+    color: 'black',
+  },
+  list: {},
 });
 
 export default VolunteerHome;
