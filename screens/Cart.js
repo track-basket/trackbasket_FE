@@ -23,7 +23,7 @@ const Cart = ({ navigation, route }) => {
       console.log(cart.items.find((item) => item.upc === upc).quantity);
       return cart.items.find((item) => item.upc === upc).quantity;
     } else {
-      return 6;
+      return 1;
     }
   };
   const submitShoppingList = () => {
