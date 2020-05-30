@@ -19,5 +19,6 @@ const styles = StyleSheet.create({
   submitBtnText: {
     fontSize: 24,
     color: 'white',
+    textAlign: 'center',
   },
 });
