@@ -2,42 +2,44 @@ import React, { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Button } from '../components/Button';
 import VolunteerContext from '../volunteer-context';
+import moment from 'moment';
 
 const ConfirmList = ({ navigation, route }) => {
   const item = route.params;
   const { assignedLists, setAssignedLists } = useContext(VolunteerContext);
-  console.log(assignedLists);
 
   const handleSubmit = () => {
-    console.log(item);
     setAssignedLists([item, ...assignedLists]);
-    console.log(assignedLists);
-    navigation.navigate('VolunteerTabs');
+    navigation.navigate('VolunteerHome');
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.containerInner}>
-        <Text style={styles.introtext}>
-          Are you sure you want to select this list?
-        </Text>
         <View style={styles.orderContainer}>
           <View style={styles.userDetails}>
+            <Text style={styles.introtext}>Order details</Text>
             <Text style={styles.orderText}>
-              <Text style={styles.orderTextBold}>Name:</Text>
+              <Text style={styles.orderTextBold}>Name: </Text>
+              {route.params.userDetails.name}
             </Text>
             <Text style={styles.orderText}>
-              <Text style={styles.orderTextBold}>Delivery address:</Text>
+              <Text style={styles.orderTextBold}>Delivery address: </Text>
+              {route.params.userDetails.address}
             </Text>
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Store:</Text>{' '}
               {route.params.storeId}
             </Text>
+            <Text style={styles.orderText}>
+              <Text style={styles.orderTextBold}>Distance from you:</Text>{' '}
+              {route.params.distance.toFixed(2)} miles
+            </Text>
           </View>
           <View style={styles.orderInfo}>
             <Text style={styles.orderText}>
-              <Text style={styles.orderTextBold}>Ordered at:</Text>{' '}
-              {route.params.created_at}
+              <Text style={styles.orderTextBold}>Ordered:</Text>{' '}
+              {moment(route.params.created_at).format('MMM D')}
             </Text>
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Items:</Text>{' '}
@@ -45,6 +47,7 @@ const ConfirmList = ({ navigation, route }) => {
             </Text>
           </View>
         </View>
+        <Text style={styles.introtext}>Do you want to select this list?</Text>
         <Button text="CONFIRM" onPress={handleSubmit} />
         <Button
           text="CANCEL"
@@ -70,7 +73,7 @@ const styles = StyleSheet.create({
   containerInner: {
     justifyContent: 'center',
     width: 300,
-    marginBottom: 50,
+    marginBottom: 100,
   },
   userDetails: {
     marginBottom: 10,
