@@ -6,6 +6,7 @@ import Home from './screens/Home';
 import VolunteerHome from './screens/VolunteerHome';
 import LoginModal from './screens/LoginModal';
 import ConfirmList from './screens/ConfirmList';
+import SelectList from './screens/SelectList';
 import VolunteerLoginModal from './screens/VolunteerLoginModal';
 import AtRiskTabs from './screens/AtRiskTabs';
 import VolunteerTabs from './screens/VolunteerTabs';
@@ -38,6 +39,11 @@ const MainStackScreen = () => {
       <MainStack.Screen
         name="VolunteerTabs"
         component={VolunteerTabs}
+        options={{ title: '' }}
+      />
+      <MainStack.Screen
+        name="SelectList"
+        component={SelectList}
         options={{ title: '' }}
       />
     </MainStack.Navigator>
@@ -88,7 +94,71 @@ const App = () => {
   const [errorMsg, setErrorMsg] = useState(null);
   const [installationId, setInstallationId] = useState(null);
   const [volunteer, setVolunteer] = useState(null);
-  const [assignedLists, setAssignedLists] = useState([]);
+  const [assignedLists, setAssignedLists] = useState([
+    {
+      age: 'a month ago',
+      created_at: '2020-05-01',
+      daysOld: 29,
+      distance: 2.84763587820524,
+      lat: '39.732540',
+      listId: 6,
+      lng: '-104.973261',
+      number_items: 55,
+      storeId: '3434958',
+      userDetails: {
+        atriskuser_id: '2334534',
+        name: 'John Doe',
+        address: '729 E 10th Avenue',
+        city: 'Denver',
+        state: 'Colorado',
+        'zip code': '80203',
+        'phone number': '(721) 400-1342',
+      },
+      status: 'pending',
+    },
+    {
+      age: 'a month ago',
+      created_at: '2020-05-01',
+      daysOld: 29,
+      distance: 2.84763587820524,
+      lat: '39.732540',
+      listId: 6,
+      lng: '-104.973261',
+      number_items: 55,
+      storeId: '3434958',
+      userDetails: {
+        atriskuser_id: '2334534',
+        name: 'John Doe',
+        address: '729 E 10th Avenue',
+        city: 'Denver',
+        state: 'Colorado',
+        'zip code': '80203',
+        'phone number': '(721) 400-1342',
+      },
+      status: 'pending',
+    },
+    {
+      age: 'a month ago',
+      created_at: '2020-05-01',
+      daysOld: 29,
+      distance: 2.84763587820524,
+      lat: '39.732540',
+      listId: 6,
+      lng: '-104.973261',
+      number_items: 55,
+      storeId: '3434958',
+      userDetails: {
+        atriskuser_id: '2334534',
+        name: 'John Doe',
+        address: '729 E 10th Avenue',
+        city: 'Denver',
+        state: 'Colorado',
+        'zip code': '80203',
+        'phone number': '(721) 400-1342',
+      },
+      status: 'pending',
+    },
+  ]);
   const [allLists, setAllLists] = useState(null);
   useEffect(() => {
     (async () => {
