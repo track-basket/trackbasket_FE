@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, AsyncStorage } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from './screens/Home';
@@ -12,11 +12,23 @@ import AtRiskTabs from './screens/AtRiskTabs';
 import VolunteerTabs from './screens/VolunteerTabs';
 import { UserProvider } from './user-context';
 import { VolunteerProvider } from './volunteer-context';
-import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 
 const RootStack = createStackNavigator();
 const MainStack = createStackNavigator();
+
+const storeData = async (lists) => {
+  try {
+    await AsyncStorage.setItem(
+      'assignedLists',
+      JSON.stringify({
+        lists,
+      }),
+    );
+  } catch (error) {
+    console.log('Error saving data');
+  }
+};
 
 const MainStackScreen = () => {
   return (
@@ -94,72 +106,24 @@ const App = () => {
   const [errorMsg, setErrorMsg] = useState(null);
   const [installationId, setInstallationId] = useState(null);
   const [volunteer, setVolunteer] = useState(null);
-  const [assignedLists, setAssignedLists] = useState([
-    {
-      age: 'a month ago',
-      created_at: '2020-05-01',
-      daysOld: 29,
-      distance: 2.84763587820524,
-      lat: '39.732540',
-      listId: 6,
-      lng: '-104.973261',
-      number_items: 55,
-      storeId: '3434958',
-      userDetails: {
-        atriskuser_id: '2334534',
-        name: 'John Doe',
-        address: '729 E 10th Avenue',
-        city: 'Denver',
-        state: 'Colorado',
-        'zip code': '80203',
-        'phone number': '(721) 400-1342',
-      },
-      status: 'pending',
-    },
-    {
-      age: 'a month ago',
-      created_at: '2020-05-01',
-      daysOld: 29,
-      distance: 2.84763587820524,
-      lat: '39.732540',
-      listId: 6,
-      lng: '-104.973261',
-      number_items: 55,
-      storeId: '3434958',
-      userDetails: {
-        atriskuser_id: '2334534',
-        name: 'John Doe',
-        address: '729 E 10th Avenue',
-        city: 'Denver',
-        state: 'Colorado',
-        'zip code': '80203',
-        'phone number': '(721) 400-1342',
-      },
-      status: 'pending',
-    },
-    {
-      age: 'a month ago',
-      created_at: '2020-05-01',
-      daysOld: 29,
-      distance: 2.84763587820524,
-      lat: '39.732540',
-      listId: 6,
-      lng: '-104.973261',
-      number_items: 55,
-      storeId: '3434958',
-      userDetails: {
-        atriskuser_id: '2334534',
-        name: 'John Doe',
-        address: '729 E 10th Avenue',
-        city: 'Denver',
-        state: 'Colorado',
-        'zip code': '80203',
-        'phone number': '(721) 400-1342',
-      },
-      status: 'pending',
-    },
-  ]);
+  const [assignedLists, setAssignedLists] = useState([]);
   const [allLists, setAllLists] = useState(null);
+
+  const retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('assignedLists');
+      if (value !== null) {
+        // We have data!!
+        console.log('retrieving: ' + JSON.parse(value).lists);
+        setAssignedLists(JSON.parse(value).lists);
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    storeData(assignedLists);
+  }, [assignedLists]);
+
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
@@ -173,6 +137,7 @@ const App = () => {
         userLocation.coords.longitude,
       ]);
     })();
+    retrieveData();
   }, []);
   return (
     <VolunteerProvider
