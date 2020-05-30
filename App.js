@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Home from './screens/Home';
 import VolunteerHome from './screens/VolunteerHome';
 import LoginModal from './screens/LoginModal';
+import ChangeStatusModal from './screens/ChangeStatusModal';
 import ConfirmList from './screens/ConfirmList';
 import SelectList from './screens/SelectList';
 import VolunteerLoginModal from './screens/VolunteerLoginModal';
@@ -182,6 +183,10 @@ const App = () => {
               component={VolunteerLoginModal}
             />
             <RootStack.Screen name="Confirm list" component={ConfirmList} />
+            <RootStack.Screen
+              name="Change status"
+              component={ChangeStatusModal}
+            />
           </RootStack.Navigator>
         </NavigationContainer>
       </UserProvider>
