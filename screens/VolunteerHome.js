@@ -12,7 +12,7 @@ import {
 import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
 // import { AsyncStorage } from 'react-native';
- 
+
 function calcCrow(lat1, lon1, lat2, lon2) {
   var R = 6371; // km
   var dLat = toRad(lat2 - lat1);
@@ -108,7 +108,11 @@ const VolunteerHome = ({ navigation }) => {
                       <TouchableOpacity style={styles.editBtn}>
                         <Text
                           style={styles.editBtnText}
-                          onPress={() => navigation.navigate('VolunteerTabs')}
+                          onPress={() =>
+                            navigation.navigate('VolunteerTabs', {
+                              selectedList: item,
+                            })
+                          }
                         >
                           SHOP ORDER
                         </Text>

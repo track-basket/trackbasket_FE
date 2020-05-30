@@ -5,15 +5,19 @@ import VolunteerContext from '../volunteer-context';
 import VolunteerItems from '../components/VolunteerItems';
 
 const VolunteerShop = () => {
-  const { volunteer, assignedLists, setAssignedLists } = useContext(
-    VolunteerContext,
+  const { volunteer, assignedLists, singleList } = useContext(VolunteerContext);
+  assignedLists.map((list) =>
+    list.items.sort((a, b) => {
+      return a.aisleNumber - b.aisleNumber;
+    }),
   );
-  console.log(assignedLists);
+  console.log('c', singleList);
+
   return (
     <View style={styles.container}>
       <View style={styles.innercontainer}>
-        {assignedLists.map((list) =>
-          list.items.map((item) => (
+        {!!singleList &&
+          singleList.selectedList.items.map((item) => (
             <VolunteerItems
               aisleNumber={item.aisleNumber}
               description={item.description}
@@ -23,14 +27,12 @@ const VolunteerShop = () => {
               quantity={item.quantity}
               key={item.upc}
             />
-          )),
-        )}
-        <VolunteerItems />
+          ))}
         {/* <ScrollView>
-          {assignedLists.items.map((item) => {
-            return item.upc;
-          })}
-        </ScrollView> */}
+            {assignedLists.items.map((item) => {
+              return item.upc;
+            })}
+          </ScrollView> */}
       </View>
     </View>
   );

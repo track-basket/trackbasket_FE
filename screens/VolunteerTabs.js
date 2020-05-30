@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import VolunteerContext from '../volunteer-context';
 import { MaterialIcons } from 'react-native-vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import VolunteerShop from './VolunteerShop';
@@ -6,7 +7,12 @@ import VolunteerTask from './VolunteerTask';
 
 const Tab = createBottomTabNavigator();
 
-const VolunteerTabs = () => {
+const VolunteerTabs = ({ route, navigation }) => {
+  const { findSingleList } = useContext(VolunteerContext);
+
+  const { params } = route;
+  findSingleList(params);
+  // console.log(params.selectedList.listId);
   return (
     <Tab.Navigator>
       <Tab.Screen
