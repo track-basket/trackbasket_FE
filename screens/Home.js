@@ -87,7 +87,9 @@ const Home = ({ navigation, route }) => {
                     return itemCount;
                   }, 0)}
                 </Text>
-                <Text style={styles.detailsText}>Submitted: May 21, 2020 </Text>
+                <Text style={styles.detailsText}>
+                  Submitted: {cart.submittedAt}
+                </Text>
               </View>
             </View>
           )}
