@@ -79,7 +79,6 @@ const SelectList = ({ navigation }) => {
   const [listData, setListData] = useState([]);
   const [sort, setSort] = useState('quantity-ascending');
   const { volunteer, assignedLists } = useContext(VolunteerContext);
-  console.log(assignedLists);
   useEffect(() => {
     let newData = data.map((item) => {
       let distance = calcCrow(
