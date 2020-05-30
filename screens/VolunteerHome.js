@@ -1,313 +1,102 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import VolunteerContext from '../volunteer-context';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import moment from 'moment';
+import { Button } from '../components/Button';
 
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
-  FlatList,
-  Picker,
+  ScrollView,
 } from 'react-native';
 import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
-// import { AsyncStorage } from 'react-native';
-
-const data = [
-  {
-    listId: 1,
-    storeId: '94738291',
-    created_at: '2020-01-20',
-    number_items: 24,
-    lat: '39.716350',
-    lng: '-104.932437',
-    status: 'pending',
-    items: [
-      {
-        upc: '0001111042852',
-        aisleNumber: 7,
-        description: 'Simple Truth Organic™ 2% Reduced Fat Milk',
-        image_url:
-          'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
-        price: 3.29,
-      },
-      {
-        upc: '8305729934',
-        aisleNumber: 3,
-        description: "Nature's Own Honey Wheat Sliced Bread",
-        image_url:
-          'https://user-images.githubusercontent.com/4350550/83094330-b3ac3980-a05e-11ea-97fb-9dfb29bc817b.png',
-        price: 2.99,
-      },
-    ],
-  },
-  {
-    listId: 2,
-    storeId: '9284093',
-    created_at: '2020-04-15',
-    number_items: 16,
-    lat: '39.743810',
-    lng: '-104.999385',
-  },
-  {
-    listId: 3,
-    storeId: '9284098',
-    created_at: '2020-05-22',
-    number_items: 11,
-    lat: '39.674611',
-    lng: '-104.938273',
-  },
-  {
-    listId: 4,
-    storeId: '3434958',
-    created_at: '2020-04-22',
-    number_items: 17,
-    lat: '39.732540',
-    lng: '-104.973261',
-  },
-  {
-    listId: 5,
-    storeId: '9284098',
-    created_at: '2020-02-22',
-    number_items: 2,
-    lat: '39.674611',
-    lng: '-104.938273',
-  },
-  {
-    listId: 6,
-    storeId: '3434958',
-    created_at: '2020-05-01',
-    number_items: 55,
-    lat: '39.732540',
-    lng: '-104.973261',
-  },
-];
-
-function calcCrow(lat1, lon1, lat2, lon2) {
-  var R = 6371; // km
-  var dLat = toRad(lat2 - lat1);
-  var dLon = toRad(lon2 - lon1);
-  var lat1 = toRad(lat1);
-  var lat2 = toRad(lat2);
-
-  var a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  var d = R * c;
-  return d;
-}
-
-// Converts numeric degrees to radians
-function toRad(Value) {
-  return (Value * Math.PI) / 180;
-}
-
-// const storeData = async () => {
-//   try {
-//     await AsyncStorage.setItem(
-//       '@MySuperStore:key',
-//       JSON.stringify({
-//         lists: ['list1', 'list2', 'list3'],
-//       }),
-//     );
-//   } catch (error) {
-//     // Error saving data
-//   }
-// };
-
-// const retrieveData = async () => {
-//   try {
-//     const value = await AsyncStorage.getItem('@MySuperStore:key');
-//     if (value !== null) {
-//       // We have data!!
-//       console.log(JSON.parse(value));
-//     }
-//   } catch (error) {
-//     // Error retrieving data
-//   }
-// };
 
 const VolunteerHome = ({ navigation }) => {
   const { volunteer, assignedLists } = useContext(VolunteerContext);
-  const [listData, setListData] = useState([]);
-
-  const [sort, setSort] = useState('quantity-ascending');
-  useEffect(() => {
-    let newData = data.map((item) => {
-      let distance = calcCrow(
-        item.lat,
-        item.lng,
-        volunteer.location[0],
-        volunteer.location[1],
-      );
-      let daysOld = moment().diff(moment(item.created_at), 'days');
-      let age = moment(item.created_at).fromNow();
-      return { distance, age, daysOld, ...item };
-    });
-    setListData(newData);
-  }, []);
-
-  let sortedData;
-  if (sort === 'distance-ascending') {
-    sortedData = listData.sort((a, b) => {
-      return a.distance < b.distance ? 1 : -1;
-    });
-  }
-  if (sort === 'distance-descending') {
-    sortedData = listData.sort((a, b) => {
-      return a.distance > b.distance ? 1 : -1;
-    });
-  }
-  if (sort === 'daysold-ascending') {
-    sortedData = listData.sort((a, b) => {
-      return a.daysOld < b.daysOld ? 1 : -1;
-    });
-  }
-  if (sort === 'daysold-descending') {
-    sortedData = listData.sort((a, b) => {
-      return a.daysOld > b.daysOld ? 1 : -1;
-    });
-  }
-  if (sort === 'quantity-ascending') {
-    sortedData = listData.sort((a, b) => {
-      return a.number_items < b.number_items ? 1 : -1;
-    });
-  }
-  if (sort === 'quantity-descending') {
-    sortedData = listData.sort((a, b) => {
-      return a.number_items > b.number_items ? 1 : -1;
-    });
-  }
   return (
-    <View style={styles.container}>
-      <View style={styles.innerContainer}>
-        <Logo />
-        <Text style={styles.greeting}>
-          <TimeOfDay />, {volunteer.name}
-        </Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Volunteer profile')}
-          style={styles.editProfile}
-        >
-          <Text style={styles.editProfileText}>EDIT PROFILE</Text>
-        </TouchableOpacity>
-        {!!assignedLists.length && (
-          <View style={styles.assignedLists}>
-            <Text style={styles.volunteerOpportunitiesSubtitle}>My Lists</Text>
-            {assignedLists.map((item, i) => {
-              return (
-                <View key={i} style={[styles.listItem]}>
-                  <View style={styles.listInfo}>
-                    <Text style={styles.listText}>
-                      Distance: {item.distance.toFixed(2)} miles
-                    </Text>
-                    <Text style={styles.listText}>
-                      Items: {item.number_items}
-                    </Text>
-                    <Text style={styles.listText}>Requested {item.age}</Text>
-                  </View>
-                  <TouchableOpacity style={styles.selectListBtn}>
-                    <Text
-                      style={styles.selectListBtnText}
-                      onPress={() => navigation.navigate('VolunteerTabs')}
-                    >
-                      SHOP
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              );
-            })}
-          </View>
-        )}
-        {!assignedLists.length && (
-          <View style={styles.noListsContainer}>
-            <Text style={styles.listText}>You have no lists</Text>
-          </View>
-        )}
-        <View style={styles.volunteerOpportunitiesContainer}>
-          <Text style={styles.volunteerOpportunitiesSubtitle}>
-            Volunteer Opportunities
+    <ScrollView contentContainerStyle={styles.contentContainer}>
+      <View style={styles.container}>
+        <View style={styles.innerContainer}>
+          <Logo />
+          <Text style={styles.greeting}>
+            <TimeOfDay />, {volunteer.name}
           </Text>
-          <View style={styles.sortContainer}>
-            <Text style={styles.sortTitle}>Sort by:</Text>
-            <Picker
-              selectedValue={sort}
-              onValueChange={(itemValue, itemIndex) => setSort(itemValue)}
-              style={styles.onePicker}
-              itemStyle={styles.onePickerItem}
-            >
-              <Picker.Item
-                label="Items (most to least)"
-                value="quantity-ascending"
-              />
-              <Picker.Item
-                label="Items (least to most)"
-                value="quantity-descending"
-              />
-              <Picker.Item
-                label="Distance (farthest to closest)"
-                value="distance-ascending"
-              />
-              <Picker.Item
-                label="Distance (closest to farthest)"
-                value="distance-descending"
-              />
-              <Picker.Item
-                label="Days Old (oldest to newest)"
-                value="daysold-ascending"
-              />
-              <Picker.Item
-                label="Days Old (newest to oldest)"
-                value="daysold-descending"
-              />
-            </Picker>
-          </View>
-          <FlatList
-            style={styles.list}
-            data={sortedData.filter(
-              (item) => assignedLists.indexOf(item) === -1,
-            )}
-            keyExtractor={(item) => item.listId.toString()}
-            renderItem={({ item }) => {
-              return (
-                <View style={styles.listItem}>
-                  <View style={styles.listInfo}>
-                    <Text style={styles.listText}>
-                      Distance: {item.distance.toFixed(2)} miles
-                    </Text>
-                    <Text style={styles.listText}>
-                      Items: {item.number_items}
-                    </Text>
-                    <Text style={styles.listText}>Requested {item.age}</Text>
-                  </View>
-                  <TouchableOpacity style={styles.selectListBtn}>
-                    <Text
-                      style={styles.selectListBtnText}
-                      onPress={() => navigation.navigate('Confirm list', item)}
-                    >
-                      SELECT
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              );
-            }}
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Volunteer profile')}
+            style={styles.editProfile}
+          >
+            <Text style={styles.editProfileText}>EDIT PROFILE</Text>
+          </TouchableOpacity>
+          <Button
+            text="ADD A NEW LIST"
+            onPress={() => navigation.navigate('SelectList')}
+            customStyles={{ marginTop: 20 }}
           />
+          {!!assignedLists.length && (
+            <View style={styles.assignedLists}>
+              <Text style={styles.orders}>Your lists</Text>
+              {assignedLists.map((item, i) => {
+                return (
+                  <View key={i} style={styles.item}>
+                    <View style={styles.details}>
+                      <Text
+                        style={[styles.detailsText, styles.detailsTextName]}
+                      >
+                        Name: {item.userDetails.name}
+                      </Text>
+                      <View style={styles.numAge}>
+                        <Text style={styles.detailsText}>
+                          Submitted: {item.age}
+                        </Text>
+                        <Text style={styles.detailsText}>
+                          Items: {item.number_items}
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={styles.orderStatus}>
+                      <View style={styles.orderBadge}>
+                        <Text style={styles.orderBadgeText}>
+                          {item.status.toUpperCase()}
+                        </Text>
+                      </View>
+                      <TouchableOpacity style={styles.editBtn}>
+                        <Text
+                          style={styles.editBtnText}
+                          onPress={() => navigation.navigate('VolunteerTabs')}
+                        >
+                          SHOP ORDER
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                );
+              })}
+            </View>
+          )}
+          {!assignedLists.length && (
+            <View style={styles.noListsContainer}>
+              <Text style={styles.volunteerOpportunitiesSubtitle}>
+                You have no lists
+              </Text>
+            </View>
+          )}
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    flexGrow: 1,
+  },
   container: {
     alignItems: 'center',
     // justifyContent: 'center',
     flex: 1,
     backgroundColor: 'white',
-    marginTop: 50,
+    marginTop: 0,
   },
   button: {
     alignItems: 'center',
@@ -339,9 +128,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   innerContainer: {
-    marginBottom: 68,
+    // marginBottom: 68,
     alignItems: 'center',
     width: 600,
+    marginTop: 100,
   },
   secondaryText: {
     fontSize: 18,
@@ -367,7 +157,8 @@ const styles = StyleSheet.create({
   },
   orders: {
     fontSize: 26,
-    marginTop: 30,
+    marginBottom: 20,
+    textAlign: 'center',
   },
   buttonContainer: {
     alignItems: 'center',
@@ -375,7 +166,8 @@ const styles = StyleSheet.create({
   },
   orderStatus: {
     flexDirection: 'row',
-    marginTop: 20,
+    marginTop: 10,
+    justifyContent: 'space-between',
   },
   orderBadge: {
     backgroundColor: '#DEE078',
@@ -403,63 +195,40 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginTop: 20,
   },
-  listText: {
-    fontSize: 18,
-  },
-  listItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 30,
-    alignItems: 'center',
-  },
-  selectListBtn: {
-    borderWidth: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    marginLeft: 20,
-  },
-  selectListBtnText: {
-    fontSize: 20,
-  },
+
   list: {
     flexGrow: 0,
     width: 350,
     height: 250,
   },
-  volunteerOpportunitiesSubtitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    // marginBottom: 10,
-  },
-  volunteerOpportunitiesContainer: {
-    marginTop: 20,
-  },
-  picker: {
-    width: 200,
-    height: 44,
-    borderColor: 'black',
-    borderWidth: 1,
-  },
-  onePickerItem: {
-    height: 44,
-    color: 'black',
-  },
-  sortTitle: {
-    textAlign: 'center',
-    marginBottom: 10,
-  },
-  sortContainer: {
-    marginVertical: 20,
-  },
+
   assignedLists: {
     width: 350,
     marginTop: 30,
   },
   noListsContainer: {
-    marginTop: 40,
+    marginTop: 100,
     marginBottom: 20,
+  },
+  detailsText: {
+    fontSize: 18,
+    marginTop: 2,
+  },
+  detailsTextName: {
+    fontSize: 25,
+    fontWeight: 'bold',
+  },
+  item: {
+    marginBottom: 35,
+  },
+  volunteerOpportunitiesSubtitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  numAge: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
 

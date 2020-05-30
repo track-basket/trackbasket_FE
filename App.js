@@ -1,21 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, AsyncStorage } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from './screens/Home';
 import VolunteerHome from './screens/VolunteerHome';
 import LoginModal from './screens/LoginModal';
 import ConfirmList from './screens/ConfirmList';
+import SelectList from './screens/SelectList';
 import VolunteerLoginModal from './screens/VolunteerLoginModal';
 import AtRiskTabs from './screens/AtRiskTabs';
 import VolunteerTabs from './screens/VolunteerTabs';
 import { UserProvider } from './user-context';
 import { VolunteerProvider } from './volunteer-context';
-import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 
 const RootStack = createStackNavigator();
 const MainStack = createStackNavigator();
+
+const storeData = async (lists) => {
+  try {
+    await AsyncStorage.setItem(
+      'assignedLists',
+      JSON.stringify({
+        lists,
+      }),
+    );
+  } catch (error) {
+    console.log('Error saving data');
+  }
+};
 
 const MainStackScreen = () => {
   return (
@@ -38,6 +51,11 @@ const MainStackScreen = () => {
       <MainStack.Screen
         name="VolunteerTabs"
         component={VolunteerTabs}
+        options={{ title: '' }}
+      />
+      <MainStack.Screen
+        name="SelectList"
+        component={SelectList}
         options={{ title: '' }}
       />
     </MainStack.Navigator>
@@ -90,6 +108,22 @@ const App = () => {
   const [volunteer, setVolunteer] = useState(null);
   const [assignedLists, setAssignedLists] = useState([]);
   const [allLists, setAllLists] = useState(null);
+
+  const retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('assignedLists');
+      if (value !== null) {
+        // We have data!!
+        console.log('retrieving: ' + JSON.parse(value).lists);
+        setAssignedLists(JSON.parse(value).lists);
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    storeData(assignedLists);
+  }, [assignedLists]);
+
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
@@ -103,6 +137,7 @@ const App = () => {
         userLocation.coords.longitude,
       ]);
     })();
+    retrieveData();
   }, []);
   return (
     <VolunteerProvider
