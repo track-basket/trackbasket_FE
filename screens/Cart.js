@@ -1,5 +1,11 @@
 import React, { useContext } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import UserContext from '../user-context';
 import GroceryItem from '../components/GroceryItem';
 import { Button } from '../components/Button';
@@ -33,38 +39,46 @@ const Cart = ({ navigation, route }) => {
   };
   if (cart.items.length > 0) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.header}>Your cart</Text>
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        <View style={styles.container}>
+          <Text style={styles.header}>Your cart</Text>
 
-        <View style={styles.innercontainer}>
-          {cart.items.map((item) => {
-            if (item.upc) {
-              return (
-                <GroceryItem
-                  upc={item.upc}
-                  aisleNumber={item.aisleNumber}
-                  description={item.description}
-                  image_url={item.image_url}
-                  price={item.price}
-                  clickHandler={toggleCartItem}
-                  quantity={checkForCart(item.upc)}
-                  key={item.upc + 'cart'}
-                />
-              );
-            }
-          })}
-          {cart.status === 'not submitted' && (
-            <TouchableOpacity onPress={() => submitShoppingList()}>
-              <Button text="SUBMIT ORDER" onPress={submitShoppingList} />
-            </TouchableOpacity>
-          )}
-          {cart.status === 'pending' && (
-            <TouchableOpacity onPress={() => submitShoppingList()}>
-              <Button text="SAVE ORDER" onPress={submitShoppingList} />
-            </TouchableOpacity>
-          )}
+          <View style={styles.innercontainer}>
+            {cart.items.map((item) => {
+              if (item.upc) {
+                return (
+                  <GroceryItem
+                    upc={item.upc}
+                    aisleNumber={item.aisleNumber}
+                    description={item.description}
+                    image_url={item.image_url}
+                    price={item.price}
+                    clickHandler={toggleCartItem}
+                    quantity={checkForCart(item.upc)}
+                    key={item.upc + 'cart'}
+                  />
+                );
+              }
+            })}
+            {cart.status === 'not submitted' && (
+              <TouchableOpacity
+                onPress={() => submitShoppingList()}
+                style={styles.submitBtn}
+              >
+                <Button text="SUBMIT ORDER" onPress={submitShoppingList} />
+              </TouchableOpacity>
+            )}
+            {cart.status === 'pending' && (
+              <TouchableOpacity
+                onPress={() => submitShoppingList()}
+                style={styles.submitBtn}
+              >
+                <Button text="SAVE ORDER" onPress={submitShoppingList} />
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
-      </View>
+      </ScrollView>
     );
   } else {
     return (
@@ -76,6 +90,9 @@ const Cart = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -96,6 +113,9 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 24,
+  },
+  submitBtn: {
+    marginBottom: 50,
   },
 });
 

@@ -66,11 +66,7 @@ const Home = ({ navigation, route }) => {
           )}
           {!!cart.items.length && (
             <View style={styles.currentOrder}>
-              <Text style={styles.submitted}>
-                {route.params ? route.params.msg : ''}
-              </Text>
               <Text style={styles.orders}>Current order</Text>
-
               <View style={styles.orderStatus}>
                 <View style={styles.orderBadge}>
                   <Text style={styles.orderBadgeText}>
@@ -85,9 +81,15 @@ const Home = ({ navigation, route }) => {
               </View>
               <View style={styles.details}>
                 <Text style={styles.detailsText}>
-                  Items: {cart.items.length}
+                  Items:{' '}
+                  {cart.items.reduce((itemCount, item) => {
+                    itemCount += item.quantity;
+                    return itemCount;
+                  }, 0)}
                 </Text>
-                <Text style={styles.detailsText}>Submitted: May 21, 2020 </Text>
+                <Text style={styles.detailsText}>
+                  Submitted: {cart.submittedAt}
+                </Text>
               </View>
             </View>
           )}
@@ -156,15 +158,14 @@ const styles = StyleSheet.create({
     borderColor: '#59DE7E',
     borderWidth: 2,
     color: '#59DE7E',
-    paddingVertical: 14,
-    paddingHorizontal: 18,
-    marginTop: 15,
-    width: 200,
+    paddingVertical: 7,
+    paddingHorizontal: 10,
+    marginTop: 10,
     alignItems: 'center',
   },
   editProfileText: {
     color: '#59DE7E',
-    fontSize: 26,
+    fontSize: 18,
   },
   orders: {
     fontSize: 26,
@@ -186,7 +187,7 @@ const styles = StyleSheet.create({
   },
   orderBadgeText: {
     color: 'white',
-    fontSize: 26,
+    fontSize: 20,
   },
   currentOrder: {
     alignItems: 'center',
@@ -199,7 +200,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   editBtnText: {
-    fontSize: 24,
+    fontSize: 20,
   },
   details: {
     alignSelf: 'flex-start',

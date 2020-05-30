@@ -11,7 +11,52 @@ import {
 } from 'react-native';
 import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
+// import { AsyncStorage } from 'react-native';
 
+function calcCrow(lat1, lon1, lat2, lon2) {
+  var R = 6371; // km
+  var dLat = toRad(lat2 - lat1);
+  var dLon = toRad(lon2 - lon1);
+  var lat1 = toRad(lat1);
+  var lat2 = toRad(lat2);
+
+  var a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c;
+  return d;
+}
+
+// Converts numeric degrees to radians
+function toRad(Value) {
+  return (Value * Math.PI) / 180;
+}
+
+// const storeData = async () => {
+//   try {
+//     await AsyncStorage.setItem(
+//       '@MySuperStore:key',
+//       JSON.stringify({
+//         lists: ['list1', 'list2', 'list3'],
+//       }),
+//     );
+//   } catch (error) {
+//     // Error saving data
+//   }
+// };
+
+// const retrieveData = async () => {
+//   try {
+//     const value = await AsyncStorage.getItem('@MySuperStore:key');
+//     if (value !== null) {
+//       // We have data!!
+//       console.log(JSON.parse(value));
+//     }
+//   } catch (error) {
+//     // Error retrieving data
+//   }
+// };
 const VolunteerHome = ({ navigation }) => {
   const { volunteer, assignedLists } = useContext(VolunteerContext);
   return (
@@ -29,9 +74,9 @@ const VolunteerHome = ({ navigation }) => {
             <Text style={styles.editProfileText}>EDIT PROFILE</Text>
           </TouchableOpacity>
           <Button
-            text="ADD A NEW LIST"
+            text="ADD A NEW LIST TO SHOP"
             onPress={() => navigation.navigate('SelectList')}
-            customStyles={{ marginTop: 20 }}
+            customStyles={{ marginTop: 20, width: 250 }}
           />
           {!!assignedLists.length && (
             <View style={styles.assignedLists}>
@@ -68,7 +113,11 @@ const VolunteerHome = ({ navigation }) => {
                       <TouchableOpacity style={styles.editBtn}>
                         <Text
                           style={styles.editBtnText}
-                          onPress={() => navigation.navigate('VolunteerTabs')}
+                          onPress={() =>
+                            navigation.navigate('VolunteerTabs', {
+                              selectedList: item,
+                            })
+                          }
                         >
                           SHOP ORDER
                         </Text>
@@ -150,15 +199,14 @@ const styles = StyleSheet.create({
     borderColor: '#59DE7E',
     borderWidth: 2,
     color: '#59DE7E',
-    paddingVertical: 14,
-    paddingHorizontal: 18,
-    marginTop: 15,
-    width: 200,
+    paddingVertical: 7,
+    paddingHorizontal: 10,
+    marginTop: 10,
     alignItems: 'center',
   },
   editProfileText: {
     color: '#59DE7E',
-    fontSize: 26,
+    fontSize: 18,
   },
   orders: {
     fontSize: 26,
@@ -182,7 +230,7 @@ const styles = StyleSheet.create({
   },
   orderBadgeText: {
     color: 'white',
-    fontSize: 26,
+    fontSize: 20,
   },
 
   editBtn: {
@@ -193,7 +241,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   editBtnText: {
-    fontSize: 24,
+    fontSize: 20,
   },
 
   submitted: {

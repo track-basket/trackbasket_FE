@@ -17,9 +17,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     padding: 5,
-    fontSize: 18,
-    marginBottom: 20,
-    height: 40,
+    fontSize: 15,
+    marginBottom: 5,
+    height: 35,
   },
   introtext: {
     fontSize: 30,
@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   label: {
-    fontSize: 18,
-    marginBottom: 5,
+    fontSize: 14,
+    marginBottom: 3,
   },
 });
 
