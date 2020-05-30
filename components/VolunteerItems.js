@@ -117,9 +117,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   bottomBlock: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    // flexDirection: 'row',
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
 });
 
