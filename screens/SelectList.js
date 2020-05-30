@@ -16,7 +16,7 @@ const data = [
     items: [
       {
         upc: '0001111042852',
-        aisleNumber: 7,
+        aisleNumber: 1,
         description: 'Simple Truth Organic™ 2% Reduced Fat Milk',
         image_url:
           'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
@@ -50,6 +50,7 @@ const data = [
         image_url:
           'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
         price: 3.29,
+        quantity: 1,
       },
       {
         upc: '8305729934',
@@ -78,6 +79,7 @@ const data = [
         image_url:
           'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
         price: 3.29,
+        quantity: 1,
       },
       {
         upc: '8305729934',
@@ -106,6 +108,7 @@ const data = [
         image_url:
           'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
         price: 3.29,
+        quantity: 1,
       },
       {
         upc: '8305729934',
@@ -134,6 +137,7 @@ const data = [
         image_url:
           'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
         price: 3.29,
+        quantity: 1,
       },
       {
         upc: '8305729934',
@@ -162,6 +166,7 @@ const data = [
         image_url:
           'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
         price: 3.29,
+        quantity: 1,
       },
       {
         upc: '8305729934',
