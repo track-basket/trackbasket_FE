@@ -2,7 +2,7 @@ import React from 'react';
 import { MaterialIcons } from 'react-native-vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import VolunteerShop from './VolunteerShop';
-import Info from './Info';
+import VolunteerTask from './VolunteerTask';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,8 +20,8 @@ const VolunteerTabs = () => {
         }}
       />
       <Tab.Screen
-        component={Info}
-        name="Info"
+        component={VolunteerTask}
+        name="Volunteer Task"
         options={{
           tabBarLabel: 'Info',
           tabBarIcon: ({ color, size }) => (
