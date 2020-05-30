@@ -55,11 +55,16 @@ const VolunteerHome = ({ navigation }) => {
                       </View>
                     </View>
                     <View style={styles.orderStatus}>
-                      <View style={styles.orderBadge}>
+                      <TouchableOpacity
+                        style={styles.orderBadge}
+                        onPress={() =>
+                          navigation.navigate('Change status', { item })
+                        }
+                      >
                         <Text style={styles.orderBadgeText}>
                           {item.status.toUpperCase()}
                         </Text>
-                      </View>
+                      </TouchableOpacity>
                       <TouchableOpacity style={styles.editBtn}>
                         <Text
                           style={styles.editBtnText}
