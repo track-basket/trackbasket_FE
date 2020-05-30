@@ -49,7 +49,7 @@ const ConfirmList = ({ navigation, route }) => {
         <Button
           text="CANCEL"
           customStyles={{ backgroundColor: '#DE5959', marginTop: 10 }}
-          onPress={() => navigation.navigate('VolunteerHome')}
+          onPress={() => navigation.navigate('SelectList')}
         />
       </View>
     </View>
