@@ -1,5 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, Text, View, Alert } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+  KeyboardAvoidingView,
+} from 'react-native';
 import UserContext from '../user-context';
 import { TextField } from '../components/Form';
 import { Button } from '../components/Button';
@@ -53,7 +59,7 @@ const LoginModal = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.containerInner}>
         {!user && (
           <Text style={styles.introtext}>
@@ -69,7 +75,7 @@ const LoginModal = ({ navigation }) => {
         />
         <TextField
           label="Delivery address"
-          placeholder="Name"
+          placeholder="Delivery address"
           onChangeText={setAddress}
           value={address}
         />
@@ -95,7 +101,7 @@ const LoginModal = ({ navigation }) => {
           <Button onPress={handleSubmit} text="SUBMIT" />
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -113,7 +119,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   introtext: {
-    fontSize: 30,
+    fontSize: 20,
     marginBottom: 20,
     textAlign: 'center',
   },
