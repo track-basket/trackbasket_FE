@@ -1,7 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import VolunteerContext from '../volunteer-context';
-
-import ShoppingListItem from '../components/ShoppingListItem';
 import { Button } from '../components/Button';
 
 import {
@@ -13,38 +11,11 @@ import {
 } from 'react-native';
 import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
-// import { AsyncStorage } from 'react-native';
-
-// const storeData = async () => {
-//   try {
-//     await AsyncStorage.setItem(
-//       '@MySuperStore:key',
-//       JSON.stringify({
-//         lists: ['list1', 'list2', 'list3'],
-//       }),
-//     );
-//   } catch (error) {
-//     // Error saving data
-//   }
-// };
-
-// const retrieveData = async () => {
-//   try {
-//     const value = await AsyncStorage.getItem('@MySuperStore:key');
-//     if (value !== null) {
-//       // We have data!!
-//       console.log(JSON.parse(value));
-//     }
-//   } catch (error) {
-//     // Error retrieving data
-//   }
-// };
 
 const VolunteerHome = ({ navigation }) => {
   const { volunteer, assignedLists } = useContext(VolunteerContext);
-
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={styles.contentContainer}>
       <View style={styles.container}>
         <View style={styles.innerContainer}>
           <Logo />
@@ -67,19 +38,21 @@ const VolunteerHome = ({ navigation }) => {
               <Text style={styles.orders}>Your lists</Text>
               {assignedLists.map((item, i) => {
                 return (
-                  <View style={styles.item}>
+                  <View key={i} style={styles.item}>
                     <View style={styles.details}>
                       <Text
                         style={[styles.detailsText, styles.detailsTextName]}
                       >
                         Name: {item.userDetails.name}
                       </Text>
-                      <Text style={styles.detailsText}>
-                        Items: {item.number_items}
-                      </Text>
-                      <Text style={styles.detailsText}>
-                        Submitted: {item.age}
-                      </Text>
+                      <View style={styles.numAge}>
+                        <Text style={styles.detailsText}>
+                          Submitted: {item.age}
+                        </Text>
+                        <Text style={styles.detailsText}>
+                          Items: {item.number_items}
+                        </Text>
+                      </View>
                     </View>
                     <View style={styles.orderStatus}>
                       <View style={styles.orderBadge}>
@@ -88,7 +61,12 @@ const VolunteerHome = ({ navigation }) => {
                         </Text>
                       </View>
                       <TouchableOpacity style={styles.editBtn}>
-                        <Text style={styles.editBtnText}>SHOP ORDER</Text>
+                        <Text
+                          style={styles.editBtnText}
+                          onPress={() => navigation.navigate('VolunteerTabs')}
+                        >
+                          SHOP ORDER
+                        </Text>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -110,6 +88,9 @@ const VolunteerHome = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    flexGrow: 1,
+  },
   container: {
     alignItems: 'center',
     // justifyContent: 'center',
@@ -186,6 +167,7 @@ const styles = StyleSheet.create({
   orderStatus: {
     flexDirection: 'row',
     marginTop: 10,
+    justifyContent: 'space-between',
   },
   orderBadge: {
     backgroundColor: '#DEE078',
@@ -228,19 +210,25 @@ const styles = StyleSheet.create({
     marginTop: 100,
     marginBottom: 20,
   },
-  details: {
-    alignSelf: 'flex-start',
-  },
   detailsText: {
     fontSize: 18,
     marginTop: 2,
   },
   detailsTextName: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: 'bold',
   },
   item: {
     marginBottom: 35,
+  },
+  volunteerOpportunitiesSubtitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  numAge: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
 
