@@ -23,6 +23,25 @@ const data = [
     number_items: 24,
     lat: '39.716350',
     lng: '-104.932437',
+    status: 'pending',
+    items: [
+      {
+        upc: '0001111042852',
+        aisleNumber: 7,
+        description: 'Simple Truth Organic™ 2% Reduced Fat Milk',
+        image_url:
+          'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
+        price: 3.29,
+      },
+      {
+        upc: '8305729934',
+        aisleNumber: 3,
+        description: "Nature's Own Honey Wheat Sliced Bread",
+        image_url:
+          'https://user-images.githubusercontent.com/4350550/83094330-b3ac3980-a05e-11ea-97fb-9dfb29bc817b.png',
+        price: 2.99,
+      },
+    ],
   },
   {
     listId: 2,
