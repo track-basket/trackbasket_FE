@@ -114,6 +114,7 @@ const App = () => {
         submitOrder,
         assignedLists,
         setAssignedLists,
+        updateListStatus,
         location,
         setLocation,
         allLists,
