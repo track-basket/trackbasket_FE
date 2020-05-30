@@ -15,7 +15,7 @@ const ShoppingListItem = ({ item, navigation }) => {
         style={styles.selectListBtn}
         onPress={() => navigation.navigate('Confirm list', item)}
       >
-        <Text style={styles.selectListBtnText}>SELECT</Text>
+        <Text style={styles.selectListBtnText}>DETAILS</Text>
       </TouchableOpacity>
     </View>
   );
