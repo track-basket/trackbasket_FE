@@ -1,5 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Alert,
+  KeyboardAvoidingView,
+} from 'react-native';
 import VolunteerContext from '../volunteer-context';
 import { TextField } from '../components/Form';
 import { Button } from '../components/Button';
@@ -51,7 +58,7 @@ const VolunteerLoginModal = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.containerInner}>
         {!volunteer && (
           <Text style={styles.introtext}>
@@ -76,7 +83,7 @@ const VolunteerLoginModal = ({ navigation }) => {
           <Button onPress={handleSubmit} text="SUBMIT" />
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -94,7 +101,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   introtext: {
-    fontSize: 30,
+    fontSize: 20,
     marginBottom: 20,
     textAlign: 'center',
   },

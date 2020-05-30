@@ -13,6 +13,7 @@ import VolunteerTabs from './screens/VolunteerTabs';
 import { UserProvider } from './user-context';
 import { VolunteerProvider } from './volunteer-context';
 import * as Location from 'expo-location';
+import moment from 'moment';
 
 const RootStack = createStackNavigator();
 const MainStack = createStackNavigator();
@@ -100,7 +101,11 @@ const App = () => {
   };
   const setNewUser = (user) => setUser(user);
   const submitOrder = () => {
-    setCart({ items: cart.items, status: 'pending' });
+    setCart({
+      items: cart.items,
+      status: 'pending',
+      submittedAt: moment().format('YYYY-MM-DD'),
+    });
   };
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
