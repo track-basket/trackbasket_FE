@@ -112,6 +112,7 @@ const App = () => {
   const [installationId, setInstallationId] = useState(null);
   const [volunteer, setVolunteer] = useState(null);
   const [assignedLists, setAssignedLists] = useState([]);
+  const [singleList, findSingleList] = useState(null);
   const [allLists, setAllLists] = useState(null);
 
   const retrieveData = async () => {
@@ -158,6 +159,8 @@ const App = () => {
         setLocation,
         allLists,
         setAllLists,
+        findSingleList,
+        singleList,
       }}
     >
       <UserProvider
