@@ -9,6 +9,7 @@ import ChangeStatusModal from './screens/ChangeStatusModal';
 import ConfirmDelete from './screens/ConfirmDelete';
 import ConfirmList from './screens/ConfirmList';
 import SelectList from './screens/SelectList';
+import CompletedModal from './screens/CompletedModal';
 import VolunteerLoginModal from './screens/VolunteerLoginModal';
 import AtRiskTabs from './screens/AtRiskTabs';
 import VolunteerTabs from './screens/VolunteerTabs';
@@ -195,6 +196,11 @@ const App = () => {
             <RootStack.Screen
               name="Change status"
               component={ChangeStatusModal}
+            />
+            <MainStack.Screen
+              name="CompletedModal"
+              component={CompletedModal}
+              options={{ title: '' }}
             />
             <RootStack.Screen name="Confirm delete" component={ConfirmDelete} />
           </RootStack.Navigator>
