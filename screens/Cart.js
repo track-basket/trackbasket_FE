@@ -26,7 +26,6 @@ const Cart = ({ navigation, route }) => {
   };
   const checkForCart = (upc) => {
     if (cart.items.find((item) => item.upc === upc)) {
-      console.log(cart.items.find((item) => item.upc === upc).quantity);
       return cart.items.find((item) => item.upc === upc).quantity;
     } else {
       return 1;

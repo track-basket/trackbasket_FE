@@ -11,7 +11,6 @@ const VolunteerShop = () => {
       return a.aisleNumber - b.aisleNumber;
     }),
   );
-  console.log('c', singleList);
 
   return (
     <View style={styles.container}>

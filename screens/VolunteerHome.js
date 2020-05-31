@@ -102,7 +102,7 @@ const VolunteerHome = ({ navigation }) => {
                     <View style={styles.orderStatus}>
                       <StatusBadge
                         onPress={() =>
-                          navigation.navigate('Change Status', { item })
+                          navigation.navigate('Change tatus', { item })
                         }
                         status={item.status}
                       />
