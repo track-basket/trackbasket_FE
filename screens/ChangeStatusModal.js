@@ -27,7 +27,6 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
         <View style={styles.statusContainer}>
           <StatusBadge
             status="pending"
-            // customStyles={{ marginTop: 10 }}
             highlighted={item.status === 'pending'}
             onPress={() => {
               handlePress('pending');
@@ -37,7 +36,6 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
         <View style={styles.statusContainer}>
           <StatusBadge
             status="assigned"
-            // customStyles={{ marginTop: 10 }}
             highlighted={item.status === 'assigned'}
             onPress={() => {
               handlePress('assigned');
@@ -47,7 +45,6 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
         <View style={styles.statusContainer}>
           <StatusBadge
             status="at store"
-            // customStyles={{ marginTop: 10 }}
             highlighted={item.status === 'at store'}
             onPress={() => {
               handlePress('at store');
@@ -57,7 +54,6 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
         <View style={styles.statusContainer}>
           <StatusBadge
             status="on way"
-            // customStyles={{ marginTop: 10 }}
             highlighted={item.status === 'on way'}
             onPress={() => {
               handlePress('on way');
@@ -67,7 +63,6 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
         <View style={styles.statusContainer}>
           <StatusBadge
             status="delivered"
-            // customStyles={{ marginTop: 10 }}
             highlighted={item.status === 'delivered'}
             onPress={() => {
               handlePress('delivered');
