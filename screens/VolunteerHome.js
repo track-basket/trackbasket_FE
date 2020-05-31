@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   detailsTextName: {
-    fontSize: 25,
+    fontSize: 20,
   },
   item: {
     marginBottom: 35,
