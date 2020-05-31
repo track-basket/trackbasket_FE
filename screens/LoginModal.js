@@ -57,23 +57,6 @@ const LoginModal = ({ navigation }) => {
       return user[type];
     }
   }
-  const formatNumber = () => {
-    var cleaned = ('' + text).replace(/\D/g, '');
-    var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
-    if (match) {
-      var intlCode = match[1] ? '+1 ' : '',
-        number = [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join(
-          '',
-        );
-
-      this.setState({
-        phoneNum: number,
-      });
-
-      return;
-    }
-  };
-
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.containerInner}>
@@ -83,7 +66,7 @@ const LoginModal = ({ navigation }) => {
           </Text>
         )}
         {user && <Text style={styles.introtext}>Update your info</Text>}
-        <Text>* All Fields Required</Text>
+        <Text style={styles.h2} > * All Fields Required</Text>
         <TextField
           label="Name"
           placeholder="Name"
@@ -91,8 +74,8 @@ const LoginModal = ({ navigation }) => {
           value={name}
         />
         <TextField
-          label="Delivery address"
-          placeholder="Delivery address"
+          label="Delivery Address"
+          placeholder="Delivery Address"
           onChangeText={setAddress}
           value={address}
         />
@@ -103,19 +86,19 @@ const LoginModal = ({ navigation }) => {
           value={city}
         />
         <TextField
-          label="Zip code"
+          label="Zip Code"
           placeholder="Zip Code"
           onChangeText={setZip}
           value={zip}
         />
         <TextField
-          label="Phone number"
-          placeholder="Phone number"
+          label="Phone Number"
+          placeholder="Phone Number"
           onChangeText={setPhone}
           value={phone}
         />
         <View style={styles.btnContainer}>
-          <Button onPress={handleSubmit} text="SUBMIT" />
+          <Button onPress={handleSubmit} text="Submit" />
         </View>
       </View>
     </KeyboardAvoidingView>
@@ -142,6 +125,11 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     marginTop: 10,
+  },
+  h2: {
+    color: 'red',
+    fontSize: 16,
+    fontFamily: 'HelveticaNeue-BoldItalic',
   },
 });
 
