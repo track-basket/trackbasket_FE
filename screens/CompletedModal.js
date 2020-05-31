@@ -11,7 +11,7 @@ const CompletedModal = ({ navigation: { goBack } }) => {
           <MaterialIcons name="done" color="green" size={120} />
         </View>
         <Text style={styles.introtext}>
-          You have acquired all items for this list!
+          You have shopped all items on this list!
         </Text>
         <Button
           text="CLOSE"
