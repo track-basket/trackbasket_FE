@@ -9,21 +9,28 @@ import VolunteerTask from './VolunteerTask';
 const Tab = createBottomTabNavigator();
 
 const VolunteerTabs = ({ navigation, route }) => {
-  const { singleList, assignedLists } = useContext(VolunteerContext);
+  const { singleList, assignedLists, setAssignedLists } = useContext(
+    VolunteerContext,
+  );
 
   const list = assignedLists[route.params.params.selectedList];
-  console.log(list);
-
-  let itemsLeft = list.items.filter(
-    (item) => !item.acquired && !item.unavailable,
-  );
-  let totalItemsLeft = itemsLeft.reduce((acc, el) => {
-    acc += el.quantity;
-    return acc;
-  }, 0);
-  if (!totalItemsLeft) {
-    navigation.navigate('CompletedModal');
+  let totalItemsLeft;
+  if (list) {
+    let itemsLeft = list.items.filter(
+      (item) => !item.acquired && !item.unavailable,
+    );
+    totalItemsLeft = itemsLeft.reduce((acc, el) => {
+      acc += el.quantity;
+      return acc;
+    }, 0);
+    if (!totalItemsLeft && !list.completed) {
+      navigation.navigate('CompletedModal');
+      const items = [...assignedLists];
+      items[route.params.params.selectedList].completed = true;
+      setAssignedLists(items);
+    }
   }
+
   function IconWithBadge({ name, badgeCount, color, size }) {
     return (
       <View style={{ width: 24, height: 24, margin: 5 }}>
@@ -66,11 +73,7 @@ const VolunteerTabs = ({ navigation, route }) => {
         options={{
           tabBarLabel: 'Shop',
           tabBarIcon: ({ color, size }) => (
-            <HomeIconWithBadge
-              name="shopping-basket"
-              color={color}
-              size={size}
-            />
+            <HomeIconWithBadge name="shopping-cart" color={color} size={size} />
           ),
         }}
       />
@@ -80,7 +83,7 @@ const VolunteerTabs = ({ navigation, route }) => {
         options={{
           tabBarLabel: 'Info',
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="shopping-cart" color={color} size={size} />
+            <MaterialIcons name="info" color={color} size={size} />
           ),
         }}
       />
