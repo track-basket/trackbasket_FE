@@ -34,7 +34,6 @@ const VolunteerItems = ({
   if (unavailable) {
     highlightedUnavailable = { borderColor: 'gray', borderWidth: 1 };
   }
-  console.log(acquired);
   return (
     <View style={styles.container}>
       <View style={styles.imgDescriptionContainer}>
