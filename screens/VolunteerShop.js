@@ -26,7 +26,7 @@ const VolunteerShop = ({ route }) => {
   if (!assignedLists.length) {
     return (
       <View>
-        <Text>no lists</Text>
+        <Text>No lists</Text>
       </View>
     );
   }
