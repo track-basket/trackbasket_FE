@@ -6,6 +6,7 @@ import Home from './screens/Home';
 import VolunteerHome from './screens/VolunteerHome';
 import LoginModal from './screens/LoginModal';
 import ChangeStatusModal from './screens/ChangeStatusModal';
+import ConfirmDelete from './screens/ConfirmDelete';
 import ConfirmList from './screens/ConfirmList';
 import SelectList from './screens/SelectList';
 import VolunteerLoginModal from './screens/VolunteerLoginModal';
@@ -195,6 +196,7 @@ const App = () => {
               name="Change status"
               component={ChangeStatusModal}
             />
+            <RootStack.Screen name="Confirm delete" component={ConfirmDelete} />
           </RootStack.Navigator>
         </NavigationContainer>
       </UserProvider>
