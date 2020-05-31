@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import VolunteerContext from '../volunteer-context';
 import { Button } from '../components/Button';
-
+import StatusBadge from '../components/StatusBadge';
 import {
   StyleSheet,
   Text,
@@ -100,16 +100,12 @@ const VolunteerHome = ({ navigation }) => {
                       </View>
                     </View>
                     <View style={styles.orderStatus}>
-                      <TouchableOpacity
-                        style={styles.orderBadge}
+                      <StatusBadge
                         onPress={() =>
                           navigation.navigate('Change status', { item })
                         }
-                      >
-                        <Text style={styles.orderBadgeText}>
-                          {item.status.toUpperCase()}
-                        </Text>
-                      </TouchableOpacity>
+                        status={item.status}
+                      />
                       <TouchableOpacity style={styles.editBtn}>
                         <Text
                           style={styles.editBtnText}
