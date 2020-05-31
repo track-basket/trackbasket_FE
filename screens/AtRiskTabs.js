@@ -57,34 +57,28 @@ const AtRiskTabs = () => {
   }
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen
-          component={Shop}
-          name="Shop"
-          options={{
-            tabBarLabel: 'Shop',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialIcons name="shopping-basket" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          component={Cart}
-          name="Cart"
-          options={{
-            tabBarLabel: 'Cart',
-            tabBarIcon: ({ color, size }) => (
-              <HomeIconWithBadge
-                name="shopping-cart"
-                color={color}
-                size={size}
-              />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <Tab.Navigator>
+      <Tab.Screen
+        component={Shop}
+        name="Shop"
+        options={{
+          tabBarLabel: 'Shop',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="shopping-basket" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        component={Cart}
+        name="Cart"
+        options={{
+          tabBarLabel: 'Cart',
+          tabBarIcon: ({ color, size }) => (
+            <HomeIconWithBadge name="shopping-cart" color={color} size={size} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 
