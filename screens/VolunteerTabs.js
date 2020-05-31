@@ -21,6 +21,9 @@ const VolunteerTabs = ({ navigation, route }) => {
     acc += el.quantity;
     return acc;
   }, 0);
+  if (!totalItemsLeft) {
+    navigation.navigate('CompletedModal');
+  }
   function IconWithBadge({ name, badgeCount, color, size }) {
     return (
       <View style={{ width: 24, height: 24, margin: 5 }}>
