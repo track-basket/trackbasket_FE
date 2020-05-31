@@ -111,7 +111,8 @@ const VolunteerHome = ({ navigation }) => {
                           style={styles.editBtnText}
                           onPress={() =>
                             navigation.navigate('VolunteerTabs', {
-                              selectedList: item,
+                              screen: 'Volunteer Shop',
+                              params: { selectedList: i },
                             })
                           }
                         >
