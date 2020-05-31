@@ -5,6 +5,7 @@ import {
   View,
   Alert,
   KeyboardAvoidingView,
+  TextInput,
 } from 'react-native';
 import UserContext from '../user-context';
 import { TextField } from '../components/Form';
@@ -66,7 +67,7 @@ const LoginModal = ({ navigation }) => {
           </Text>
         )}
         {user && <Text style={styles.introtext}>Update your info</Text>}
-        <Text style={styles.h2} > * All Fields Required</Text>
+        <Text style={styles.h2}> * All Fields Required</Text>
         <TextField
           label="Name"
           placeholder="Name"
@@ -110,20 +111,23 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
+    justifyContent: 'flex-start',
     borderWidth: 1,
   },
   containerInner: {
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     width: 300,
     marginTop: 70,
+    marginBottom: 50,
   },
   introtext: {
     fontSize: 20,
-    marginBottom: 20,
+    marginBottom: 30,
     textAlign: 'center',
     fontFamily: 'HelveticaNeue-Bold',
   },
   btnContainer: {
+    justifyContent: 'flex-end',
     marginTop: 10,
   },
   h2: {
