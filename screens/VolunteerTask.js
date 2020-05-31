@@ -66,34 +66,38 @@ const VolunteerTask = ({ navigation }) => {
                     item: singleList.selectedList,
                   })
                 }
-                customStyles={{ borderWidth: 0 }}
+                customStyles={{
+                  borderWidth: 0,
+                }}
               />
             </View>
-            <Button
-              text="UPDATE STATUS"
-              customTextStyles={{ fontSize: 20, color: 'black' }}
-              customStyles={{ backgroundColor: 'lightgray', width: 250 }}
-              onPress={() =>
-                navigation.navigate('Change status', {
-                  item: singleList.selectedList,
-                })
-              }
-            />
+            <View style={styles.buttonArea}>
+              <Button
+                text="UPDATE STATUS"
+                customTextStyles={{ fontSize: 20, color: 'black' }}
+                customStyles={{ backgroundColor: 'lightgray', width: 250 }}
+                onPress={() =>
+                  navigation.navigate('Change Status', {
+                    item: singleList.selectedList,
+                  })
+                }
+              />
+            </View>
           </View>
-        </View>
 
-        <Button
-          text="ABANDON TASK"
-          // style={styles.redButton}
-          // onPress={() => handlePress('pending')}
-          onPress={() =>
-            navigation.navigate('Confirm delete', {
-              item: singleList.selectedList,
-            })
-          }
-          customStyles={{ backgroundColor: 'red', width: 250 }}
-          customTextStyles={{ fontSize: 20 }}
-        />
+          <Button
+            text="ABANDON TASK"
+            // style={styles.redButton}
+            // onPress={() => handlePress('pending')}
+            onPress={() =>
+              navigation.navigate('Confirm delete', {
+                item: singleList.selectedList,
+              })
+            }
+            customStyles={{ backgroundColor: 'red', width: 250 }}
+            customTextStyles={{ fontSize: 20 }}
+          />
+        </View>
       </View>
     </View>
   );
@@ -154,6 +158,10 @@ const styles = StyleSheet.create({
   },
   details: {
     marginBottom: -20,
+  },
+  buttonArea: {
+    margin: 30,
+    paddingTop: 30,
   },
 });
 
