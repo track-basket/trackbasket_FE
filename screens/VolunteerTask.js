@@ -90,7 +90,7 @@ const VolunteerTask = ({ navigation }) => {
             // style={styles.redButton}
             // onPress={() => handlePress('pending')}
             onPress={() =>
-              navigation.navigate('Confirm delete', {
+              navigation.navigate('Confirm Delete', {
                 item: singleList.selectedList,
               })
             }
