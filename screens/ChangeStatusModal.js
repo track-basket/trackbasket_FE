@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import StatusBadge from '../components/StatusBadge';
@@ -9,7 +10,6 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
 
   const handlePress = (status) => {
     let lists = [...assignedLists];
-    console.log(lists);
     let selectedList = lists.find((list) => {
       return list.listId === item.listId;
     });

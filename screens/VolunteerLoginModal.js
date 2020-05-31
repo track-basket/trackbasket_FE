@@ -66,6 +66,8 @@ const VolunteerLoginModal = ({ navigation }) => {
           </Text>
         )}
         {volunteer && <Text style={styles.introtext}>Update your info</Text>}
+        <Text style={styles.h2}> * All Fields Required</Text>
+
         <TextField
           label="Name"
           placeholder="Name"
@@ -92,21 +94,28 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
     borderWidth: 1,
   },
   containerInner: {
     justifyContent: 'center',
     width: 300,
+    marginTop: 70,
     marginBottom: 50,
   },
   introtext: {
     fontSize: 20,
-    marginBottom: 20,
+    marginBottom: 30,
     textAlign: 'center',
+    fontFamily: 'HelveticaNeue-Bold',
   },
   btnContainer: {
     marginTop: 10,
+  },
+  h2: {
+    color: 'red',
+    fontSize: 16,
+    fontFamily: 'HelveticaNeue-BoldItalic',
+    marginBottom: 20,
   },
 });
 

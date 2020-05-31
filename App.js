@@ -187,14 +187,14 @@ const App = () => {
               component={MainStackScreen}
               options={{ headerShown: false }}
             />
-            <RootStack.Screen name="Your profile" component={LoginModal} />
+            <RootStack.Screen name="Your Profile" component={LoginModal} />
             <RootStack.Screen
-              name="Volunteer profile"
+              name="Volunteer Profile"
               component={VolunteerLoginModal}
             />
-            <RootStack.Screen name="Confirm list" component={ConfirmList} />
+            <RootStack.Screen name="Confirm List" component={ConfirmList} />
             <RootStack.Screen
-              name="Change status"
+              name="Change Status"
               component={ChangeStatusModal}
             />
             <MainStack.Screen
@@ -202,7 +202,7 @@ const App = () => {
               component={CompletedModal}
               options={{ title: '' }}
             />
-            <RootStack.Screen name="Confirm delete" component={ConfirmDelete} />
+            <RootStack.Screen name="Confirm Delete" component={ConfirmDelete} />
           </RootStack.Navigator>
         </NavigationContainer>
       </UserProvider>

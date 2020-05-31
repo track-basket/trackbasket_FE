@@ -7,12 +7,10 @@ const ConfirmDelete = ({ navigation, route }) => {
   const { item } = route.params;
   const { assignedLists, setAssignedLists } = useContext(VolunteerContext);
   const handlePress = (status) => {
-    console.log(status);
     let lists = [...assignedLists];
     let filteredLists = lists.filter((list) => {
-      return list.id !== item.id;
+      return list.listId !== item.listId;
     });
-
     setAssignedLists(filteredLists);
     navigation.navigate('VolunteerHome');
   };

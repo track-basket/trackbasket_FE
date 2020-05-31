@@ -5,6 +5,7 @@ import {
   View,
   Alert,
   KeyboardAvoidingView,
+  TextInput,
 } from 'react-native';
 import UserContext from '../user-context';
 import { TextField } from '../components/Form';
@@ -57,7 +58,6 @@ const LoginModal = ({ navigation }) => {
       return user[type];
     }
   }
-
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.containerInner}>
@@ -67,6 +67,7 @@ const LoginModal = ({ navigation }) => {
           </Text>
         )}
         {user && <Text style={styles.introtext}>Update your info</Text>}
+        <Text style={styles.h2}> * All Fields Required</Text>
         <TextField
           label="Name"
           placeholder="Name"
@@ -74,8 +75,8 @@ const LoginModal = ({ navigation }) => {
           value={name}
         />
         <TextField
-          label="Delivery address"
-          placeholder="Delivery address"
+          label="Delivery Address"
+          placeholder="Delivery Address"
           onChangeText={setAddress}
           value={address}
         />
@@ -86,19 +87,19 @@ const LoginModal = ({ navigation }) => {
           value={city}
         />
         <TextField
-          label="Zip code"
+          label="Zip Code"
           placeholder="Zip Code"
           onChangeText={setZip}
           value={zip}
         />
         <TextField
-          label="Phone number"
-          placeholder="Phone number"
+          label="Phone Number"
+          placeholder="Phone Number"
           onChangeText={setPhone}
           value={phone}
         />
         <View style={styles.btnContainer}>
-          <Button onPress={handleSubmit} text="SUBMIT" />
+          <Button onPress={handleSubmit} text="Submit" />
         </View>
       </View>
     </KeyboardAvoidingView>
@@ -110,21 +111,29 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     borderWidth: 1,
   },
   containerInner: {
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     width: 300,
+    marginTop: 70,
     marginBottom: 50,
   },
   introtext: {
     fontSize: 20,
-    marginBottom: 20,
+    marginBottom: 30,
     textAlign: 'center',
+    fontFamily: 'HelveticaNeue-Bold',
   },
   btnContainer: {
+    justifyContent: 'flex-end',
     marginTop: 10,
+  },
+  h2: {
+    color: 'red',
+    fontSize: 16,
+    fontFamily: 'HelveticaNeue-BoldItalic',
   },
 });
 

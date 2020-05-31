@@ -68,10 +68,14 @@ const Shop = () => {
     }
   };
   const checkForCart = (upc) => {
-    if (cart.items.find((item) => item.upc === upc)) {
-      return cart.items.find((item) => item.upc === upc).quantity;
+    if (cart) {
+      if (cart.items.find((item) => item.upc === upc)) {
+        return cart.items.find((item) => item.upc === upc).quantity;
+      } else {
+        return 1;
+      }
     } else {
-      return 1;
+      return '';
     }
   };
   return (

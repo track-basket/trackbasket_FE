@@ -26,7 +26,6 @@ const Cart = ({ navigation, route }) => {
   };
   const checkForCart = (upc) => {
     if (cart.items.find((item) => item.upc === upc)) {
-      console.log(cart.items.find((item) => item.upc === upc).quantity);
       return cart.items.find((item) => item.upc === upc).quantity;
     } else {
       return 1;
@@ -37,11 +36,11 @@ const Cart = ({ navigation, route }) => {
     submitOrder();
     navigation.navigate('Home', { msg: 'Your order has been submitted!' });
   };
-  if (cart.items.length > 0) {
+  if (cart && cart.items.length > 0) {
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.container}>
-          <Text style={styles.header}>Your cart</Text>
+          <Text style={styles.header}>Your Cart</Text>
 
           <View style={styles.innercontainer}>
             {cart.items.map((item) => {
@@ -65,7 +64,11 @@ const Cart = ({ navigation, route }) => {
                 onPress={() => submitShoppingList()}
                 style={styles.submitBtn}
               >
-                <Button text="SUBMIT ORDER" onPress={submitShoppingList} />
+                <Button
+                  style={styles.btnText}
+                  text="SUBMIT ORDER"
+                  onPress={submitShoppingList}
+                />
               </TouchableOpacity>
             )}
             {cart.status === 'pending' && (
@@ -116,6 +119,7 @@ const styles = StyleSheet.create({
   },
   submitBtn: {
     marginBottom: 50,
+    fontFamily: 'HelveticaNeue-Bold',
   },
 });
 

@@ -67,7 +67,6 @@ const VolunteerTask = ({ navigation }) => {
                     item: selectedList,
                   })
                 }
-                customStyles={{ borderWidth: 0 }}
               />
             </View>
             <Button
@@ -81,14 +80,13 @@ const VolunteerTask = ({ navigation }) => {
               }
             />
           </View>
-        </View>
 
         <Button
           text="ABANDON TASK"
           // style={styles.redButton}
           // onPress={() => handlePress('pending')}
           onPress={() =>
-            navigation.navigate('Confirm delete', {
+            navigation.navigate('Confirm Delete', {
               item: selected.selectedList,
             })
           }
@@ -156,6 +154,10 @@ const styles = StyleSheet.create({
   },
   details: {
     marginBottom: -20,
+  },
+  buttonArea: {
+    margin: 30,
+    paddingTop: 30,
   },
 });
 

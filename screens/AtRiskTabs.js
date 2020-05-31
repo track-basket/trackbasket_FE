@@ -2,7 +2,7 @@ import { MaterialIcons } from 'react-native-vector-icons';
 import React, { useContext } from 'react';
 import { Text, View } from 'react-native';
 import UserContext from '../user-context';
-
+import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Cart from './Cart';
 import Shop from './Shop';
@@ -41,15 +41,19 @@ const AtRiskTabs = () => {
 
   function HomeIconWithBadge(props) {
     // You should pass down the badgeCount in some other ways like React Context API, Redux, MobX or event emitters.
-    return (
-      <IconWithBadge
-        {...props}
-        badgeCount={cart.items.reduce((itemCount, item) => {
-          itemCount += item.quantity;
-          return itemCount;
-        }, 0)}
-      />
-    );
+    if (cart) {
+      return (
+        <IconWithBadge
+          {...props}
+          badgeCount={cart.items.reduce((itemCount, item) => {
+            itemCount += item.quantity;
+            return itemCount;
+          }, 0)}
+        />
+      );
+    } else {
+      return '';
+    }
   }
 
   return (

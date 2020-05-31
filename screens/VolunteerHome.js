@@ -68,7 +68,7 @@ const VolunteerHome = ({ navigation }) => {
             <TimeOfDay />, {volunteer.name}
           </Text>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Volunteer profile')}
+            onPress={() => navigation.navigate('Volunteer Profile')}
             style={styles.editProfile}
           >
             <Text style={styles.editProfileText}>EDIT PROFILE</Text>
@@ -102,7 +102,7 @@ const VolunteerHome = ({ navigation }) => {
                     <View style={styles.orderStatus}>
                       <StatusBadge
                         onPress={() =>
-                          navigation.navigate('Change status', { item })
+                          navigation.navigate('Change tatus', { item })
                         }
                         status={item.status}
                       />
