@@ -16,7 +16,7 @@ const GroceryItem = ({
   const { cart, updateCart } = useContext(UserContext);
   const [itemCount, setItemCount] = useState(quantity);
   const determineIfInCart = () => {
-    if (cart.items.find((item) => item.upc === upc)) {
+    if (cart && cart.items.find((item) => item.upc === upc)) {
       return quantity;
     } else {
       return itemCount;
@@ -39,7 +39,7 @@ const GroceryItem = ({
     }
   };
   const getButtonText = () => {
-    if (cart.items.find((item) => item.upc === upc)) {
+    if (cart && cart.items.find((item) => item.upc === upc)) {
       return 'Remove from cart';
     } else {
       return 'Add to cart';

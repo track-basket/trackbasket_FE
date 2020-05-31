@@ -37,7 +37,7 @@ const Cart = ({ navigation, route }) => {
     submitOrder();
     navigation.navigate('Home', { msg: 'Your order has been submitted!' });
   };
-  if (cart.items.length > 0) {
+  if (cart && cart.items.length > 0) {
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.container}>
