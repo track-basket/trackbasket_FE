@@ -1,6 +1,12 @@
 /* eslint-disable no-shadow */
 import React, { useState, useContext } from 'react';
-import { StyleSheet, View, TextInput, ScrollView } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  ScrollView,
+  SectionList,
+} from 'react-native';
 import VolunteerContext from '../volunteer-context';
 import VolunteerItems from '../components/VolunteerItems';
 
@@ -12,27 +18,38 @@ const VolunteerShop = () => {
     }),
   );
   console.log('c', singleList);
+  const selectedList = singleList.selectedList.items;
+  console.log(selectedList);
+  const aisles = selectedList.map((item) => item.aisleNumber);
+  const DATA = aisles.map((aisle) => {
+    return {
+      title: 'Aisle ' + aisle,
+      data: selectedList.filter((item) => item.aisleNumber === aisle),
+    };
+  });
+  console.log(DATA);
 
   return (
     <View style={styles.container}>
       <View style={styles.innercontainer}>
         {!!singleList &&
           singleList.selectedList.items.map((item) => (
-            <VolunteerItems
-              aisleNumber={item.aisleNumber}
-              description={item.description}
-              image={item.image_url}
-              price={item.price}
-              upc={item.upc}
-              quantity={item.quantity}
-              key={item.upc}
-            />
-          ))}
-        {/* <ScrollView>
-            {assignedLists.items.map((item) => {
-              return item.upc;
-            })}
-          </ScrollView> */}
+            
+        //     <VolunteerItems
+        //       aisleNumber={item.aisleNumber}
+        //       description={item.description}
+        //       image={item.image_url}
+        //       price={item.price}
+        //       upc={item.upc}
+        //       quantity={item.quantity}
+        //       key={item.upc}
+        //     />
+        //   ))}
+        // {/* <ScrollView>
+        //     {assignedLists.items.map((item) => {
+        //       return item.upc;
+        //     })}
+        //   </ScrollView> */}
       </View>
     </View>
   );
