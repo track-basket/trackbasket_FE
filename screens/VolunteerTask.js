@@ -28,13 +28,13 @@ const VolunteerTask = ({ navigation }) => {
             <View style={styles.infoField}>
               <Text style={styles.detailsKind}>
                 <Text style={styles.infoKind}>Name: </Text>
-                Joe Smith
+                {singleList.selectedList.userDetails.name}
               </Text>
             </View>
             <View style={styles.infoField}>
               <Text style={styles.detailsKind}>
                 <Text style={styles.infoKind}>Delivery Address: </Text>
-                123 Main Street, Denver CO 80203
+                {singleList.selectedList.userDetails.address}
               </Text>
             </View>
             <View style={styles.infoField}>
@@ -46,19 +46,19 @@ const VolunteerTask = ({ navigation }) => {
             <View style={styles.infoField}>
               <Text style={styles.detailsKind}>
                 <Text style={styles.infoKind}>Ordered at: </Text>
-                1:21 PM May 21
+                {singleList.selectedList.created_at}
               </Text>
             </View>
             <View style={styles.infoField}>
               <Text style={styles.detailsKind}>
                 <Text style={styles.infoKind}>Items: </Text>
-                29
+                {singleList.selectedList.number_items}
               </Text>
             </View>
           </View>
           <View>
             <View style={styles.statusRow}>
-              <Text style={styles.statusText}>STATUS</Text>
+              <Text style={[styles.infoKind, styles.detailsKind]}>Status:</Text>
               <StatusBadge
                 status={singleList.selectedList.status}
                 onPress={() =>
@@ -71,7 +71,7 @@ const VolunteerTask = ({ navigation }) => {
             </View>
             <Button
               text="UPDATE STATUS"
-              customTextStyles={{ fontSize: 20 }}
+              customTextStyles={{ fontSize: 20, color: 'black' }}
               customStyles={{ backgroundColor: 'lightgray', width: 250 }}
               onPress={() =>
                 navigation.navigate('Change status', {
@@ -143,13 +143,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   statusRow: {
-    // flexDirection: 'row',
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    marginBottom: 10,
+    // justifyContent: 'center',
   },
   statusText: {
     fontSize: 16,
     marginBottom: -4,
+  },
+  details: {
+    marginBottom: -20,
   },
 });
 
