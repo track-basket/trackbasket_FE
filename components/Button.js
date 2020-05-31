@@ -14,10 +14,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
     alignItems: 'center',
     alignSelf: 'center',
-    width: 200,
+    width: 220,
   },
   submitBtnText: {
     fontSize: 24,
+    fontFamily: 'HelveticaNeue-Bold',
     color: 'white',
     textAlign: 'center',
   },
