@@ -8,10 +8,10 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
   const item = route.params.item;
 
   const handlePress = (status) => {
-    item.status = status;
     let lists = [...assignedLists];
+    console.log(lists);
     let selectedList = lists.find((list) => {
-      return list.id === item.id;
+      return list.listId === item.listId;
     });
     let index = assignedLists.indexOf(selectedList);
     lists[index].status = status;
