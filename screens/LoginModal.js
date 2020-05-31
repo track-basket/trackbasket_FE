@@ -57,6 +57,22 @@ const LoginModal = ({ navigation }) => {
       return user[type];
     }
   }
+  const formatNumber = () => {
+    var cleaned = ('' + text).replace(/\D/g, '');
+    var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      var intlCode = match[1] ? '+1 ' : '',
+        number = [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join(
+          '',
+        );
+
+      this.setState({
+        phoneNum: number,
+      });
+
+      return;
+    }
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -67,6 +83,7 @@ const LoginModal = ({ navigation }) => {
           </Text>
         )}
         {user && <Text style={styles.introtext}>Update your info</Text>}
+        <Text>* All Fields Required</Text>
         <TextField
           label="Name"
           placeholder="Name"
@@ -110,18 +127,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
     borderWidth: 1,
   },
   containerInner: {
     justifyContent: 'center',
     width: 300,
-    marginBottom: 50,
+    marginTop: 70,
   },
   introtext: {
     fontSize: 20,
     marginBottom: 20,
     textAlign: 'center',
+    fontFamily: 'HelveticaNeue-Bold',
   },
   btnContainer: {
     marginTop: 10,
