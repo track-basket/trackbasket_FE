@@ -13,7 +13,7 @@ const ShoppingListItem = ({ item, navigation }) => {
       </View>
       <TouchableOpacity
         style={styles.selectListBtn}
-        onPress={() => navigation.navigate('Confirm list', item)}
+        onPress={() => navigation.navigate('Confirm List', item)}
       >
         <Text style={styles.selectListBtnText}>DETAILS</Text>
       </TouchableOpacity>
