@@ -23,6 +23,14 @@ const VolunteerShop = ({ route }) => {
       return a.aisleNumber - b.aisleNumber;
     }),
   );
+  if (!assignedLists.length) {
+    return (
+      <View>
+        <Text>no lists</Text>
+      </View>
+    );
+  }
+
   let singleListIndex = route.params.selectedList;
   setSingleList(singleListIndex);
   const selectedList = assignedLists[singleListIndex].items;
