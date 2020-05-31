@@ -19,6 +19,13 @@ const VolunteerTask = ({ navigation }) => {
     VolunteerContext,
   );
   const selectedList = assignedLists[singleList];
+  if (!assignedLists.length) {
+    return (
+      <View>
+        <Text>No lists</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -71,28 +78,36 @@ const VolunteerTask = ({ navigation }) => {
             </View>
             <Button
               text="UPDATE STATUS"
-              customTextStyles={{ fontSize: 20, color: 'black' }}
-              customStyles={{ backgroundColor: 'lightgray', width: 250 }}
+              customTextStyles={{
+                fontSize: 20,
+                color: 'black',
+              }}
+              customStyles={{
+                backgroundColor: 'lightgray',
+                width: 250,
+                marginVertical: 20,
+              }}
               onPress={() =>
-                navigation.navigate('Change status', {
+                navigation.navigate('Change Status', {
                   item: selectedList,
                 })
               }
             />
           </View>
 
-        <Button
-          text="ABANDON TASK"
-          // style={styles.redButton}
-          // onPress={() => handlePress('pending')}
-          onPress={() =>
-            navigation.navigate('Confirm Delete', {
-              item: selected.selectedList,
-            })
-          }
-          customStyles={{ backgroundColor: 'red', width: 250 }}
-          customTextStyles={{ fontSize: 20 }}
-        />
+          <Button
+            text="ABANDON TASK"
+            // style={styles.redButton}
+            // onPress={() => handlePress('pending')}
+            onPress={() =>
+              navigation.navigate('Confirm Delete', {
+                item: selectedList,
+              })
+            }
+            customStyles={{ backgroundColor: 'red', width: 250 }}
+            customTextStyles={{ fontSize: 20 }}
+          />
+        </View>
       </View>
     </View>
   );
