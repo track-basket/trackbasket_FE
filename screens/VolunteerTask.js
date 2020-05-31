@@ -1,12 +1,13 @@
 import React, { useState, useContext } from 'react';
 import VolunteerContext from '../volunteer-context';
+import StatusBadge from '../components/StatusBadge';
+import { Button } from '../components/Button';
 
 import {
   View,
   Text,
   Picker,
   StyleSheet,
-  Button,
   Dimensions,
   Alert,
 } from 'react-native';
@@ -14,91 +15,113 @@ let ScreenHeight = Dimensions.get('window').height;
 
 const VolunteerTask = ({ navigation }) => {
   const [selectedValue, setSelectedValue] = useState('Pending');
-  const { volunteer, assignedLists, setAssignedLists } = useContext(
+  const { volunteer, assignedLists, setAssignedLists, singleList } = useContext(
     VolunteerContext,
   );
 
-  const abandonTask = (id) => {
-    // if we are going to allow the user to have multiple lists, we can rewrite this,
-    // but if the user can only have one list, we can just set their assigned lists to []
-    // we will also want to change the status back to penidng, but can only do that via fetch
-    // (can't update an unmounted compon)
-    setAssignedLists([]);
-    Alert.alert('Task Abandoned', 'Select another list', [{ text: 'OK' }], {
-      cancelable: false,
-    });
-    navigation.navigate('VolunteerHome');
-  };
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Task Details</Text>
-      <View style={styles.infoField}>
-        <Text style={styles.infoKind}>Name: </Text>
-        <Text>Joe Smith</Text>
+      <View style={styles.innerContainer}>
+        <View>
+          <View style={styles.details}>
+            <Text style={styles.header}>Task Details</Text>
+            <View style={styles.infoField}>
+              <Text style={styles.detailsKind}>
+                <Text style={styles.infoKind}>Name: </Text>
+                Joe Smith
+              </Text>
+            </View>
+            <View style={styles.infoField}>
+              <Text style={styles.detailsKind}>
+                <Text style={styles.infoKind}>Delivery Address: </Text>
+                123 Main Street, Denver CO 80203
+              </Text>
+            </View>
+            <View style={styles.infoField}>
+              <Text style={styles.detailsKind}>
+                <Text style={styles.infoKind}>Store: </Text>
+                King Soopers, 333 Speer Blvd
+              </Text>
+            </View>
+            <View style={styles.infoField}>
+              <Text style={styles.detailsKind}>
+                <Text style={styles.infoKind}>Ordered at: </Text>
+                1:21 PM May 21
+              </Text>
+            </View>
+            <View style={styles.infoField}>
+              <Text style={styles.detailsKind}>
+                <Text style={styles.infoKind}>Items: </Text>
+                29
+              </Text>
+            </View>
+          </View>
+          <View>
+            <View style={styles.statusRow}>
+              <Text style={styles.statusText}>STATUS</Text>
+              <StatusBadge
+                status={singleList.selectedList.status}
+                onPress={() =>
+                  navigation.navigate('Change status', {
+                    item: singleList.selectedList,
+                  })
+                }
+                customStyles={{ borderWidth: 0 }}
+              />
+            </View>
+            <Button
+              text="UPDATE STATUS"
+              customTextStyles={{ fontSize: 20 }}
+              customStyles={{ backgroundColor: 'lightgray', width: 250 }}
+              onPress={() =>
+                navigation.navigate('Change status', {
+                  item: singleList.selectedList,
+                })
+              }
+            />
+          </View>
+        </View>
+
+        <Button
+          text="ABANDON TASK"
+          // style={styles.redButton}
+          // onPress={() => handlePress('pending')}
+          onPress={() =>
+            navigation.navigate('Confirm delete', {
+              item: singleList.selectedList,
+            })
+          }
+          customStyles={{ backgroundColor: 'red', width: 250 }}
+          customTextStyles={{ fontSize: 20 }}
+        />
       </View>
-      <View style={styles.infoField}>
-        <Text style={styles.infoKind}>Delivery Address: </Text>
-        <Text>123 Main Street, Denver CO 80203</Text>
-      </View>
-      <View style={styles.infoField}>
-        <Text style={styles.infoKind}>Store: </Text>
-        <Text>King Soopers, 333 Speer Blvd</Text>
-      </View>
-      <View style={styles.infoField}>
-        <Text style={styles.infoKind}>Ordered at: </Text>
-        <Text>1:21 PM May 21</Text>
-      </View>
-      <View style={styles.infoField}>
-        <Text style={styles.infoKind}>Items: </Text>
-        <Text>29</Text>
-      </View>
-      <Picker
-        selectedValue={selectedValue}
-        style={styles.picker}
-        onValueChange={(itemValue) => setSelectedValue(itemValue)}
-      >
-        <Picker.Item label="Pending" value="pending" />
-        <Picker.Item label="Shopping" value="shopping" />
-        <Picker.Item label="On The Way" value="on the way" />
-        <Picker.Item label="Delivered" value="delivered" />
-      </Picker>
-      <Button
-        title="Change Status"
-        style={styles.button}
-        onPress={(status) =>
-          Alert.alert(
-            'Update Successful',
-            'Status has been changed to' + ' ' + selectedValue + '.',
-            [{ text: 'OK' }],
-            {
-              cancelable: false,
-            },
-          )
-        }
-      />
-      <Button
-        title="Abandon Task"
-        style={styles.redButton}
-        onPress={() => abandonTask()}
-      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // alignItems: 'center',
-    // justifyContent: 'center',
     backgroundColor: 'white',
-    height: ScreenHeight,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  innerContainer: {
+    alignItems: 'center',
+    width: 400,
+    marginVertical: 50,
+    justifyContent: 'space-between',
+    flexGrow: 1,
   },
   infoField: {
     flexDirection: 'row',
-    padding: 15,
-    paddingBottom: 0,
+    paddingBottom: 20,
   },
   infoKind: {
     fontFamily: 'HelveticaNeue-Bold',
+  },
+  detailsKind: {
+    fontSize: 18,
   },
   statusUpdate: {
     fontFamily: 'HelveticaNeue-Bold',
@@ -114,18 +137,20 @@ const styles = StyleSheet.create({
     marginBottom: 120,
   },
   header: {
-    fontFamily: 'HelveticaNeue-Bold',
-    fontSize: 36,
+    fontSize: 24,
     textAlign: 'center',
     paddingBottom: 35,
+    fontWeight: 'bold',
   },
-  //   redButton: {
-  //     // alignSelf: 'center',
-  //     color: '#ff0000',
-  //   },
-  //   button: {
-  //     alignSelf: 'center',
-  //   },
+  statusRow: {
+    // flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  statusText: {
+    fontSize: 16,
+    marginBottom: -4,
+  },
 });
 
 export default VolunteerTask;
