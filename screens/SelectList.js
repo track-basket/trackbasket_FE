@@ -61,6 +61,33 @@ const data = [
         price: 2.99,
         quantity: 1,
       },
+      {
+        upc: '3842389434',
+        aisleNumber: 12,
+        description: 'Klondike The Original Ice Cream Bars',
+        image_url:
+          'https://user-images.githubusercontent.com/4350550/83094526-17cefd80-a05f-11ea-9856-7a5c8c3566e5.png',
+        price: 3.49,
+        quantity: 1,
+      },
+      {
+        upc: '9128485812',
+        aisleNumber: 2,
+        description: 'Kroger® Restaurant Style Tortilla Chips',
+        image_url:
+          'https://user-images.githubusercontent.com/4350550/83095102-dc80fe80-a05f-11ea-9027-73ae65963359.png',
+        price: 1.25,
+        quantity: 1,
+      },
+      {
+        upc: '1592384912',
+        aisleNumber: 4,
+        description: 'Simple Truth Organic™ Gala Apples Pouch',
+        image_url:
+          'https://user-images.githubusercontent.com/4350550/83095372-6fba3400-a060-11ea-91fc-f646038c2dfd.png',
+        price: 3.99,
+        quantity: 3,
+      },
     ],
   },
   {
