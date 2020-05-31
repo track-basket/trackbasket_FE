@@ -29,10 +29,10 @@ const VolunteerItems = ({
   let highlightedAcquired;
   let highlightedUnavailable;
   if (acquired) {
-    highlightedAcquired = { borderColor: 'black', borderWidth: 1 };
+    highlightedAcquired = { borderColor: 'gray', borderWidth: 1 };
   }
   if (unavailable) {
-    highlightedUnavailable = { borderColor: 'black', borderWidth: 1 };
+    highlightedUnavailable = { borderColor: 'gray', borderWidth: 1 };
   }
   console.log(acquired);
   return (
