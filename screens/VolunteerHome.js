@@ -208,6 +208,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     marginBottom: 20,
     textAlign: 'center',
+    fontWeight: 'bold',
   },
   buttonContainer: {
     alignItems: 'center',
@@ -265,7 +266,6 @@ const styles = StyleSheet.create({
   },
   detailsTextName: {
     fontSize: 25,
-    fontWeight: 'bold',
   },
   item: {
     marginBottom: 35,
