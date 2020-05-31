@@ -20,7 +20,7 @@ const Home = ({ navigation, route }) => {
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('Your profile');
+                navigation.navigate('Your Profile');
               }}
             >
               <View style={styles.button}>
@@ -34,7 +34,7 @@ const Home = ({ navigation, route }) => {
             </View>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('Volunteer profile');
+                navigation.navigate('Volunteer Profile');
               }}
             >
               <View style={styles.button}>
@@ -56,17 +56,17 @@ const Home = ({ navigation, route }) => {
             <TimeOfDay />, {user.name}
           </Text>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Your profile')}
+            onPress={() => navigation.navigate('Your Profile')}
             style={styles.editProfile}
           >
             <Text style={styles.editProfileText}>EDIT PROFILE</Text>
           </TouchableOpacity>
           {!cart.items.length && (
-            <Text style={styles.orders}>No current orders</Text>
+            <Text style={styles.orders}>No Current Orders</Text>
           )}
           {!!cart.items.length && (
             <View style={styles.currentOrder}>
-              <Text style={styles.orders}>Current order</Text>
+              <Text style={styles.orders}>Current Order</Text>
               <View style={styles.orderStatus}>
                 <View style={styles.orderBadge}>
                   <Text style={styles.orderBadgeText}>
@@ -96,7 +96,7 @@ const Home = ({ navigation, route }) => {
           {!cart.items.length && (
             <TouchableOpacity onPress={() => navigation.navigate('AtRiskTabs')}>
               <View style={styles.button}>
-                <Text style={styles.buttonText}>Start shopping</Text>
+                <Text style={styles.buttonText}>Start Shopping</Text>
               </View>
             </TouchableOpacity>
           )}
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     shadowColor: 'black',
   },
   buttonText: {
-    fontFamily: 'Helvetica',
+    fontFamily: 'HelveticaNeue-Bold',
     fontSize: 26,
     textAlign: 'center',
     width: 150,
@@ -162,6 +162,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginTop: 10,
     alignItems: 'center',
+    borderRadius: 30,
   },
   editProfileText: {
     color: '#59DE7E',
@@ -194,6 +195,7 @@ const styles = StyleSheet.create({
   },
   editBtn: {
     backgroundColor: 'lightgray',
+    borderRadius: 30,
     paddingVertical: 10,
     paddingHorizontal: 20,
     alignItems: 'center',

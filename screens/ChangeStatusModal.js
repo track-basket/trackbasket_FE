@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import StatusBadge from '../components/StatusBadge';
@@ -9,7 +10,6 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
 
   const handlePress = (status) => {
     let lists = [...assignedLists];
-    console.log(lists);
     let selectedList = lists.find((list) => {
       return list.listId === item.listId;
     });
@@ -26,7 +26,7 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
         </View>
         <StatusBadge
           status="pending"
-          customStyles={{ marginTop: 10 }}
+          customStyles={{ marginTop: 10, width: 200, alignItems: 'center' }}
           highlighted={item.status === 'pending'}
           onPress={() => {
             handlePress('pending');
@@ -34,7 +34,7 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
         />
         <StatusBadge
           status="assigned"
-          customStyles={{ marginTop: 10 }}
+          customStyles={{ marginTop: 10, width: 200, alignItems: 'center' }}
           highlighted={item.status === 'assigned'}
           onPress={() => {
             handlePress('assigned');
@@ -42,7 +42,7 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
         />
         <StatusBadge
           status="at store"
-          customStyles={{ marginTop: 10 }}
+          customStyles={{ marginTop: 10, width: 200, alignItems: 'center' }}
           highlighted={item.status === 'at store'}
           onPress={() => {
             handlePress('at store');
@@ -50,7 +50,7 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
         />
         <StatusBadge
           status="on way"
-          customStyles={{ marginTop: 10 }}
+          customStyles={{ marginTop: 10, width: 200, alignItems: 'center' }}
           highlighted={item.status === 'on way'}
           onPress={() => {
             handlePress('on way');
@@ -58,7 +58,7 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
         />
         <StatusBadge
           status="delivered"
-          customStyles={{ marginTop: 10 }}
+          customStyles={{ marginTop: 10, width: 200, alignItems: 'center' }}
           highlighted={item.status === 'delivered'}
           onPress={() => {
             handlePress('delivered');
