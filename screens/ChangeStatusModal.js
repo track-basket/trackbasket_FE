@@ -22,7 +22,7 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
     <View style={styles.container}>
       <View style={styles.innerContainer}>
         <View>
-          <Text style={styles.title}>Change status</Text>
+          <Text style={styles.title}>Change order status</Text>
         </View>
         <StatusBadge
           status="pending"
