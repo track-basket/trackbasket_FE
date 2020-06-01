@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { AsYouType } from 'libphonenumber-js';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { postAtRiskUser, patchAtRiskUser } from '../components/ApiCalls';
 
 import {
   StyleSheet,
@@ -50,8 +51,15 @@ const LoginModal = ({ navigation }) => {
         zip,
         phone,
         cart,
+        state: 'Colorado',
+        id: Constants.deviceId,
       };
       setNewUser(info);
+      if (!user) {
+        postAtRiskUser(info);
+      } else {
+        patchAtRiskUser(info);
+      }
       navigation.navigate('Home');
     }
   };
