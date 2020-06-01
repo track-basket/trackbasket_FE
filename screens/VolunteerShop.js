@@ -23,17 +23,20 @@ const VolunteerShop = ({ route }) => {
       return a.aisleNumber - b.aisleNumber;
     }),
   );
-  if (!assignedLists.length) {
+
+  let singleListId = route.params.selectedList;
+  console.log(singleListId);
+  setSingleList(singleListId);
+  let selectedList = assignedLists.find((item) => item.listId === singleListId);
+  if (selectedList) {
+    selectedList = selectedList.items;
+  } else {
     return (
       <View>
-        <Text>No lists</Text>
+        <Text>No selected list</Text>
       </View>
     );
   }
-
-  let singleListIndex = route.params.selectedList;
-  setSingleList(singleListIndex);
-  const selectedList = assignedLists[singleListIndex].items;
 
   const aisles = selectedList.reduce((acc, el) => {
     if (!acc.includes(el.aisleNumber)) {
@@ -50,22 +53,19 @@ const VolunteerShop = ({ route }) => {
 
   const handleClick = (upc, type) => {
     const items = [...assignedLists];
-    const selectedItem = items[singleListIndex].items.find(
-      (item) => item.upc === upc,
-    );
-    const index = items[singleListIndex].items.indexOf(selectedItem);
+    const selectedList = items.find((list) => list.listId === singleListId);
+    const selectedItem = selectedList.items.find((item) => item.upc === upc);
+    const index = selectedList.items.indexOf(selectedItem);
     if (type === 'acquired') {
-      items[singleListIndex].items[index].acquired = !selectedItem.acquired;
+      selectedList.items[index].acquired = !selectedItem.acquired;
     }
     if (type === 'acquired' && selectedItem.unavailable) {
-      items[singleListIndex].items[index].unavailable = false;
+      selectedList.items[index].unavailable = false;
     }
     if (type === 'unavailable') {
-      items[singleListIndex].items[
-        index
-      ].unavailable = !selectedItem.unavailable;
+      selectedList.items[index].unavailable = !selectedItem.unavailable;
       if (type === 'unavailable' && selectedItem.acquired) {
-        items[singleListIndex].items[index].acquired = false;
+        selectedList.items[index].acquired = false;
       }
     }
 
