@@ -21,6 +21,7 @@ const LoginModal = ({ navigation }) => {
   const [address, setAddress] = useState(handleNameValue('address'));
   const [city, setCity] = useState(handleNameValue('city'));
   const [zip, setZip] = useState(handleNameValue('zip'));
+  const [state, setState] = useState(handleNameValue('state'));
   const [phone, setPhone] = useState(handleNameValue('phone'));
   // const [phone, setPhone] = useState('');
 
@@ -51,7 +52,7 @@ const LoginModal = ({ navigation }) => {
         zip,
         phone,
         cart,
-        state: 'Colorado',
+        state,
         id: Constants.deviceId,
       };
       setNewUser(info);
@@ -102,10 +103,12 @@ const LoginModal = ({ navigation }) => {
             value={address}
           />
           <TextField
-            label="City"
-            placeholder="City"
-            onChangeText={setCity}
-            value={city}
+            label="Phone Number"
+            placeholder="Phone Number"
+            keyboardType="numeric"
+            onChangeText={setPhone}
+            value={initiateFormatter()}
+            maxLength={14}
           />
           <TextField
             label="Zip Code"
@@ -115,14 +118,17 @@ const LoginModal = ({ navigation }) => {
             value={zip}
           />
           <TextField
-            label="Phone Number"
-            placeholder="Phone Number"
-            keyboardType="numeric"
-            onChangeText={setPhone}
-            value={initiateFormatter()}
-            maxLength={14}
+            label="City"
+            placeholder="City"
+            onChangeText={setCity}
+            value={city}
           />
-
+          <TextField
+            label="State"
+            placeholder="State"
+            onChangeText={setState}
+            value={state}
+          />
           <View style={styles.btnContainer}>
             <Button onPress={handleSubmit} text="Submit" />
           </View>
