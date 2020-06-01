@@ -13,7 +13,9 @@ const VolunteerTabs = ({ navigation, route }) => {
     VolunteerContext,
   );
 
-  const list = assignedLists[route.params.params.selectedList];
+  const list = assignedLists.find(
+    (list) => list.listId === route.params.params.selectedList,
+  );
   let totalItemsLeft;
   if (list) {
     let itemsLeft = list.items.filter(
@@ -26,7 +28,9 @@ const VolunteerTabs = ({ navigation, route }) => {
     if (!totalItemsLeft && !list.completed) {
       navigation.navigate('CompletedModal');
       const items = [...assignedLists];
-      items[route.params.params.selectedList].completed = true;
+      items.find(
+        (list) => list.listId === route.params.params.selectedList,
+      ).completed = true;
       setAssignedLists(items);
     }
   }
