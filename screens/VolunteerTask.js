@@ -70,7 +70,7 @@ const VolunteerTask = ({ navigation }) => {
               <StatusBadge
                 status={selectedList.status}
                 onPress={() =>
-                  navigation.navigate('Change status', {
+                  navigation.navigate('Change Status', {
                     item: selectedList,
                   })
                 }

@@ -8,7 +8,6 @@ import {
   View,
   Alert,
   KeyboardAvoidingView,
-  TextInput,
 } from 'react-native';
 import UserContext from '../user-context';
 import { TextField } from '../components/Form';
@@ -65,6 +64,10 @@ const LoginModal = ({ navigation }) => {
     }
   }
 
+  const initiateFormatter = () => {
+    phone.length > 1 && asYouType.input(phone);
+  };
+
   return (
     <KeyboardAvoidingView style={styles.container} behaviour="padding">
       <View style={styles.containerInner}>
@@ -106,7 +109,7 @@ const LoginModal = ({ navigation }) => {
             placeholder="Phone Number"
             keyboardType="numeric"
             onChangeText={setPhone}
-            value={phone.length > 1 && asYouType.input(phone)}
+            value={initiateFormatter()}
             maxLength={14}
           />
 
