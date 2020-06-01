@@ -18,11 +18,11 @@ const VolunteerTask = ({ navigation }) => {
   const { volunteer, assignedLists, setAssignedLists, singleList } = useContext(
     VolunteerContext,
   );
-  const selectedList = assignedLists[singleList];
-  if (!assignedLists.length) {
+  const selectedList = assignedLists.find((list) => list.listId === singleList);
+  if (!selectedList) {
     return (
       <View>
-        <Text>No lists</Text>
+        <Text>No selected list</Text>
       </View>
     );
   }
