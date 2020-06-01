@@ -25,7 +25,6 @@ const VolunteerShop = ({ route }) => {
   );
 
   let singleListId = route.params.selectedList;
-  console.log(singleListId);
   setSingleList(singleListId);
   let selectedList = assignedLists.find((item) => item.listId === singleListId);
   if (selectedList) {
