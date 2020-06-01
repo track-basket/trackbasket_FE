@@ -102,21 +102,20 @@ const VolunteerHome = ({ navigation }) => {
                     <View style={styles.orderStatus}>
                       <StatusBadge
                         onPress={() =>
-                          navigation.navigate('Change tatus', { item })
+                          navigation.navigate('Change Status', { item })
                         }
                         status={item.status}
                       />
-                      <TouchableOpacity style={styles.editBtn}>
-                        <Text
-                          style={styles.editBtnText}
-                          onPress={() =>
-                            navigation.navigate('VolunteerTabs', {
-                              selectedList: item,
-                            })
-                          }
-                        >
-                          SHOP ORDER
-                        </Text>
+                      <TouchableOpacity
+                        style={styles.editBtn}
+                        onPress={() =>
+                          navigation.navigate('VolunteerTabs', {
+                            screen: 'Volunteer Shop',
+                            params: { selectedList: item.listId },
+                          })
+                        }
+                      >
+                        <Text style={styles.editBtnText}>SHOP ORDER</Text>
                       </TouchableOpacity>
                     </View>
                   </View>

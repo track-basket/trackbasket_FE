@@ -9,6 +9,7 @@ import ChangeStatusModal from './screens/ChangeStatusModal';
 import ConfirmDelete from './screens/ConfirmDelete';
 import ConfirmList from './screens/ConfirmList';
 import SelectList from './screens/SelectList';
+import CompletedModal from './screens/CompletedModal';
 import VolunteerLoginModal from './screens/VolunteerLoginModal';
 import AtRiskTabs from './screens/AtRiskTabs';
 import VolunteerTabs from './screens/VolunteerTabs';
@@ -114,7 +115,7 @@ const App = () => {
   const [installationId, setInstallationId] = useState(null);
   const [volunteer, setVolunteer] = useState(null);
   const [assignedLists, setAssignedLists] = useState([]);
-  const [singleList, findSingleList] = useState(null);
+  const [singleList, setSingleList] = useState(null);
   const [allLists, setAllLists] = useState(null);
 
   const retrieveData = async () => {
@@ -161,7 +162,7 @@ const App = () => {
         setLocation,
         allLists,
         setAllLists,
-        findSingleList,
+        setSingleList,
         singleList,
       }}
     >
@@ -195,6 +196,11 @@ const App = () => {
             <RootStack.Screen
               name="Change Status"
               component={ChangeStatusModal}
+            />
+            <MainStack.Screen
+              name="CompletedModal"
+              component={CompletedModal}
+              options={{ title: '' }}
             />
             <RootStack.Screen name="Confirm Delete" component={ConfirmDelete} />
           </RootStack.Navigator>

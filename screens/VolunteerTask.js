@@ -18,6 +18,14 @@ const VolunteerTask = ({ navigation }) => {
   const { volunteer, assignedLists, setAssignedLists, singleList } = useContext(
     VolunteerContext,
   );
+  const selectedList = assignedLists.find((list) => list.listId === singleList);
+  if (!selectedList) {
+    return (
+      <View>
+        <Text>No selected list</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -28,13 +36,13 @@ const VolunteerTask = ({ navigation }) => {
             <View style={styles.infoField}>
               <Text style={styles.detailsKind}>
                 <Text style={styles.infoKind}>Name: </Text>
-                {singleList.selectedList.userDetails.name}
+                {selectedList.userDetails.name}
               </Text>
             </View>
             <View style={styles.infoField}>
               <Text style={styles.detailsKind}>
                 <Text style={styles.infoKind}>Delivery Address: </Text>
-                {singleList.selectedList.userDetails.address}
+                {selectedList.userDetails.address}
               </Text>
             </View>
             <View style={styles.infoField}>
@@ -46,13 +54,13 @@ const VolunteerTask = ({ navigation }) => {
             <View style={styles.infoField}>
               <Text style={styles.detailsKind}>
                 <Text style={styles.infoKind}>Ordered at: </Text>
-                {singleList.selectedList.created_at}
+                {selectedList.created_at}
               </Text>
             </View>
             <View style={styles.infoField}>
               <Text style={styles.detailsKind}>
                 <Text style={styles.infoKind}>Items: </Text>
-                {singleList.selectedList.number_items}
+                {selectedList.number_items}
               </Text>
             </View>
           </View>
@@ -60,29 +68,31 @@ const VolunteerTask = ({ navigation }) => {
             <View style={styles.statusRow}>
               <Text style={[styles.infoKind, styles.detailsKind]}>Status:</Text>
               <StatusBadge
-                status={singleList.selectedList.status}
+                status={selectedList.status}
                 onPress={() =>
-                  navigation.navigate('Change Status', {
-                    item: singleList.selectedList,
-                  })
-                }
-                customStyles={{
-                  borderWidth: 0,
-                }}
-              />
-            </View>
-            <View style={styles.buttonArea}>
-              <Button
-                text="UPDATE STATUS"
-                customTextStyles={{ fontSize: 20, color: 'black' }}
-                customStyles={{ backgroundColor: 'lightgray', width: 250 }}
-                onPress={() =>
-                  navigation.navigate('Change Status', {
-                    item: singleList.selectedList,
+                  navigation.navigate('Change status', {
+                    item: selectedList,
                   })
                 }
               />
             </View>
+            <Button
+              text="UPDATE STATUS"
+              customTextStyles={{
+                fontSize: 20,
+                color: 'black',
+              }}
+              customStyles={{
+                backgroundColor: 'lightgray',
+                width: 250,
+                marginVertical: 20,
+              }}
+              onPress={() =>
+                navigation.navigate('Change Status', {
+                  item: selectedList,
+                })
+              }
+            />
           </View>
 
           <Button
@@ -91,7 +101,7 @@ const VolunteerTask = ({ navigation }) => {
             // onPress={() => handlePress('pending')}
             onPress={() =>
               navigation.navigate('Confirm Delete', {
-                item: singleList.selectedList,
+                item: selectedList,
               })
             }
             customStyles={{ backgroundColor: 'red', width: 250 }}
@@ -150,6 +160,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
+    marginTop: 5,
     // justifyContent: 'center',
   },
   statusText: {

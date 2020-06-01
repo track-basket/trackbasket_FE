@@ -5,13 +5,16 @@ import { Button } from '../components/Button';
 
 const ConfirmDelete = ({ navigation, route }) => {
   const { item } = route.params;
-  const { assignedLists, setAssignedLists } = useContext(VolunteerContext);
+  const { assignedLists, setAssignedLists, setSingleList } = useContext(
+    VolunteerContext,
+  );
   const handlePress = (status) => {
     let lists = [...assignedLists];
     let filteredLists = lists.filter((list) => {
       return list.listId !== item.listId;
     });
     setAssignedLists(filteredLists);
+    setSingleList(null);
     navigation.navigate('VolunteerHome');
   };
   return (

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet, View } from 'react-native';
 import VolunteerContext from '../volunteer-context';
 
 const StatusBadge = ({ onPress, status, customStyles, highlighted }) => {
@@ -23,8 +23,6 @@ const StatusBadge = ({ onPress, status, customStyles, highlighted }) => {
   }
   if (highlighted) {
     highlightStyle = { borderWidth: 10, borderColor: 'lightgray' };
-  } else {
-    highlightStyle = { borderWidth: 10, borderColor: 'white' };
   }
   return (
     <TouchableOpacity
@@ -38,11 +36,11 @@ const StatusBadge = ({ onPress, status, customStyles, highlighted }) => {
 
 const styles = StyleSheet.create({
   orderBadge: {
+    alignSelf: 'center',
+    marginHorizontal: 10,
     backgroundColor: '#DEE078',
     borderRadius: 30,
     padding: 10,
-    // marginRight: 10,
-    alignSelf: 'center',
   },
   orderBadgeText: {
     color: 'white',
