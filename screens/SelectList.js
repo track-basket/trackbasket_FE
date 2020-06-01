@@ -12,7 +12,6 @@ const data = [
     number_items: 24,
     lat: '39.716350',
     lng: '-104.932437',
-    status: 'pending',
     items: [
       {
         upc: '0001111042852',
@@ -45,7 +44,6 @@ const data = [
     number_items: 16,
     lat: '39.743810',
     lng: '-104.999385',
-    status: 'pending',
     items: [
       {
         upc: '0001111042852',
@@ -111,7 +109,6 @@ const data = [
     number_items: 11,
     lat: '39.674611',
     lng: '-104.938273',
-    status: 'pending',
     items: [
       {
         upc: '0001111042852',
@@ -265,7 +262,7 @@ const SelectList = ({ navigation }) => {
         'zip code': '80203',
         'phone number': '(721) 400-1342',
       };
-      let status = 'SELECTED';
+      let status = 'assigned';
       return { distance, age, status, userDetails, daysOld, ...item };
     });
     setListData(newData);
