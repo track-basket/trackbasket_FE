@@ -3,6 +3,7 @@ import React, { useState, useContext } from 'react';
 import { StyleSheet, View, TextInput, ScrollView } from 'react-native';
 import GroceryItem from '../components/GroceryItem';
 import UserContext from '../user-context';
+import { fetchItems } from '../components/ApiCalls';
 
 const sampleData = {
   id: 'searchItems',
@@ -56,7 +57,7 @@ const Shop = () => {
   const [text, setText] = useState('');
   const { attributes } = sampleData;
   const { items } = attributes;
-  const { removeFromCart, addToCart, cart } = useContext(UserContext);
+  const { removeFromCart, addToCart, cart, user } = useContext(UserContext);
   const toggleCartItem = (upc, quantity) => {
     let selectedItem = items.find((item) => item.upc === upc);
     if (cart.items.find((item) => item.upc === upc)) {
@@ -78,6 +79,7 @@ const Shop = () => {
       return '';
     }
   };
+  fetchItems('milk', user.id);
   return (
     <View style={styles.container}>
       <View style={styles.innercontainer}>
