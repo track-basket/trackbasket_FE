@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useContext } from 'react';
 import VolunteerContext from '../volunteer-context';
 import { Button } from '../components/Button';
@@ -71,10 +72,10 @@ const VolunteerHome = ({ navigation }) => {
             onPress={() => navigation.navigate('Volunteer Profile')}
             style={styles.editProfile}
           >
-            <Text style={styles.editProfileText}>EDIT PROFILE</Text>
+            <Text style={styles.editProfileText}>Edit Profile</Text>
           </TouchableOpacity>
           <Button
-            text="ADD A NEW LIST TO SHOP"
+            text="Find New List"
             onPress={() => navigation.navigate('SelectList')}
             customStyles={{ marginTop: 20, width: 250 }}
           />
