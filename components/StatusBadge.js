@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 30,
     padding: 10,
-    width: 200,
   },
   orderBadgeText: {
     color: 'white',
