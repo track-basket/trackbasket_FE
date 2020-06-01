@@ -47,10 +47,10 @@ const ConfirmList = ({ navigation, route }) => {
             </Text>
           </View>
         </View>
-        <Text style={styles.introtext}>Do you want to select this list?</Text>
-        <Button text="CONFIRM" onPress={handleSubmit} />
+        {/* <Text style={styles.introtext}>Do you want to select this list?</Text> */}
+        <Button text="Confirm" onPress={handleSubmit} />
         <Button
-          text="CANCEL"
+          text="Cancel"
           customStyles={{ backgroundColor: '#DE5959', marginTop: 10 }}
           onPress={() => navigation.navigate('SelectList')}
         />

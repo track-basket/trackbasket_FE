@@ -1,20 +1,13 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useState, useContext } from 'react';
 import VolunteerContext from '../volunteer-context';
 import StatusBadge from '../components/StatusBadge';
 import { Button } from '../components/Button';
 
-import {
-  View,
-  Text,
-  Picker,
-  StyleSheet,
-  Dimensions,
-  Alert,
-} from 'react-native';
-let ScreenHeight = Dimensions.get('window').height;
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
 const VolunteerTask = ({ navigation }) => {
-  const [selectedValue, setSelectedValue] = useState('Pending');
+  // const [selectedValue, setSelectedValue] = useState('Pending');
   const { volunteer, assignedLists, setAssignedLists, singleList } = useContext(
     VolunteerContext,
   );
@@ -77,7 +70,7 @@ const VolunteerTask = ({ navigation }) => {
               />
             </View>
             <Button
-              text="UPDATE STATUS"
+              text="Update Status"
               customTextStyles={{
                 fontSize: 20,
                 color: 'black',
@@ -96,9 +89,7 @@ const VolunteerTask = ({ navigation }) => {
           </View>
 
           <Button
-            text="ABANDON TASK"
-            // style={styles.redButton}
-            // onPress={() => handlePress('pending')}
+            text="Abandon Task"
             onPress={() =>
               navigation.navigate('Confirm Delete', {
                 item: selectedList,

@@ -37,7 +37,9 @@ const VolunteerLoginModal = ({ navigation }) => {
   }, []);
 
   const initiateFormatter = () => {
-    phone.length > 1 && asYouType.input(phone);
+    if (phone.length > 1) {
+      return asYouType.input(phone);
+    }
   };
 
   const handleSubmit = () => {

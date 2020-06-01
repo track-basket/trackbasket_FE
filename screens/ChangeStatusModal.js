@@ -31,6 +31,7 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
             onPress={() => {
               handlePress('pending');
             }}
+            customStyles={{ width: 200 }}
           />
         </View>
         <View style={styles.statusContainer}>
@@ -40,6 +41,7 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
             onPress={() => {
               handlePress('assigned');
             }}
+            customStyles={{ width: 200 }}
           />
         </View>
         <View style={styles.statusContainer}>
@@ -49,6 +51,7 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
             onPress={() => {
               handlePress('at store');
             }}
+            customStyles={{ width: 200 }}
           />
         </View>
         <View style={styles.statusContainer}>
@@ -58,6 +61,7 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
             onPress={() => {
               handlePress('on way');
             }}
+            customStyles={{ width: 200 }}
           />
         </View>
         <View style={styles.statusContainer}>
@@ -67,6 +71,7 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
             onPress={() => {
               handlePress('delivered');
             }}
+            customStyles={{ width: 200 }}
           />
         </View>
       </View>
