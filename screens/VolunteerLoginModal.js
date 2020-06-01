@@ -36,6 +36,10 @@ const VolunteerLoginModal = ({ navigation }) => {
     setInstallationId(Constants.deviceId);
   }, []);
 
+  const initiateFormatter = () => {
+    phone.length > 1 && asYouType.input(phone);
+  };
+
   const handleSubmit = () => {
     if (!name) {
       Alert.alert('Please enter your name');
@@ -85,7 +89,7 @@ const VolunteerLoginModal = ({ navigation }) => {
             placeholder="Phone number"
             onChangeText={setPhone}
             keyboardType="numeric"
-            value={phone.length > 1 && asYouType.input(phone)}
+            value={initiateFormatter()}
           />
           <View style={styles.btnContainer}>
             <Button onPress={handleSubmit} text="SUBMIT" />

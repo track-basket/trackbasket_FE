@@ -39,8 +39,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginHorizontal: 10,
     backgroundColor: '#DEE078',
+    alignItems: 'center',
     borderRadius: 30,
     padding: 10,
+    width: 200,
   },
   orderBadgeText: {
     color: 'white',
