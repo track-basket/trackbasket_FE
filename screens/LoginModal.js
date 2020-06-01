@@ -1,4 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { AsYouType } from 'libphonenumber-js';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import {
   StyleSheet,
   Text,
@@ -14,17 +17,20 @@ import Constants from 'expo-constants';
 
 const LoginModal = ({ navigation }) => {
   const { user, setNewUser, setInstallationId } = useContext(UserContext);
-
   const [name, setName] = useState(handleNameValue('name'));
   const [address, setAddress] = useState(handleNameValue('address'));
   const [city, setCity] = useState(handleNameValue('city'));
   const [zip, setZip] = useState(handleNameValue('zip'));
   const [phone, setPhone] = useState(handleNameValue('phone'));
+  // const [phone, setPhone] = useState('');
+
   const [cart] = useState();
 
   useEffect(() => {
     setInstallationId(Constants.deviceId);
   }, []);
+
+  const asYouType = new AsYouType('US');
 
   const handleSubmit = () => {
     if (!name) {
@@ -58,49 +64,56 @@ const LoginModal = ({ navigation }) => {
       return user[type];
     }
   }
+
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <KeyboardAvoidingView style={styles.container} behaviour="padding">
       <View style={styles.containerInner}>
-        {!user && (
-          <Text style={styles.introtext}>
-            Sign up to order groceries and have them delivered by a volunteer
-          </Text>
-        )}
-        {user && <Text style={styles.introtext}>Update your info</Text>}
-        <Text style={styles.h2}> * All Fields Required</Text>
-        <TextField
-          label="Name"
-          placeholder="Name"
-          onChangeText={setName}
-          value={name}
-        />
-        <TextField
-          label="Delivery Address"
-          placeholder="Delivery Address"
-          onChangeText={setAddress}
-          value={address}
-        />
-        <TextField
-          label="City"
-          placeholder="City"
-          onChangeText={setCity}
-          value={city}
-        />
-        <TextField
-          label="Zip Code"
-          placeholder="Zip Code"
-          onChangeText={setZip}
-          value={zip}
-        />
-        <TextField
-          label="Phone Number"
-          placeholder="Phone Number"
-          onChangeText={setPhone}
-          value={phone}
-        />
-        <View style={styles.btnContainer}>
-          <Button onPress={handleSubmit} text="Submit" />
-        </View>
+        <KeyboardAwareScrollView>
+          {!user && (
+            <Text style={styles.introtext}>
+              Sign up to order groceries and have them delivered by a volunteer
+            </Text>
+          )}
+          {user && <Text style={styles.introtext}>Update your info</Text>}
+          <Text style={styles.h2}> * All Fields Required</Text>
+          <TextField
+            label="Name"
+            placeholder="Name"
+            onChangeText={setName}
+            value={name}
+          />
+          <TextField
+            label="Delivery Address"
+            placeholder="Delivery Address"
+            onChangeText={setAddress}
+            value={address}
+          />
+          <TextField
+            label="City"
+            placeholder="City"
+            onChangeText={setCity}
+            value={city}
+          />
+          <TextField
+            label="Zip Code"
+            keyboardType="numeric"
+            placeholder="Zip Code"
+            onChangeText={setZip}
+            value={zip}
+          />
+          <TextField
+            label="Phone Number"
+            placeholder="Phone Number"
+            keyboardType="numeric"
+            onChangeText={setPhone}
+            value={phone.length > 1 && asYouType.input(phone)}
+            maxLength={14}
+          />
+
+          <View style={styles.btnContainer}>
+            <Button onPress={handleSubmit} text="Submit" />
+          </View>
+        </KeyboardAwareScrollView>
       </View>
     </KeyboardAvoidingView>
   );

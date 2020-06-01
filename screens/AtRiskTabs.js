@@ -2,7 +2,6 @@ import { MaterialIcons } from 'react-native-vector-icons';
 import React, { useContext } from 'react';
 import { Text, View } from 'react-native';
 import UserContext from '../user-context';
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Cart from './Cart';
 import Shop from './Shop';
@@ -14,6 +13,7 @@ const AtRiskTabs = () => {
   function IconWithBadge({ name, badgeCount, color, size }) {
     return (
       <View style={{ width: 24, height: 24, margin: 5 }}>
+
         <MaterialIcons name={name} size={size} color={color} />
         {badgeCount > 0 && (
           <View
