@@ -19,10 +19,21 @@ const VolunteerItems = ({
   description,
   aisleNumber,
   quantity,
+  handleClick,
+  acquired,
+  unavailable,
 }) => {
   const { volunteer, assignedLists, setAssignedLists } = useContext(
     VolunteerContext,
   );
+  let highlightedAcquired;
+  let highlightedUnavailable;
+  if (acquired) {
+    highlightedAcquired = { borderColor: 'gray', borderWidth: 1 };
+  }
+  if (unavailable) {
+    highlightedUnavailable = { borderColor: 'gray', borderWidth: 1 };
+  }
   return (
     <View style={styles.container}>
       <View style={styles.imgDescriptionContainer}>
@@ -39,31 +50,41 @@ const VolunteerItems = ({
           </Text>
 
           <Text key={description + 'price'} style={styles.description}>
-            ${price} Aisle {aisleNumber}
+            Price: ${price}
           </Text>
-          <View style={styles.bottomRow}>
-            <View style={styles.bottomBlock}>
-              <TouchableOpacity>
-                <MaterialIcons
-                  name="done"
-                  color="green"
-                  size={30}
-                  onPress={() => {}}
-                />
-                <Text>Retrieved</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.bottomBlock}>
-              <TouchableOpacity>
-                <MaterialIcons
-                  name="close"
-                  color="red"
-                  size={30}
-                  onPress={() => {}}
-                />
-                <Text>Unavailable</Text>
-              </TouchableOpacity>
-            </View>
+        </View>
+      </View>
+
+      <View style={styles.bottomRow}>
+        <View style={styles.quantity}>
+          <Text style={styles.quantityText}>Quantity: {quantity}</Text>
+        </View>
+        <View style={styles.options}>
+          <View style={styles.bottomBlock}>
+            <TouchableOpacity
+              style={styles.icon}
+              onPress={() => {
+                handleClick(upc, 'acquired');
+              }}
+            >
+              <View style={[styles.iconContainer, highlightedAcquired]}>
+                <MaterialIcons name="done" color="green" size={30} />
+              </View>
+              <Text>Retrieved</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.bottomBlock}>
+            <TouchableOpacity
+              style={styles.icon}
+              onPress={() => {
+                handleClick(upc, 'unavailable');
+              }}
+            >
+              <View style={[styles.iconContainer, highlightedUnavailable]}>
+                <MaterialIcons name="close" color="red" size={30} />
+              </View>
+              <Text>Unavailable</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -77,12 +98,12 @@ const styles = StyleSheet.create({
   },
   imgBorder: {
     borderWidth: 1,
-    marginRight: 20,
     backgroundColor: 'white',
+    marginRight: 20,
+    justifyContent: 'center',
   },
   container: {
     marginBottom: 40,
-    alignItems: 'stretch',
   },
   button: {
     alignItems: 'center',
@@ -97,8 +118,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   itemImage: {
-    marginTop: 15,
-    marginBottom: 15,
     height: 100,
     width: 110,
   },
@@ -114,12 +133,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 10,
     justifyContent: 'space-between',
-    marginHorizontal: 20,
+    alignItems: 'center',
   },
   bottomBlock: {
+    marginHorizontal: 10,
     // flexDirection: 'row',
     // justifyContent: 'center',
     // alignItems: 'center',
+  },
+  options: {
+    flexDirection: 'row',
+  },
+  icon: {
+    alignItems: 'center',
+  },
+  iconContainer: {
+    padding: 5,
+    borderRadius: 100,
   },
 });
 

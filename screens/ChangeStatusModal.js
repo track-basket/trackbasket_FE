@@ -24,46 +24,51 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
         <View>
           <Text style={styles.title}>Change order status</Text>
         </View>
-        <StatusBadge
-          status="pending"
-          customStyles={{ marginTop: 10, width: 200, alignItems: 'center' }}
-          highlighted={item.status === 'pending'}
-          onPress={() => {
-            handlePress('pending');
-          }}
-        />
-        <StatusBadge
-          status="assigned"
-          customStyles={{ marginTop: 10, width: 200, alignItems: 'center' }}
-          highlighted={item.status === 'assigned'}
-          onPress={() => {
-            handlePress('assigned');
-          }}
-        />
-        <StatusBadge
-          status="at store"
-          customStyles={{ marginTop: 10, width: 200, alignItems: 'center' }}
-          highlighted={item.status === 'at store'}
-          onPress={() => {
-            handlePress('at store');
-          }}
-        />
-        <StatusBadge
-          status="on way"
-          customStyles={{ marginTop: 10, width: 200, alignItems: 'center' }}
-          highlighted={item.status === 'on way'}
-          onPress={() => {
-            handlePress('on way');
-          }}
-        />
-        <StatusBadge
-          status="delivered"
-          customStyles={{ marginTop: 10, width: 200, alignItems: 'center' }}
-          highlighted={item.status === 'delivered'}
-          onPress={() => {
-            handlePress('delivered');
-          }}
-        />
+        <View style={styles.statusContainer}>
+          <StatusBadge
+            status="pending"
+            highlighted={item.status === 'pending'}
+            onPress={() => {
+              handlePress('pending');
+            }}
+          />
+        </View>
+        <View style={styles.statusContainer}>
+          <StatusBadge
+            status="assigned"
+            highlighted={item.status === 'assigned'}
+            onPress={() => {
+              handlePress('assigned');
+            }}
+          />
+        </View>
+        <View style={styles.statusContainer}>
+          <StatusBadge
+            status="at store"
+            highlighted={item.status === 'at store'}
+            onPress={() => {
+              handlePress('at store');
+            }}
+          />
+        </View>
+        <View style={styles.statusContainer}>
+          <StatusBadge
+            status="on way"
+            highlighted={item.status === 'on way'}
+            onPress={() => {
+              handlePress('on way');
+            }}
+          />
+        </View>
+        <View style={styles.statusContainer}>
+          <StatusBadge
+            status="delivered"
+            highlighted={item.status === 'delivered'}
+            onPress={() => {
+              handlePress('delivered');
+            }}
+          />
+        </View>
       </View>
     </View>
   );
@@ -83,6 +88,10 @@ const styles = StyleSheet.create({
   },
   innerContainer: {
     marginBottom: 100,
+  },
+  statusContainer: {
+    height: 70,
+    justifyContent: 'center',
   },
 });
 

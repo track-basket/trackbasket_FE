@@ -12,7 +12,6 @@ const data = [
     number_items: 24,
     lat: '39.716350',
     lng: '-104.932437',
-    status: 'pending',
     items: [
       {
         upc: '0001111042852',
@@ -22,6 +21,8 @@ const data = [
           'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
         price: 3.29,
         quantity: 1,
+        acquired: false,
+        unavailable: false,
       },
       {
         upc: '8305729934',
@@ -31,6 +32,8 @@ const data = [
           'https://user-images.githubusercontent.com/4350550/83094330-b3ac3980-a05e-11ea-97fb-9dfb29bc817b.png',
         price: 2.99,
         quantity: 1,
+        acquired: false,
+        unavailable: false,
       },
     ],
   },
@@ -41,7 +44,6 @@ const data = [
     number_items: 16,
     lat: '39.743810',
     lng: '-104.999385',
-    status: 'pending',
     items: [
       {
         upc: '0001111042852',
@@ -51,6 +53,8 @@ const data = [
           'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
         price: 3.29,
         quantity: 1,
+        acquired: false,
+        unavailable: false,
       },
       {
         upc: '8305729934',
@@ -60,6 +64,41 @@ const data = [
           'https://user-images.githubusercontent.com/4350550/83094330-b3ac3980-a05e-11ea-97fb-9dfb29bc817b.png',
         price: 2.99,
         quantity: 1,
+        acquired: false,
+        unavailable: false,
+      },
+      {
+        upc: '3842389434',
+        aisleNumber: 12,
+        description: 'Klondike The Original Ice Cream Bars',
+        image_url:
+          'https://user-images.githubusercontent.com/4350550/83094526-17cefd80-a05f-11ea-9856-7a5c8c3566e5.png',
+        price: 3.49,
+        quantity: 1,
+        acquired: false,
+        unavailable: false,
+      },
+      {
+        upc: '9128485812',
+        aisleNumber: 3,
+        description: 'Kroger® Restaurant Style Tortilla Chips',
+        image_url:
+          'https://user-images.githubusercontent.com/4350550/83095102-dc80fe80-a05f-11ea-9027-73ae65963359.png',
+        price: 1.25,
+        quantity: 1,
+        acquired: false,
+        unavailable: false,
+      },
+      {
+        upc: '1592384912',
+        aisleNumber: 4,
+        description: 'Simple Truth Organic™ Gala Apples Pouch',
+        image_url:
+          'https://user-images.githubusercontent.com/4350550/83095372-6fba3400-a060-11ea-91fc-f646038c2dfd.png',
+        price: 3.99,
+        quantity: 3,
+        acquired: false,
+        unavailable: false,
       },
     ],
   },
@@ -70,7 +109,6 @@ const data = [
     number_items: 11,
     lat: '39.674611',
     lng: '-104.938273',
-    status: 'pending',
     items: [
       {
         upc: '0001111042852',
@@ -224,7 +262,7 @@ const SelectList = ({ navigation }) => {
         'zip code': '80203',
         'phone number': '(721) 400-1342',
       };
-      let status = 'SELECTED';
+      let status = 'assigned';
       return { distance, age, status, userDetails, daysOld, ...item };
     });
     setListData(newData);
