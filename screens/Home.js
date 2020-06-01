@@ -72,7 +72,6 @@ const Home = ({ navigation, route }) => {
                   <Text style={styles.orderBadgeText}>
                     {cart.status.toUpperCase()}
                   </Text>
-                  <Text style={styles.updateText}>Tap To Update</Text>
                 </View>
                 <TouchableOpacity style={styles.editBtn}>
                   <Text style={styles.editBtnText} onPress={handleEditOrder}>
@@ -216,11 +215,6 @@ const styles = StyleSheet.create({
   submitted: {
     fontSize: 24,
     marginTop: 20,
-  },
-  updateText: {
-    color: '#fff',
-    fontSize: 10,
-    fontFamily: 'HelveticaNeue-Bold',
   },
 });
 

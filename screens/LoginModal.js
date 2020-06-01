@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { AsYouType } from 'libphonenumber-js';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { postAtRiskUser, patchAtRiskUser } from '../components/ApiCalls';
+import { atRiskProfileHandler } from '../components/ApiCalls';
 
 import {
   StyleSheet,
@@ -57,14 +57,14 @@ const LoginModal = ({ navigation }) => {
       };
       setNewUser(info);
       if (!user) {
-        postAtRiskUser(info);
+        atRiskProfileHandler(info, 'POST');
       } else {
-        patchAtRiskUser(info);
+        atRiskProfileHandler(info, 'PATCH');
       }
       navigation.navigate('Home');
     }
   };
-
+  console.log(phone);
   function handleNameValue(type) {
     if (!user) {
       return '';
