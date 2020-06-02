@@ -1,65 +1,20 @@
 /* eslint-disable no-shadow */
 import React, { useState, useContext } from 'react';
-import { StyleSheet, View, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, View, TextInput, ScrollView, Text } from 'react-native';
 import GroceryItem from '../components/GroceryItem';
 import UserContext from '../user-context';
 import { fetchItems } from '../components/ApiCalls';
 
-const sampleData = {
-  id: 'searchItems',
-  attributes: {
-    items: [
-      {
-        upc: '0001111042852',
-        aisle_number: 7,
-        description: 'Simple Truth Organic™ 2% Reduced Fat Milk',
-        image:
-          'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
-        unit_price: 3.29,
-      },
-      {
-        upc: '8305729934',
-        aisle_number: 3,
-        description: "Nature's Own Honey Wheat Sliced Bread",
-        image:
-          'https://user-images.githubusercontent.com/4350550/83094330-b3ac3980-a05e-11ea-97fb-9dfb29bc817b.png',
-        unit_price: 2.99,
-      },
-      {
-        upc: '3842389434',
-        aisle_number: 12,
-        description: 'Klondike The Original Ice Cream Bars',
-        image:
-          'https://user-images.githubusercontent.com/4350550/83094526-17cefd80-a05f-11ea-9856-7a5c8c3566e5.png',
-        unit_price: 3.49,
-      },
-      {
-        upc: '9128485812',
-        aisle_number: 2,
-        description: 'Kroger® Restaurant Style Tortilla Chips',
-        image:
-          'https://user-images.githubusercontent.com/4350550/83095102-dc80fe80-a05f-11ea-9027-73ae65963359.png',
-        unit_price: 1.25,
-      },
-      {
-        upc: '1592384912',
-        aisle_number: 4,
-        description: 'Simple Truth Organic™ Gala Apples Pouch',
-        image:
-          'https://user-images.githubusercontent.com/4350550/83095372-6fba3400-a060-11ea-91fc-f646038c2dfd.png',
-        unit_price: 3.99,
-      },
-    ],
-  },
-};
-
 const Shop = () => {
   const [text, setText] = useState('');
-  const { attributes } = sampleData;
-  const { items } = attributes;
+  const [currentSearch, setCurrentSearch] = useState(null);
+  const [currentItem, setCurrentItem] = useState(null);
+
   const { removeFromCart, addToCart, cart, user } = useContext(UserContext);
   const toggleCartItem = (upc, quantity) => {
-    let selectedItem = items.find((item) => item.upc === upc);
+    let selectedItem = currentSearch.data.attributes.find(
+      (item) => item.upc === upc,
+    );
     if (cart.items.find((item) => item.upc === upc)) {
       selectedItem.quantity = 1;
       removeFromCart(selectedItem);
@@ -79,7 +34,28 @@ const Shop = () => {
       return '';
     }
   };
-  fetchItems('milk', user.id);
+  const handleSearch = (item) => {
+    setCurrentItem(item);
+    fetchItems(item, user.id)
+      .then((response) => response.json())
+      .then((result) => setCurrentSearch(result))
+      .catch((error) => console.log('error', error));
+  };
+
+  const validator = () => {
+    if (currentSearch) {
+      if (currentSearch.data) {
+        if (!currentSearch.data.attributes.error) {
+          return 'item found';
+        }
+      }
+      if (currentSearch.data.attributes.error) {
+        return 'not found';
+      }
+    } else {
+      return false;
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.innercontainer}>
@@ -87,24 +63,34 @@ const Shop = () => {
           placeholder="Search Items..."
           style={styles.searchBar}
           onChangeText={(text) => setText(text)}
-          onSubmitEditing={() => console.log(text)}
+          onSubmitEditing={() => handleSearch(text)}
         />
+        {}
         <ScrollView>
-          {items.map((item) => {
-            return (
-              <GroceryItem
-                upc={item.upc}
-                aisleNumber={item.aisleNumber}
-                description={item.description}
-                image_url={item.image_url}
-                price={item.price}
-                clickHandler={toggleCartItem}
-                quantity={checkForCart(item.upc)}
-                key={item.upc}
-              />
-            );
-          })}
+          {validator() === 'item found' &&
+            currentSearch.data.attributes.map((item) => {
+              return (
+                <GroceryItem
+                  upc={item.upc}
+                  aisleNumber={item.aisle_number}
+                  description={item.name}
+                  image_url={item.image}
+                  price={item.unit_price}
+                  clickHandler={toggleCartItem}
+                  quantity={checkForCart(item.upc)}
+                  key={item.upc}
+                />
+              );
+            })}
         </ScrollView>
+        {!validator() && (
+          <Text style={styles.initialHeader}>Enter a search term.</Text>
+        )}
+        {validator() === 'not found' && (
+          <Text style={styles.initialHeader}>
+            {'No items matching' + ' ' + currentItem}
+          </Text>
+        )}
       </View>
     </View>
   );
@@ -126,6 +112,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 40,
     padding: 5,
+  },
+  initialHeader: {
+    textAlign: 'center',
+    fontFamily: 'HelveticaNeue',
+    fontSize: 18,
+    color: 'grey',
   },
 });
 

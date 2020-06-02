@@ -51,13 +51,13 @@ export const fetchItems = (item, userId) => {
     headers: myHeaders,
     redirect: 'follow',
   };
-  fetch(
+  return fetch(
     BASE + '/items?product=' + item + '&at_risk_user_id=' + userId,
-    requestOptions
-  )
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.log('error', error));
+    requestOptions,
+  );
+  // .then((response) => response.text())
+  // .then((result) => console.log(result))
+  // .catch((error) => console.log('error', error));
 };
 
 export const postVolunteer = async (user) => {
@@ -98,7 +98,7 @@ export const getAtRiskUser = (id) => {
 };
 
 export const updateList = (list) => {
-  console.log(list.id)
+  console.log(list.id);
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   let data = {
@@ -109,15 +109,15 @@ export const updateList = (list) => {
       image: item.image,
       quantity: item.quantity,
       unit_price: item.unit_price,
-      upc: item.upc
-    }))
+      upc: item.upc,
+    })),
   };
   var raw = JSON.stringify(data);
   var requestOptions = {
     method: 'PATCH',
     headers: myHeaders,
     body: raw,
-    redirect: 'follow'
+    redirect: 'follow',
   };
   return fetch(BASE + '/shoppinglist/' + list.id, requestOptions)
     .then((response) => response.json())
