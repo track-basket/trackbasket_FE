@@ -77,7 +77,7 @@ const VolunteerShop = ({ route }) => {
             <VolunteerItems
               aisleNumber={item.aisleNumber}
               description={item.description}
-              image={item.image_url}
+              image={item.image}
               price={item.price}
               upc={item.upc}
               quantity={item.quantity}
