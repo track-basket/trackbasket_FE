@@ -11,43 +11,43 @@ const sampleData = {
     items: [
       {
         upc: '0001111042852',
-        aisleNumber: 7,
+        aisle_number: 7,
         description: 'Simple Truth Organic™ 2% Reduced Fat Milk',
-        image_url:
+        image:
           'https://silk.com/wp-content/uploads/2019/02/unsweet-almond-coconut-blend-1.png',
-        price: 3.29,
+        unit_price: 3.29,
       },
       {
         upc: '8305729934',
-        aisleNumber: 3,
+        aisle_number: 3,
         description: "Nature's Own Honey Wheat Sliced Bread",
-        image_url:
+        image:
           'https://user-images.githubusercontent.com/4350550/83094330-b3ac3980-a05e-11ea-97fb-9dfb29bc817b.png',
-        price: 2.99,
+        unit_price: 2.99,
       },
       {
         upc: '3842389434',
-        aisleNumber: 12,
+        aisle_number: 12,
         description: 'Klondike The Original Ice Cream Bars',
-        image_url:
+        image:
           'https://user-images.githubusercontent.com/4350550/83094526-17cefd80-a05f-11ea-9856-7a5c8c3566e5.png',
-        price: 3.49,
+        unit_price: 3.49,
       },
       {
         upc: '9128485812',
-        aisleNumber: 2,
+        aisle_number: 2,
         description: 'Kroger® Restaurant Style Tortilla Chips',
-        image_url:
+        image:
           'https://user-images.githubusercontent.com/4350550/83095102-dc80fe80-a05f-11ea-9027-73ae65963359.png',
-        price: 1.25,
+        unit_price: 1.25,
       },
       {
         upc: '1592384912',
-        aisleNumber: 4,
+        aisle_number: 4,
         description: 'Simple Truth Organic™ Gala Apples Pouch',
-        image_url:
+        image:
           'https://user-images.githubusercontent.com/4350550/83095372-6fba3400-a060-11ea-91fc-f646038c2dfd.png',
-        price: 3.99,
+        unit_price: 3.99,
       },
     ],
   },
@@ -79,7 +79,6 @@ const Shop = () => {
       return '';
     }
   };
-  console.log(user);
   fetchItems('milk', user.id);
   return (
     <View style={styles.container}>
