@@ -38,15 +38,15 @@ const VolunteerShop = ({ route }) => {
   }
 
   const aisles = selectedList.reduce((acc, el) => {
-    if (!acc.includes(el.aisleNumber)) {
-      acc.push(el.aisleNumber);
+    if (!acc.includes(el.aisle_number)) {
+      acc.push(el.aisle_number);
     }
     return acc;
   }, []);
   const DATA = aisles.map((aisle) => {
     return {
       title: 'Aisle ' + aisle,
-      data: selectedList.filter((item) => item.aisleNumber === aisle),
+      data: selectedList.filter((item) => item.aisle_number === aisle),
     };
   });
 
