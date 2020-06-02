@@ -24,7 +24,6 @@ const ConfirmList = ({ navigation, route }) => {
 
   useEffect(() => {
     'list changed';
-    console.log(list);
   }, [list]);
 
   const { assignedLists, setAssignedLists } = useContext(VolunteerContext);

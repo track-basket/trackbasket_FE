@@ -1,12 +1,33 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useCallback } from 'react';
 import UserContext from '../user-context';
+import { getList } from '../components/ApiCalls';
 
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  RefreshControl,
+} from 'react-native';
 import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
 
 const Home = ({ navigation, route }) => {
-  const { user, cart } = useContext(UserContext);
+  const { user, cart, setCart } = useContext(UserContext);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const handleRefresh = useCallback(async () => {
+    setIsRefreshing(true);
+    console.log(user.id);
+    getList(user.id).then((result) => {
+      if (result.message !== 'Internal Server Error') {
+        setCart(result.data.attributes);
+      }
+    });
+    setTimeout(() => {
+      setIsRefreshing(false);
+    }, 1000);
+  });
   const handleEditOrder = () => {
     navigation.navigate('AtRiskTabs', {
       screen: 'Cart',
@@ -65,7 +86,15 @@ const Home = ({ navigation, route }) => {
             <Text style={styles.orders}>No Current Orders</Text>
           )}
           {!!cart.items.length && (
-            <View style={styles.currentOrder}>
+            <ScrollView
+              contentContainerStyle={styles.currentOrder}
+              refreshControl={
+                <RefreshControl
+                  refreshing={isRefreshing}
+                  onRefresh={handleRefresh}
+                />
+              }
+            >
               <Text style={styles.orders}>Current Order</Text>
               <View style={styles.orderStatus}>
                 <View style={styles.orderBadge}>
@@ -91,7 +120,10 @@ const Home = ({ navigation, route }) => {
                   Submitted: {cart.submittedAt}
                 </Text>
               </View>
-            </View>
+              <Text style={styles.pullToRefresh}>
+                Pull to refresh order status
+              </Text>
+            </ScrollView>
           )}
           {!cart.items.length && (
             <TouchableOpacity onPress={() => navigation.navigate('AtRiskTabs')}>
@@ -112,6 +144,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
     backgroundColor: 'white',
+    paddingTop: 50,
   },
   button: {
     alignItems: 'center',
@@ -145,6 +178,7 @@ const styles = StyleSheet.create({
   innerContainer: {
     marginBottom: 68,
     alignItems: 'center',
+    // marginTop: 100,
   },
   secondaryText: {
     fontSize: 18,
@@ -215,6 +249,12 @@ const styles = StyleSheet.create({
   submitted: {
     fontSize: 24,
     marginTop: 20,
+  },
+  pullToRefresh: {
+    marginTop: 50,
+    fontSize: 18,
+    alignItems: 'center',
+    color: 'lightgray',
   },
 });
 
