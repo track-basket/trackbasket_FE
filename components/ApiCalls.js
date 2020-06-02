@@ -47,15 +47,15 @@ export const volunteerProfileHandler = (user, methodType) => {
 export const fetchItems = (item, userId) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
-  var raw = JSON.stringify({
-    at_risk_user_id: userId,
-  });
   var requestOptions = {
     method: 'GET',
     headers: myHeaders,
-    body: raw,
+    redirect: 'follow',
   };
-  fetch(BASE + '/items/' + item.name, requestOptions)
+  fetch(
+    BASE + '/items?product=' + item + '&at_risk_user_id=' + userId,
+    requestOptions,
+  )
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.log('error', error));
