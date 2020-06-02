@@ -52,13 +52,13 @@ export const fetchItems = (item, userId) => {
     headers: myHeaders,
     redirect: 'follow',
   };
-  fetch(
+  return fetch(
     BASE + '/items?product=' + item + '&at_risk_user_id=' + userId,
     requestOptions,
-  )
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.log('error', error));
+  );
+  // .then((response) => response.text())
+  // .then((result) => console.log(result))
+  // .catch((error) => console.log('error', error));
 };
 
 export const postVolunteer = async (user) => {
