@@ -38,9 +38,8 @@ export const volunteerProfileHandler = (user, methodType) => {
     body: raw,
     redirect: 'follow',
   };
-  fetch(BASE + '/volunteer/' + user.installationId, requestOptions)
-    .then((response) => response.text())
-    .then((result) => console.log(result))
+  return fetch(BASE + '/volunteer/' + user.id, requestOptions)
+    .then((response) => response.json())
     .catch((error) => console.log('error', error));
 };
 
@@ -54,7 +53,7 @@ export const fetchItems = (item, userId) => {
   };
   fetch(
     BASE + '/items?product=' + item + '&at_risk_user_id=' + userId,
-    requestOptions,
+    requestOptions
   )
     .then((response) => response.text())
     .then((result) => console.log(result))
@@ -99,6 +98,33 @@ export const getAtRiskUser = (id) => {
 };
 
 export const updateList = (list) => {
+  console.log(list.id)
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  let data = {
+    status: list.status,
+    items: list.items.map((item) => ({
+      aisle_number: item.aisle_number,
+      description: item.description,
+      image: item.image,
+      quantity: item.quantity,
+      unit_price: item.unit_price,
+      upc: item.upc
+    }))
+  };
+  var raw = JSON.stringify(data);
+  var requestOptions = {
+    method: 'PATCH',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+  };
+  return fetch(BASE + '/shoppinglist/' + list.id, requestOptions)
+    .then((response) => response.json())
+    .catch((error) => console.log('error', error));
+};
+
+export const postList = (list) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   var raw = JSON.stringify({
@@ -106,13 +132,12 @@ export const updateList = (list) => {
     items: list.items,
   });
   var requestOptions = {
-    method: 'PATCH',
+    method: 'POST',
     headers: myHeaders,
     body: raw,
     redirect: 'follow',
   };
   return fetch(BASE + '/shoppinglist/' + list.id, requestOptions)
     .then((response) => response.json())
-    .then((result) => console.log(result))
     .catch((error) => console.log('error', error));
 };
