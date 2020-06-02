@@ -59,7 +59,7 @@ const Home = ({ navigation, route }) => {
             onPress={() => navigation.navigate('Your Profile')}
             style={styles.editProfile}
           >
-            <Text style={styles.editProfileText}>EDIT PROFILE</Text>
+            <Text style={styles.editProfileText}>Edit Profile</Text>
           </TouchableOpacity>
           {!cart.items.length && (
             <Text style={styles.orders}>No Current Orders</Text>
@@ -75,7 +75,7 @@ const Home = ({ navigation, route }) => {
                 </View>
                 <TouchableOpacity style={styles.editBtn}>
                   <Text style={styles.editBtnText} onPress={handleEditOrder}>
-                    EDIT ORDER
+                    Edit Order
                   </Text>
                 </TouchableOpacity>
               </View>

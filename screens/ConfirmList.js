@@ -33,6 +33,16 @@ const ConfirmList = ({ navigation, route }) => {
     navigation.navigate('VolunteerHome');
   };
 
+  const getInfo = (infoType) => {
+    if (route) {
+      return route.params.userDetails.infoType;
+    }
+  };
+  const getOrderInfo = (infoType) => {
+    if (route) {
+      return route.params.infoType;
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.containerInner}>

@@ -13,7 +13,6 @@ const AtRiskTabs = () => {
   function IconWithBadge({ name, badgeCount, color, size }) {
     return (
       <View style={{ width: 24, height: 24, margin: 5 }}>
-
         <MaterialIcons name={name} size={size} color={color} />
         {badgeCount > 0 && (
           <View
@@ -57,28 +56,32 @@ const AtRiskTabs = () => {
   }
 
   return (
-    <Tab.Navigator>
-      <Tab.Screen
-        component={Shop}
-        name="Shop"
-        options={{
-          tabBarLabel: 'Shop',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="shopping-basket" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        component={Cart}
-        name="Cart"
-        options={{
-          tabBarLabel: 'Cart',
-          tabBarIcon: ({ color, size }) => (
-            <HomeIconWithBadge name="shopping-cart" color={color} size={size} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
+      <Tab.Navigator>
+        <Tab.Screen
+          component={Shop}
+          name="Shop"
+          options={{
+            tabBarLabel: 'Shop',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="shopping-basket" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          component={Cart}
+          name="Cart"
+          options={{
+            tabBarLabel: 'Cart',
+            tabBarIcon: ({ color, size }) => (
+              <HomeIconWithBadge
+                name="shopping-cart"
+                color={color}
+                size={size}
+              />
+            ),
+          }}
+        />
+      </Tab.Navigator>
   );
 };
 

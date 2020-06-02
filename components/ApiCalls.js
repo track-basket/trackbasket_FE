@@ -2,18 +2,19 @@ import React from 'react';
 
 const BASE = 'https://trackbasket.herokuapp.com';
 
-export const postAtRiskUser = async (user) => {
+export const atRiskProfileHandler = (user, methodType) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   var raw = JSON.stringify({
     name: user.name,
     address: user.address,
-    city: user.city,
-    zipcode: user.zip,
     phone_number: user.phone,
+    zipcode: user.zip,
+    city: user.city,
+    state: user.state,
   });
   var requestOptions = {
-    method: 'POST',
+    method: methodType,
     headers: myHeaders,
     body: raw,
     redirect: 'follow',
@@ -24,24 +25,37 @@ export const postAtRiskUser = async (user) => {
     .catch((error) => console.log('error', error));
 };
 
-export const patchAtRiskUser = async (user) => {
+export const volunteerProfileHandler = (user, methodType) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   var raw = JSON.stringify({
     name: user.name,
-    address: user.address,
-    city: user.city,
-    state: 'Colorado',
-    zipcode: user.zip,
     phone_number: user.phone,
   });
   var requestOptions = {
-    method: 'PATCH',
+    method: methodType,
     headers: myHeaders,
     body: raw,
     redirect: 'follow',
   };
-  fetch(BASE + '/atriskuser/' + user.id, requestOptions)
+  fetch(BASE + '/volunteer/' + user.installationId, requestOptions)
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.log('error', error));
+};
+
+export const fetchItems = (item, userId) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow',
+  };
+  fetch(
+    BASE + '/items?product=' + item + '&at_risk_user_id=' + userId,
+    requestOptions,
+  )
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.log('error', error));

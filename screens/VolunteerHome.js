@@ -58,15 +58,23 @@ function toRad(Value) {
 //     // Error retrieving data
 //   }
 // };
+
 const VolunteerHome = ({ navigation }) => {
   const { volunteer, assignedLists } = useContext(VolunteerContext);
+  const getName = () => {
+    if (volunteer) {
+      return volunteer.name;
+    } else {
+      return '';
+    }
+  };
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
       <View style={styles.container}>
         <View style={styles.innerContainer}>
           <Logo />
           <Text style={styles.greeting}>
-            <TimeOfDay />, {volunteer.name}
+            <TimeOfDay />, {getName()}
           </Text>
           <TouchableOpacity
             onPress={() => navigation.navigate('Volunteer Profile')}
@@ -79,7 +87,7 @@ const VolunteerHome = ({ navigation }) => {
             onPress={() => navigation.navigate('SelectList')}
             customStyles={{ marginTop: 20, width: 250 }}
           />
-          {!!assignedLists.length && (
+          {assignedLists && (
             <View style={styles.assignedLists}>
               <Text style={styles.orders}>Your lists</Text>
               {assignedLists.map((item, i) => {
@@ -124,7 +132,7 @@ const VolunteerHome = ({ navigation }) => {
               })}
             </View>
           )}
-          {!assignedLists.length && (
+          {!assignedLists && (
             <View style={styles.noListsContainer}>
               <Text style={styles.volunteerOpportunitiesSubtitle}>
                 You have no lists
