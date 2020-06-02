@@ -79,6 +79,7 @@ const Shop = () => {
       return '';
     }
   };
+  console.log(user);
   fetchItems('milk', user.id);
   return (
     <View style={styles.container}>
