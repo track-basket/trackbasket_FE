@@ -17,6 +17,7 @@ import { UserProvider } from './user-context';
 import { VolunteerProvider } from './volunteer-context';
 import * as Location from 'expo-location';
 import moment from 'moment';
+import { postList } from './components/ApiCalls';
 
 const RootStack = createStackNavigator();
 const MainStack = createStackNavigator();
@@ -104,10 +105,16 @@ const App = () => {
   };
   const setNewUser = (user) => setUser(user);
   const submitOrder = () => {
-    setCart({
+    postList({
       items: cart.items,
       status: 'pending',
-      submittedAt: moment().format('YYYY-MM-DD'),
+      id: user.id,
+    }).then((res) => {
+      let resultCart = res.data.attributes;
+      const [date, time] = resultCart.created_date.split(' ');
+      const [day, month, year] = date.split('/');
+      resultCart.created_date = `${year}-${month}-${day} ${time}`;
+      setCart(resultCart);
     });
   };
   const [location, setLocation] = useState(null);
