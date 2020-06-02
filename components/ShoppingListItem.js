@@ -8,7 +8,7 @@ const ShoppingListItem = ({ item, navigation }) => {
         <Text style={styles.listText}>
           Distance: {item.distance.toFixed(2)} miles
         </Text>
-        <Text style={styles.listText}>Items: {item.number_items}</Text>
+        <Text style={styles.listText}>Items: {item.item_count}</Text>
         <Text style={styles.listText}>Requested {item.age}</Text>
       </View>
       <TouchableOpacity

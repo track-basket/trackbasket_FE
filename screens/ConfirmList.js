@@ -1,19 +1,35 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect, useLayoutEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Button } from '../components/Button';
+import { getList, getAtRiskUser } from '../components/ApiCalls';
 import VolunteerContext from '../volunteer-context';
 import moment from 'moment';
 
 const ConfirmList = ({ navigation, route }) => {
-  let item;
+  const [list, setList] = useState({});
+  const selectedList = route.params;
 
-  if (route) {
-    item = route.params;
-  }
+  useEffect(() => {
+    getAtRiskUser(selectedList.at_risk_user_id).then((response) => {
+      selectedList.userDetails = response.data.attributes;
+      getList(selectedList.at_risk_user_id).then((res) => {
+        setList({
+          ...selectedList,
+          ...res.data.attributes,
+          status: 'assigned',
+        });
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    'list changed';
+    console.log(list);
+  }, [list]);
+
   const { assignedLists, setAssignedLists } = useContext(VolunteerContext);
-
   const handleSubmit = () => {
-    setAssignedLists([item, ...assignedLists]);
+    setAssignedLists([list, ...assignedLists]);
     navigation.navigate('VolunteerHome');
   };
 
@@ -35,6 +51,7 @@ const ConfirmList = ({ navigation, route }) => {
             <Text style={styles.introtext}>Order details</Text>
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Name: </Text>
+<<<<<<< HEAD
               {getInfo('name')}
             </Text>
             <Text style={styles.orderText}>
@@ -48,16 +65,44 @@ const ConfirmList = ({ navigation, route }) => {
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Distance from you:</Text>{' '}
               {() => getOrderInfo('distance').toFixed(2)} miles
+=======
+              {list.userDetails && list.userDetails.name}
+            </Text>
+            <Text style={styles.orderText}>
+              <Text style={styles.orderTextBold}>Delivery address: </Text>
+              {list.userDetails &&
+                `${list.userDetails.address}, ${
+                  list.userDetails.city
+                } ${list.userDetails.state.toUpperCase()}`}
+            </Text>
+            <Text style={styles.orderText}>
+              <Text style={styles.orderTextBold}>Store:</Text>{' '}
+              {`${list.name === 'KINGSOOPERS' ? 'King Soopers' : list.name}, ${
+                list.address
+              }, ${list.city} ${list.state}`}
+            </Text>
+            <Text style={styles.orderText}>
+              <Text style={styles.orderTextBold}>Distance from you:</Text>{' '}
+              {list.userDetails && list.distance.toFixed(2)} miles
+>>>>>>> 0f1ae65585e85634ec4e6e438a131dc41b3aa6d2
             </Text>
           </View>
           <View style={styles.orderInfo}>
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Ordered:</Text>{' '}
+<<<<<<< HEAD
               {moment(getOrderInfo('created_at')).format('MMM D')}
             </Text>
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Items:</Text>{' '}
               {getOrderInfo('number_items')};
+=======
+              {list.userDetails && moment(list.created_at).format('MMM D')}
+            </Text>
+            <Text style={styles.orderText}>
+              <Text style={styles.orderTextBold}>Items:</Text>{' '}
+              {list.userDetails && list.item_count}
+>>>>>>> 0f1ae65585e85634ec4e6e438a131dc41b3aa6d2
             </Text>
           </View>
         </View>

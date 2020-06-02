@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { AsYouType } from 'libphonenumber-js';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { volunteerProfileHandler } from '../components/ApiCalls';
+import { postVolunteer } from '../components/ApiCalls';
 
 import {
   StyleSheet,
@@ -54,7 +55,14 @@ const VolunteerLoginModal = ({ navigation }) => {
         phone,
         installationId,
         location,
+        id: 'test' + phone,
       };
+      const postInfo = {
+        name,
+        phone,
+        id: 'test' + phone,
+      };
+      postVolunteer(postInfo);
       setVolunteer(info);
       if (!volunteer) {
         volunteerProfileHandler(info, 'POST');

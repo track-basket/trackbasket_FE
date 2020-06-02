@@ -104,7 +104,7 @@ const VolunteerHome = ({ navigation }) => {
                           Submitted: {item.age}
                         </Text>
                         <Text style={styles.detailsText}>
-                          Items: {item.number_items}
+                          Items: {item.item_count}
                         </Text>
                       </View>
                     </View>

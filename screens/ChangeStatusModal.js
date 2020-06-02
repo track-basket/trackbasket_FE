@@ -1,8 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import StatusBadge from '../components/StatusBadge';
 import VolunteerContext from '../volunteer-context';
+import { updateList } from '../components/ApiCalls';
 
 const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
   const { assignedLists, setAssignedLists } = useContext(VolunteerContext);
@@ -13,6 +14,13 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
     let selectedList = lists.find((list) => {
       return list.listId === item.listId;
     });
+    const updatedList = {
+      status,
+      items: selectedList.items,
+      id: selectedList.at_risk_user_id,
+    };
+    updateList(updatedList);
+
     let index = assignedLists.indexOf(selectedList);
     lists[index].status = status;
     setAssignedLists(lists);
