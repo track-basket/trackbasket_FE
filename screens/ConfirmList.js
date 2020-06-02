@@ -78,7 +78,7 @@ const ConfirmList = ({ navigation, route }) => {
           <View style={styles.orderInfo}>
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Ordered:</Text>{' '}
-              {list.userDetails && moment(list.created_date).format('MMM D')}
+              {list.userDetails && moment(list.created_at).format('MMM D')}
             </Text>
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Items:</Text>{' '}
