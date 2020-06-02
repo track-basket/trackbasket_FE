@@ -51,21 +51,6 @@ const ConfirmList = ({ navigation, route }) => {
             <Text style={styles.introtext}>Order details</Text>
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Name: </Text>
-<<<<<<< HEAD
-              {getInfo('name')}
-            </Text>
-            <Text style={styles.orderText}>
-              <Text style={styles.orderTextBold}>Delivery address: </Text>
-              {getInfo('address')}
-            </Text>
-            <Text style={styles.orderText}>
-              <Text style={styles.orderTextBold}>Store:</Text>{' '}
-              {getInfo('storeId')}
-            </Text>
-            <Text style={styles.orderText}>
-              <Text style={styles.orderTextBold}>Distance from you:</Text>{' '}
-              {() => getOrderInfo('distance').toFixed(2)} miles
-=======
               {list.userDetails && list.userDetails.name}
             </Text>
             <Text style={styles.orderText}>
@@ -84,25 +69,16 @@ const ConfirmList = ({ navigation, route }) => {
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Distance from you:</Text>{' '}
               {list.userDetails && list.distance.toFixed(2)} miles
->>>>>>> 0f1ae65585e85634ec4e6e438a131dc41b3aa6d2
             </Text>
           </View>
           <View style={styles.orderInfo}>
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Ordered:</Text>{' '}
-<<<<<<< HEAD
-              {moment(getOrderInfo('created_at')).format('MMM D')}
-            </Text>
-            <Text style={styles.orderText}>
-              <Text style={styles.orderTextBold}>Items:</Text>{' '}
-              {getOrderInfo('number_items')};
-=======
               {list.userDetails && moment(list.created_at).format('MMM D')}
             </Text>
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Items:</Text>{' '}
               {list.userDetails && list.item_count}
->>>>>>> 0f1ae65585e85634ec4e6e438a131dc41b3aa6d2
             </Text>
           </View>
         </View>
