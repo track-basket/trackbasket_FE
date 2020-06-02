@@ -40,9 +40,9 @@ const GroceryItem = ({
   };
   const getButtonText = () => {
     if (cart && cart.items.find((item) => item.upc === upc)) {
-      return 'Remove from cart';
+      return 'Remove From Cart';
     } else {
-      return 'Add to cart';
+      return 'Add To Cart';
     }
   };
   return (
@@ -87,20 +87,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   imgBorder: {
-    borderWidth: 1,
+    // borderWidth: 1,
+    // borderRadius: 2,
+    // borderColor: '#DEE078',
     marginRight: 20,
     backgroundColor: 'white',
   },
   container: {
+    borderWidth: 1,
+    borderRadius: 2,
+    borderColor: '#DEE078',
+    padding: 15,
     marginBottom: 40,
-    alignItems: 'stretch',
   },
   button: {
     alignItems: 'center',
-    backgroundColor: 'lightgray',
+    backgroundColor: '#DEE078',
     padding: 10,
-    // borderRadius: 5,
-    // height: 25,
   },
   buttonText: {
     color: 'black',
@@ -108,13 +111,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   itemImage: {
-    marginTop: 15,
-    marginBottom: 15,
-    height: 100,
+    flex: 1,
     width: 110,
+    height: 110,
+    resizeMode: 'contain',
   },
   description: {
-    fontSize: 22,
+    fontFamily: 'HelveticaNeue-Bold',
+    fontSize: 18,
   },
   descriptionArea: {
     flexShrink: 1,
@@ -125,8 +129,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 10,
     alignItems: 'center',
-    justifyContent: 'space-around',
-    marginHorizontal: 20,
+    justifyContent: 'space-between',
   },
 });
 
