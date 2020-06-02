@@ -27,13 +27,17 @@ const styles = StyleSheet.create({
   textInput: {
     borderWidth: 1,
     textAlign: 'center',
-    width: 40,
+    width: 30,
     fontSize: 20,
     marginHorizontal: 10,
   },
   quantity: {
     flexDirection: 'row',
   },
+  // buttons: {
+  //   paddingLeft: 5,
+  //   paddingRight: 5,
+  // },
 });
 
 export default QuantityPicker;

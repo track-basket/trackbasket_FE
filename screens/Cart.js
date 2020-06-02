@@ -50,8 +50,8 @@ const Cart = ({ navigation, route }) => {
                     upc={item.upc}
                     aisleNumber={item.aisleNumber}
                     description={item.description}
-                    image={item.image}
-                    price={item.price}
+                    image_url={item.image}
+                    price={item.unit_price}
                     clickHandler={toggleCartItem}
                     quantity={checkForCart(item.upc)}
                     key={item.upc + 'cart'}
@@ -66,7 +66,7 @@ const Cart = ({ navigation, route }) => {
               >
                 <Button
                   style={styles.btnText}
-                  text="SUBMIT ORDER"
+                  text="Submit Order"
                   onPress={submitShoppingList}
                 />
               </TouchableOpacity>
@@ -76,7 +76,7 @@ const Cart = ({ navigation, route }) => {
                 onPress={() => submitShoppingList()}
                 style={styles.submitBtn}
               >
-                <Button text="SAVE ORDER" onPress={submitShoppingList} />
+                <Button text="Save Order" onPress={submitShoppingList} />
               </TouchableOpacity>
             )}
           </View>

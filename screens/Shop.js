@@ -49,6 +49,9 @@ const Shop = () => {
           return 'item found';
         }
       }
+      if (currentSearch.message === 'Internal Server Error') {
+        return '500 Error';
+      }
       if (currentSearch.data.attributes.error) {
         return 'not found';
       }
@@ -56,6 +59,7 @@ const Shop = () => {
       return false;
     }
   };
+  console.log(currentSearch);
   return (
     <View style={styles.container}>
       <View style={styles.innercontainer}>
@@ -65,7 +69,9 @@ const Shop = () => {
           onChangeText={(text) => setText(text)}
           onSubmitEditing={() => handleSearch(text)}
         />
-        {}
+        {validator() === 'item found' && (
+          <Text>{currentSearch.data.attributes.length} Items Found</Text>
+        )}
         <ScrollView>
           {validator() === 'item found' &&
             currentSearch.data.attributes.map((item) => {
@@ -73,7 +79,7 @@ const Shop = () => {
                 <GroceryItem
                   upc={item.upc}
                   aisleNumber={item.aisle_number}
-                  description={item.name}
+                  description={item.description}
                   image_url={item.image}
                   price={item.unit_price}
                   clickHandler={toggleCartItem}
@@ -90,6 +96,14 @@ const Shop = () => {
           <Text style={styles.initialHeader}>
             {'No items matching' + ' ' + currentItem}
           </Text>
+        )}
+        {validator() === '500 Error' && (
+          <View>
+            <Text style={styles.error}>Internal Server Error (500)</Text>
+            <Text style={styles.initialHeader}>
+              There was a problem on our end. Please try again shortly.
+            </Text>
+          </View>
         )}
       </View>
     </View>
@@ -118,6 +132,10 @@ const styles = StyleSheet.create({
     fontFamily: 'HelveticaNeue',
     fontSize: 18,
     color: 'grey',
+  },
+  error: {
+    color: 'red',
+    textAlign: 'center',
   },
 });
 
