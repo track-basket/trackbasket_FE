@@ -50,8 +50,8 @@ const Cart = ({ navigation, route }) => {
                     upc={item.upc}
                     aisleNumber={item.aisleNumber}
                     description={item.description}
-                    image_url={item.image_url}
-                    price={item.price}
+                    image_url={item.image}
+                    price={item.unit_price}
                     clickHandler={toggleCartItem}
                     quantity={checkForCart(item.upc)}
                     key={item.upc + 'cart'}
