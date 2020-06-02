@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, AsyncStorage } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  HeaderHeightContext,
+} from '@react-navigation/stack';
 import Home from './screens/Home';
 import VolunteerHome from './screens/VolunteerHome';
 import LoginModal from './screens/LoginModal';
@@ -111,9 +114,13 @@ const App = () => {
       id: user.id,
     }).then((res) => {
       let resultCart = res.data.attributes;
-      const [date, time] = resultCart.created_date.split(' ');
+      let [date, time] = resultCart.created_date.split(' ');
+
       const [day, month, year] = date.split('/');
-      resultCart.created_date = `${year}-${month}-${day} ${time}`;
+      const newTime = moment(`${year}-${month}-${day} ${time}`)
+        .subtract(6, 'hours')
+        .format('YYYY-MM-DD HH:mm');
+      resultCart.created_date = newTime;
       setCart(resultCart);
     });
   };
