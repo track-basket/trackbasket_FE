@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Picker, FlatList } from 'react-native';
 import ShoppingListItem from '../components/ShoppingListItem';
 import VolunteerContext from '../volunteer-context';
 import moment from 'moment';
+import { getLists } from '../components/ApiCalls';
 
 const data = [
   {
@@ -166,7 +167,6 @@ const data = [
     number_items: 2,
     lat: '39.674611',
     lng: '-104.938273',
-    status: 'pending',
     items: [
       {
         upc: '0001111042852',
@@ -243,29 +243,26 @@ const SelectList = ({ navigation }) => {
   const [listData, setListData] = useState([]);
   const [sort, setSort] = useState('quantity-ascending');
   const { volunteer, assignedLists } = useContext(VolunteerContext);
+
   useEffect(() => {
-    let newData = data.map((item) => {
-      let distance = calcCrow(
-        item.lat,
-        item.lng,
-        volunteer.location[0],
-        volunteer.location[1],
-      );
-      let daysOld = moment().diff(moment(item.created_at), 'days');
-      let age = moment(item.created_at).fromNow();
-      let userDetails = {
-        atriskuser_id: '2334534',
-        name: 'John Doe',
-        address: '729 E 10th Avenue',
-        city: 'Denver',
-        state: 'Colorado',
-        'zip code': '80203',
-        'phone number': '(721) 400-1342',
-      };
-      let status = 'assigned';
-      return { distance, age, status, userDetails, daysOld, ...item };
+    getLists().then((response) => {
+      let newData = response.data.attributes.lists.map((item) => {
+        let distance = calcCrow(
+          item.latitude_longitude[0],
+          item.latitude_longitude[1],
+          volunteer.location[0],
+          volunteer.location[1],
+        );
+        let [date, time] = item.created_at.split(' ');
+        let [month, day, year] = date.split('/');
+        item.created_at = `${year}-${month}-${day} ${time}`;
+        let daysOld = moment().diff(moment(item.created_at), 'days');
+        let age = moment(item.created_at).fromNow();
+
+        return { distance, age, daysOld, ...item };
+      });
+      setListData(newData);
     });
-    setListData(newData);
   }, []);
 
   let sortedData;
@@ -345,7 +342,7 @@ const SelectList = ({ navigation }) => {
             data={sortedData.filter(
               (item) => assignedLists.indexOf(item) === -1,
             )}
-            keyExtractor={(item) => item.listId.toString()}
+            keyExtractor={(item) => item.at_risk_user_id}
             renderItem={({ item }) => {
               return <ShoppingListItem item={item} navigation={navigation} />;
             }}
