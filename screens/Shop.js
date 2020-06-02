@@ -56,6 +56,7 @@ const Shop = () => {
       return false;
     }
   };
+  console.log(currentSearch);
   return (
     <View style={styles.container}>
       <View style={styles.innercontainer}>
@@ -65,7 +66,9 @@ const Shop = () => {
           onChangeText={(text) => setText(text)}
           onSubmitEditing={() => handleSearch(text)}
         />
-        {}
+        {validator() === 'item found' && (
+          <Text>{currentSearch.data.attributes.length} Items Found</Text>
+        )}
         <ScrollView>
           {validator() === 'item found' &&
             currentSearch.data.attributes.map((item) => {
@@ -73,7 +76,7 @@ const Shop = () => {
                 <GroceryItem
                   upc={item.upc}
                   aisleNumber={item.aisle_number}
-                  description={item.name}
+                  description={item.description}
                   image_url={item.image}
                   price={item.unit_price}
                   clickHandler={toggleCartItem}
