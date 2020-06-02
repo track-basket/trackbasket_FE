@@ -34,31 +34,6 @@ function toRad(Value) {
   return (Value * Math.PI) / 180;
 }
 
-// const storeData = async () => {
-//   try {
-//     await AsyncStorage.setItem(
-//       '@MySuperStore:key',
-//       JSON.stringify({
-//         lists: ['list1', 'list2', 'list3'],
-//       }),
-//     );
-//   } catch (error) {
-//     // Error saving data
-//   }
-// };
-
-// const retrieveData = async () => {
-//   try {
-//     const value = await AsyncStorage.getItem('@MySuperStore:key');
-//     if (value !== null) {
-//       // We have data!!
-//       console.log(JSON.parse(value));
-//     }
-//   } catch (error) {
-//     // Error retrieving data
-//   }
-// };
-
 const VolunteerHome = ({ navigation }) => {
   const { volunteer, assignedLists } = useContext(VolunteerContext);
   const getName = () => {
@@ -132,7 +107,7 @@ const VolunteerHome = ({ navigation }) => {
               })}
             </View>
           )}
-          {!assignedLists && (
+          {!assignedLists.length && (
             <View style={styles.noListsContainer}>
               <Text style={styles.volunteerOpportunitiesSubtitle}>
                 You have no lists

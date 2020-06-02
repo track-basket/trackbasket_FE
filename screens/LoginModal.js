@@ -64,7 +64,6 @@ const LoginModal = ({ navigation }) => {
       navigation.navigate('Home');
     }
   };
-  console.log(phone);
   function handleNameValue(type) {
     if (!user) {
       return '';

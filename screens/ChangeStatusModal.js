@@ -19,12 +19,13 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
       items: selectedList.items,
       id: selectedList.at_risk_user_id,
     };
-    updateList(updatedList);
+    updateList(updatedList).then((response) => {
 
-    let index = assignedLists.indexOf(selectedList);
-    lists[index].status = status;
-    setAssignedLists(lists);
-    goBack();
+      const index = lists.indexOf(selectedList);
+      lists[index].status = response.data.attributes.status;
+      setAssignedLists(lists);
+      goBack();
+    });
   };
   return (
     <View style={styles.container}>
