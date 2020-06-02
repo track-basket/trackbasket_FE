@@ -3,6 +3,7 @@ import React, { useState, useContext } from 'react';
 import VolunteerContext from '../volunteer-context';
 import StatusBadge from '../components/StatusBadge';
 import { Button } from '../components/Button';
+import moment from 'moment';
 
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
@@ -35,25 +36,33 @@ const VolunteerTask = ({ navigation }) => {
             <View style={styles.infoField}>
               <Text style={styles.detailsKind}>
                 <Text style={styles.infoKind}>Delivery Address: </Text>
-                {selectedList.userDetails.address}
+                {`${selectedList.userDetails.address}, ${
+                  selectedList.userDetails.city
+                } ${selectedList.userDetails.state.toUpperCase()}`}
               </Text>
             </View>
             <View style={styles.infoField}>
               <Text style={styles.detailsKind}>
                 <Text style={styles.infoKind}>Store: </Text>
-                King Soopers, 333 Speer Blvd
+                {`${
+                  selectedList.name === 'KINGSOOPERS'
+                    ? 'King Soopers'
+                    : selectedList.name
+                }, ${selectedList.address}, ${
+                  selectedList.city
+                } ${selectedList.state.toUpperCase()}`}
               </Text>
             </View>
             <View style={styles.infoField}>
               <Text style={styles.detailsKind}>
                 <Text style={styles.infoKind}>Ordered at: </Text>
-                {selectedList.created_at}
+                {moment(selectedList.created_at).format('h:m a MMM. D, YYYY')}
               </Text>
             </View>
             <View style={styles.infoField}>
               <Text style={styles.detailsKind}>
                 <Text style={styles.infoKind}>Items: </Text>
-                {selectedList.number_items}
+                {selectedList.item_count}
               </Text>
             </View>
           </View>
@@ -113,7 +122,7 @@ const styles = StyleSheet.create({
   },
   innerContainer: {
     alignItems: 'center',
-    width: 400,
+    width: 300,
     marginVertical: 50,
     justifyContent: 'space-between',
     flexGrow: 1,
@@ -151,7 +160,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
-    marginTop: 5,
+    marginTop: 10,
     // justifyContent: 'center',
   },
   statusText: {
