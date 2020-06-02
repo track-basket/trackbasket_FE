@@ -1,6 +1,8 @@
-import React, { useContext, useState, useCallback } from 'react';
+import React, { useContext, useState, useCallback, useEffect } from 'react';
 import UserContext from '../user-context';
 import { getList } from '../components/ApiCalls';
+import moment from 'moment';
+import StatusBadge from '../components/StatusBadge';
 
 import {
   StyleSheet,
@@ -15,13 +17,17 @@ import TimeOfDay from '../components/TimeOfDay';
 
 const Home = ({ navigation, route }) => {
   const { user, cart, setCart } = useContext(UserContext);
+
   const [isRefreshing, setIsRefreshing] = useState(false);
   const handleRefresh = useCallback(async () => {
     setIsRefreshing(true);
-    console.log(user.id);
     getList(user.id).then((result) => {
       if (result.message !== 'Internal Server Error') {
-        setCart(result.data.attributes);
+        let resultCart = result.data.attributes;
+        const [date, time] = resultCart.created_date.split(' ');
+        const [day, month, year] = date.split('/');
+        resultCart.created_date = `${year}-${month}-${day} ${time}`;
+        setCart(resultCart);
       }
     });
     setTimeout(() => {
@@ -33,6 +39,7 @@ const Home = ({ navigation, route }) => {
       screen: 'Cart',
     });
   };
+
   return (
     <View style={styles.container}>
       {!user && (
@@ -97,11 +104,7 @@ const Home = ({ navigation, route }) => {
             >
               <Text style={styles.orders}>Current Order</Text>
               <View style={styles.orderStatus}>
-                <View style={styles.orderBadge}>
-                  <Text style={styles.orderBadgeText}>
-                    {cart.status.toUpperCase()}
-                  </Text>
-                </View>
+                <StatusBadge status={cart.status} />
                 <TouchableOpacity style={styles.editBtn}>
                   <Text style={styles.editBtnText} onPress={handleEditOrder}>
                     Edit Order
@@ -117,7 +120,8 @@ const Home = ({ navigation, route }) => {
                   }, 0)}
                 </Text>
                 <Text style={styles.detailsText}>
-                  Submitted: {cart.submittedAt}
+                  Submitted:{' '}
+                  {moment(cart.created_date).format('h:m a MMM. D, YYYY')}
                 </Text>
               </View>
               <Text style={styles.pullToRefresh}>

@@ -4,6 +4,7 @@ import { Button } from '../components/Button';
 import { getList, getAtRiskUser } from '../components/ApiCalls';
 import VolunteerContext from '../volunteer-context';
 import moment from 'moment';
+import { updateList } from '../components/ApiCalls';
 
 const ConfirmList = ({ navigation, route }) => {
   const [list, setList] = useState({});
@@ -28,8 +29,12 @@ const ConfirmList = ({ navigation, route }) => {
 
   const { assignedLists, setAssignedLists } = useContext(VolunteerContext);
   const handleSubmit = () => {
-    setAssignedLists([list, ...assignedLists]);
-    navigation.navigate('VolunteerHome');
+    list.id = list.at_risk_user_id;
+    updateList(list).then((response) => {
+      list.status = response.data.attributes.status;
+      setAssignedLists([list, ...assignedLists]);
+      navigation.navigate('VolunteerHome');
+    });
   };
 
   const getInfo = (infoType) => {

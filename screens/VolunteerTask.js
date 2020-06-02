@@ -56,7 +56,7 @@ const VolunteerTask = ({ navigation }) => {
             <View style={styles.infoField}>
               <Text style={styles.detailsKind}>
                 <Text style={styles.infoKind}>Ordered at: </Text>
-                {moment(selectedList.created_at).format('h:m a MMM. D, YYYY')}
+                {moment(selectedList.created_date).format('h:m a MMM. D, YYYY')}
               </Text>
             </View>
             <View style={styles.infoField}>

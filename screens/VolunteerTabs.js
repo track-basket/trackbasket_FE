@@ -68,7 +68,6 @@ const VolunteerTabs = ({ navigation, route }) => {
     return <IconWithBadge {...props} badgeCount={totalItemsLeft} />;
   }
 
-  // console.log(params.selectedList.listId);
   return (
     <Tab.Navigator>
       <Tab.Screen

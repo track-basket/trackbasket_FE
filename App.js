@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, AsyncStorage } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  HeaderHeightContext,
+} from '@react-navigation/stack';
 import Home from './screens/Home';
 import VolunteerHome from './screens/VolunteerHome';
 import LoginModal from './screens/LoginModal';
@@ -17,6 +20,7 @@ import { UserProvider } from './user-context';
 import { VolunteerProvider } from './volunteer-context';
 import * as Location from 'expo-location';
 import moment from 'moment';
+import { postList } from './components/ApiCalls';
 
 const RootStack = createStackNavigator();
 const MainStack = createStackNavigator();
@@ -104,10 +108,20 @@ const App = () => {
   };
   const setNewUser = (user) => setUser(user);
   const submitOrder = () => {
-    setCart({
+    postList({
       items: cart.items,
       status: 'pending',
-      submittedAt: moment().format('YYYY-MM-DD'),
+      id: user.id,
+    }).then((res) => {
+      let resultCart = res.data.attributes;
+      let [date, time] = resultCart.created_date.split(' ');
+
+      const [day, month, year] = date.split('/');
+      const newTime = moment(`${year}-${month}-${day} ${time}`)
+        .subtract(6, 'hours')
+        .format('YYYY-MM-DD HH:mm');
+      resultCart.created_date = newTime;
+      setCart(resultCart);
     });
   };
   const [location, setLocation] = useState(null);
