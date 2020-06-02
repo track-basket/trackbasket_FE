@@ -5,7 +5,11 @@ import VolunteerContext from '../volunteer-context';
 import moment from 'moment';
 
 const ConfirmList = ({ navigation, route }) => {
-  const item = route.params;
+  let item;
+
+  if (route) {
+    item = route.params;
+  }
   const { assignedLists, setAssignedLists } = useContext(VolunteerContext);
 
   const handleSubmit = () => {
@@ -13,6 +17,16 @@ const ConfirmList = ({ navigation, route }) => {
     navigation.navigate('VolunteerHome');
   };
 
+  const getInfo = (infoType) => {
+    if (route) {
+      return route.params.userDetails.infoType;
+    }
+  };
+  const getOrderInfo = (infoType) => {
+    if (route) {
+      return route.params.infoType;
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.containerInner}>
@@ -21,29 +35,29 @@ const ConfirmList = ({ navigation, route }) => {
             <Text style={styles.introtext}>Order details</Text>
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Name: </Text>
-              {route.params.userDetails.name}
+              {getInfo('name')}
             </Text>
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Delivery address: </Text>
-              {route.params.userDetails.address}
+              {getInfo('address')}
             </Text>
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Store:</Text>{' '}
-              {route.params.storeId}
+              {getInfo('storeId')}
             </Text>
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Distance from you:</Text>{' '}
-              {route.params.distance.toFixed(2)} miles
+              {() => getOrderInfo('distance').toFixed(2)} miles
             </Text>
           </View>
           <View style={styles.orderInfo}>
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Ordered:</Text>{' '}
-              {moment(route.params.created_at).format('MMM D')}
+              {moment(getOrderInfo('created_at')).format('MMM D')}
             </Text>
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Items:</Text>{' '}
-              {route.params.number_items}
+              {getOrderInfo('number_items')};
             </Text>
           </View>
         </View>

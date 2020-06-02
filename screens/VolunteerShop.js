@@ -1,32 +1,29 @@
 /* eslint-disable no-shadow */
 import React, { useState, useContext } from 'react';
-import {
-  StyleSheet,
-  View,
-  TextInput,
-  ScrollView,
-  Text,
-  SectionList,
-} from 'react-native';
+import { StyleSheet, View, Text, SectionList } from 'react-native';
 import VolunteerContext from '../volunteer-context';
 import VolunteerItems from '../components/VolunteerItems';
 
 const VolunteerShop = ({ route }) => {
-  const {
-    volunteer,
-    assignedLists,
-    setSingleList,
-    setAssignedLists,
-  } = useContext(VolunteerContext);
-  assignedLists.map((list) =>
-    list.items.sort((a, b) => {
-      return a.aisleNumber - b.aisleNumber;
-    }),
+  const { assignedLists, setSingleList, setAssignedLists } = useContext(
+    VolunteerContext,
   );
-
-  let singleListId = route.params.selectedList;
-  setSingleList(singleListId);
-  let selectedList = assignedLists.find((item) => item.listId === singleListId);
+  if (assignedLists) {
+    assignedLists.map((list) =>
+      list.items.sort((a, b) => {
+        return a.aisleNumber - b.aisleNumber;
+      }),
+    );
+  }
+  if (route) {
+    var singleListId = route.params.selectedList;
+    setSingleList(singleListId);
+  }
+  if (assignedLists) {
+    var selectedList = assignedLists.find(
+      (item) => item.listId === singleListId,
+    );
+  }
   if (selectedList) {
     selectedList = selectedList.items;
   } else {
