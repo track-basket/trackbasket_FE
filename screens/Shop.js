@@ -49,6 +49,9 @@ const Shop = () => {
           return 'item found';
         }
       }
+      if (currentSearch.message === 'Internal Server Error') {
+        return '500 Error';
+      }
       if (currentSearch.data.attributes.error) {
         return 'not found';
       }
@@ -94,6 +97,14 @@ const Shop = () => {
             {'No items matching' + ' ' + currentItem}
           </Text>
         )}
+        {validator() === '500 Error' && (
+          <View>
+            <Text style={styles.error}>Internal Server Error (500)</Text>
+            <Text style={styles.initialHeader}>
+              There was a problem on our end. Please try again shortly.
+            </Text>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -121,6 +132,10 @@ const styles = StyleSheet.create({
     fontFamily: 'HelveticaNeue',
     fontSize: 18,
     color: 'grey',
+  },
+  error: {
+    color: 'red',
+    textAlign: 'center',
   },
 });
 
