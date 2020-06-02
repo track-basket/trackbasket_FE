@@ -255,10 +255,14 @@ const SelectList = ({ navigation }) => {
           volunteer.location[1],
         );
         let [date, time] = item.created_at.split(' ');
+
         let [day, month, year] = date.split('/');
-        item.created_at = `${year}-${month}-${day} ${time}`;
-        let daysOld = moment().diff(moment(item.created_at), 'days');
-        let age = moment(item.created_at).fromNow();
+        const newTime = moment(`${year}-${month}-${day} ${time}`)
+          .subtract(6, 'hours')
+          .format('YYYY-MM-DD HH:mm');
+        item.created_date = newTime;
+        let daysOld = moment().diff(moment(item.created_date), 'days');
+        let age = moment(item.created_date).fromNow();
 
         return { distance, age, daysOld, ...item };
       });
