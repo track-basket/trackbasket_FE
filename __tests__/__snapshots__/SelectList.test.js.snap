@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "white",
+      "flex": 1,
+      "marginTop": 0,
+    }
+  }
+>
+  <View>
+    <View
+      style={
+        Object {
+          "marginTop": 20,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "fontSize": 20,
+            "fontWeight": "bold",
+            "textAlign": "center",
+          }
+        }
+      >
+        Volunteer Opportunities
+      </Text>
+      <View
+        style={
+          Object {
+            "marginVertical": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "marginBottom": 10,
+              "textAlign": "center",
+            }
+          }
+        >
+          Sort by:
+        </Text>
+        <View>
+          <RCTPicker
+            items={
+              Array [
+                Object {
+                  "label": "Items (most to least)",
+                  "textColor": undefined,
+                  "value": "quantity-ascending",
+                },
+                Object {
+                  "label": "Items (least to most)",
+                  "textColor": undefined,
+                  "value": "quantity-descending",
+                },
+                Object {
+                  "label": "Distance (farthest to closest)",
+                  "textColor": undefined,
+                  "value": "distance-ascending",
+                },
+                Object {
+                  "label": "Distance (closest to farthest)",
+                  "textColor": undefined,
+                  "value": "distance-descending",
+                },
+                Object {
+                  "label": "Days Old (oldest to newest)",
+                  "textColor": undefined,
+                  "value": "daysold-ascending",
+                },
+                Object {
+                  "label": "Days Old (newest to oldest)",
+                  "textColor": undefined,
+                  "value": "daysold-descending",
+                },
+              ]
+            }
+            onChange={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            selectedIndex={0}
+            style={
+              Array [
+                Object {
+                  "height": 216,
+                },
+                Object {
+                  "color": "black",
+                  "height": 44,
+                },
+              ]
+            }
+          />
+        </View>
+      </View>
+      <RCTScrollView
+        data={Array []}
+        disableVirtualization={false}
+        getItem={[Function]}
+        getItemCount={[Function]}
+        horizontal={false}
+        initialNumToRender={10}
+        keyExtractor={[Function]}
+        maxToRenderPerBatch={10}
+        numColumns={1}
+        onContentSizeChange={[Function]}
+        onEndReachedThreshold={2}
+        onLayout={[Function]}
+        onMomentumScrollEnd={[Function]}
+        onScroll={[Function]}
+        onScrollBeginDrag={[Function]}
+        onScrollEndDrag={[Function]}
+        removeClippedSubviews={false}
+        renderItem={[Function]}
+        scrollEventThrottle={50}
+        stickyHeaderIndices={Array []}
+        updateCellsBatchingPeriod={50}
+        viewabilityConfigCallbackPairs={Array []}
+        windowSize={21}
+      >
+        <View />
+      </RCTScrollView>
+    </View>
+  </View>
+</View>
+`;

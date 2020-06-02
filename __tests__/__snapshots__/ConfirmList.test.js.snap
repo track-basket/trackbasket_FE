@@ -1,0 +1,241 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "flex": 1,
+      "justifyContent": "center",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "justifyContent": "center",
+        "marginBottom": 100,
+        "width": 300,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "marginBottom": 30,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "marginBottom": 10,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 30,
+              "marginBottom": 20,
+              "textAlign": "center",
+            }
+          }
+        >
+          Order details
+        </Text>
+        <Text
+          style={
+            Object {
+              "fontSize": 20,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "fontWeight": "bold",
+              }
+            }
+          >
+            Name: 
+          </Text>
+        </Text>
+        <Text
+          style={
+            Object {
+              "fontSize": 20,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "fontWeight": "bold",
+              }
+            }
+          >
+            Delivery address: 
+          </Text>
+        </Text>
+        <Text
+          style={
+            Object {
+              "fontSize": 20,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "fontWeight": "bold",
+              }
+            }
+          >
+            Store:
+          </Text>
+           
+        </Text>
+        <Text
+          style={
+            Object {
+              "fontSize": 20,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "fontWeight": "bold",
+              }
+            }
+          >
+            Distance from you:
+          </Text>
+           
+           miles
+        </Text>
+      </View>
+      <View>
+        <Text
+          style={
+            Object {
+              "fontSize": 20,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "fontWeight": "bold",
+              }
+            }
+          >
+            Ordered:
+          </Text>
+           
+          Jun 1
+        </Text>
+        <Text
+          style={
+            Object {
+              "fontSize": 20,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "fontWeight": "bold",
+              }
+            }
+          >
+            Items:
+          </Text>
+           
+          ;
+        </Text>
+      </View>
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "alignSelf": "center",
+          "backgroundColor": "#59DE7E",
+          "opacity": 1,
+          "paddingHorizontal": 40,
+          "paddingVertical": 10,
+          "width": 220,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "white",
+              "fontFamily": "HelveticaNeue-Bold",
+              "fontSize": 24,
+              "textAlign": "center",
+            },
+            undefined,
+          ]
+        }
+      >
+        Confirm
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "alignSelf": "center",
+          "backgroundColor": "#DE5959",
+          "marginTop": 10,
+          "opacity": 1,
+          "paddingHorizontal": 40,
+          "paddingVertical": 10,
+          "width": 220,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "white",
+              "fontFamily": "HelveticaNeue-Bold",
+              "fontSize": 24,
+              "textAlign": "center",
+            },
+            undefined,
+          ]
+        }
+      >
+        Cancel
+      </Text>
+    </View>
+  </View>
+</View>
+`;
