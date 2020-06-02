@@ -246,15 +246,16 @@ const SelectList = ({ navigation }) => {
 
   useEffect(() => {
     getLists().then((response) => {
+      console.log(response);
       let newData = response.data.attributes.lists.map((item) => {
         let distance = calcCrow(
           item.latitude_longitude[0],
           item.latitude_longitude[1],
           volunteer.location[0],
-          volunteer.location[1]
+          volunteer.location[1],
         );
         let [date, time] = item.created_at.split(' ');
-        let [month, day, year] = date.split('/');
+        let [day, month, year] = date.split('/');
         item.created_at = `${year}-${month}-${day} ${time}`;
         let daysOld = moment().diff(moment(item.created_at), 'days');
         let age = moment(item.created_at).fromNow();
@@ -340,7 +341,7 @@ const SelectList = ({ navigation }) => {
           <FlatList
             style={styles.list}
             data={sortedData.filter(
-              (item) => assignedLists.indexOf(item) === -1
+              (item) => assignedLists.indexOf(item) === -1,
             )}
             keyExtractor={(item, i) => item.at_risk_user_id + i}
             renderItem={({ item }) => {
