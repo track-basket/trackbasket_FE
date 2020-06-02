@@ -178,6 +178,7 @@ const App = () => {
           setInstallationId,
           submitOrder,
           updateCart,
+          setCart,
         }}
       >
         <NavigationContainer>
