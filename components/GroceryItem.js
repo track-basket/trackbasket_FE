@@ -6,7 +6,7 @@ import QuantityPicker from '../components/QuantityPicker';
 const GroceryItem = ({
   upc,
   price,
-  image,
+  image_url,
   description,
   aisleNumber,
   clickHandler,
@@ -51,7 +51,7 @@ const GroceryItem = ({
         <View style={styles.imgBorder}>
           <Image
             key={description + 'url'}
-            source={{ uri: image }}
+            source={{ uri: image_url }}
             style={styles.itemImage}
           />
         </View>
