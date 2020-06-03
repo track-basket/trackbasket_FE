@@ -21,10 +21,10 @@ const ConfirmDelete = ({ navigation, route }) => {
     };
     updateList(updatedList);
 
-    let filteredLists = lists.filter((list) => {
-      return list.at_risk_user_id !== item.at_risk_user_id;
-    });
-    setAssignedLists(filteredLists);
+    // let filteredLists = lists.filter((list) => {
+    //   return list.at_risk_user_id !== item.at_risk_user_id;
+    // });
+    // setAssignedLists(filteredLists);
     setSingleList(null);
     navigation.navigate('VolunteerHome');
   };
