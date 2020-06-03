@@ -118,13 +118,22 @@ const Home = ({ navigation, route }) => {
                     return itemCount;
                   }, 0)}
                 </Text>
-                <Text style={styles.detailsText}>
-                  Submitted:{' '}
-                  {cart.created_date &&
-                    moment(formatDate(cart.created_date)).format(
+                {cart.created_date ? (
+                  <Text style={styles.detailsText}>
+                    Submitted: {' '}
+                    {moment(formatDate(cart.created_date)).format(
                       'h:m a, MMMM D',
                     )}
-                </Text>
+                  </Text>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('AtRiskTabs')}
+                  >
+                    <View style={styles.button}>
+                      <Text style={styles.buttonText}>Continue shopping</Text>
+                    </View>
+                  </TouchableOpacity>
+                )}
               </View>
               <Text style={styles.pullToRefresh}>
                 Pull to refresh order status
@@ -209,13 +218,16 @@ const styles = StyleSheet.create({
   },
   orders: {
     fontSize: 26,
+    textAlign: 'center',
     marginTop: 30,
   },
   buttonContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 10,
   },
   orderStatus: {
+    alignSelf: 'center',
     flexDirection: 'row',
     marginTop: 20,
   },
@@ -259,6 +271,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     alignItems: 'center',
     color: 'lightgray',
+    textAlign: 'center',
   },
   padding: {
     height: 100,
