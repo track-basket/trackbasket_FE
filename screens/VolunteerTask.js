@@ -9,9 +9,13 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
 const VolunteerTask = ({ navigation }) => {
   // const [selectedValue, setSelectedValue] = useState('Pending');
-  const { volunteer, assignedLists, setAssignedLists, singleList } = useContext(
-    VolunteerContext,
-  );
+  const {
+    volunteer,
+    assignedLists,
+    setAssignedLists,
+    singleList,
+    formatDate,
+  } = useContext(VolunteerContext);
   const selectedList = assignedLists.find((list) => list.listId === singleList);
   if (!selectedList) {
     return (
@@ -56,7 +60,9 @@ const VolunteerTask = ({ navigation }) => {
             <View style={styles.infoField}>
               <Text style={styles.detailsKind}>
                 <Text style={styles.infoKind}>Ordered at: </Text>
-                {moment(selectedList.created_date).format('h:m a MMM. D, YYYY')}
+                {moment(formatDate(selectedList.created_date))
+                  .subtract(6, 'hours')
+                  .format('h:m a MMM. D, YYYY')}
               </Text>
             </View>
             <View style={styles.infoField}>
