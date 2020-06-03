@@ -83,10 +83,10 @@ const Home = ({ navigation, route }) => {
             onPress={() => navigation.navigate('Your Profile')}
             style={styles.editProfile}
           >
-            <Text style={styles.editProfileText}>Edit Profile</Text>
+            <Text style={styles.editProfileText}>Edit profile</Text>
           </TouchableOpacity>
           {!cart.items.length && (
-            <Text style={styles.orders}>No Current Orders</Text>
+            <Text style={styles.orders}>No current order</Text>
           )}
           {!!cart.items.length && (
             <ScrollView
@@ -98,14 +98,16 @@ const Home = ({ navigation, route }) => {
                 />
               }
             >
-              <Text style={styles.orders}>Current Order</Text>
+              <Text style={styles.orders}>Current order</Text>
               <View style={styles.orderStatus}>
                 <StatusBadge status={cart.status} />
-                <TouchableOpacity style={styles.editBtn}>
-                  <Text style={styles.editBtnText} onPress={handleEditOrder}>
-                    Edit Order
-                  </Text>
-                </TouchableOpacity>
+                {cart.status === 'pending' && (
+                  <TouchableOpacity style={styles.editBtn}>
+                    <Text style={styles.editBtnText} onPress={handleEditOrder}>
+                      Edit order
+                    </Text>
+                  </TouchableOpacity>
+                )}
               </View>
               <View style={styles.details}>
                 <Text style={styles.detailsText}>
@@ -119,7 +121,7 @@ const Home = ({ navigation, route }) => {
                   Submitted:{' '}
                   {cart.created_date &&
                     moment(formatDate(cart.created_date)).format(
-                      'h:m a MMM. D, YYYY',
+                      'h:m a, MMMM D',
                     )}
                 </Text>
               </View>
@@ -181,7 +183,7 @@ const styles = StyleSheet.create({
   innerContainer: {
     marginBottom: 68,
     alignItems: 'center',
-    // marginTop: 100,
+    marginTop: 100,
   },
   secondaryText: {
     fontSize: 18,
@@ -199,7 +201,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginTop: 10,
     alignItems: 'center',
-    borderRadius: 30,
   },
   editProfileText: {
     color: '#59DE7E',
