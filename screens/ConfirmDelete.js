@@ -11,7 +11,7 @@ const ConfirmDelete = ({ navigation, route }) => {
   const handlePress = (status) => {
     let lists = [...assignedLists];
     let filteredLists = lists.filter((list) => {
-      return list.listId !== item.listId;
+      return list.at_risk_user_id !== item.at_risk_user_id;
     });
     setAssignedLists(filteredLists);
     setSingleList(null);
