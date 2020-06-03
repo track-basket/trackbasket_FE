@@ -246,7 +246,6 @@ const SelectList = ({ navigation }) => {
 
   useEffect(() => {
     getLists().then((response) => {
-      console.log(response);
       let newData = response.data.attributes.lists.map((item) => {
         let distance = calcCrow(
           item.latitude_longitude[0],
@@ -283,22 +282,22 @@ const SelectList = ({ navigation }) => {
   }
   if (sort === 'daysold-ascending') {
     sortedData = listData.sort((a, b) => {
-      return a.daysOld < b.daysOld ? 1 : -1;
+      return a.created_at > b.created_at ? 1 : -1;
     });
   }
   if (sort === 'daysold-descending') {
     sortedData = listData.sort((a, b) => {
-      return a.daysOld > b.daysOld ? 1 : -1;
+      return a.created_at < b.created_at ? 1 : -1;
     });
   }
   if (sort === 'quantity-ascending') {
     sortedData = listData.sort((a, b) => {
-      return a.number_items < b.number_items ? 1 : -1;
+      return a.item_count < b.item_count ? 1 : -1;
     });
   }
   if (sort === 'quantity-descending') {
     sortedData = listData.sort((a, b) => {
-      return a.number_items > b.number_items ? 1 : -1;
+      return a.item_count > b.item_count ? 1 : -1;
     });
   }
   return (
@@ -344,9 +343,7 @@ const SelectList = ({ navigation }) => {
           </View>
           <FlatList
             style={styles.list}
-            data={sortedData.filter(
-              (item) => assignedLists.indexOf(item) === -1,
-            )}
+            data={sortedData}
             keyExtractor={(item, i) => item.at_risk_user_id + i}
             renderItem={({ item }) => {
               return <ShoppingListItem item={item} navigation={navigation} />;
