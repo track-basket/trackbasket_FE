@@ -6,26 +6,48 @@ import VolunteerContext from '../volunteer-context';
 import { updateList } from '../components/ApiCalls';
 
 const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
-  const { assignedLists, setAssignedLists } = useContext(VolunteerContext);
+  const {
+    assignedLists,
+    setAssignedLists,
+    setSingleList,
+    singleList,
+    volunteersLists,
+    setVolunteersLists,
+  } = useContext(VolunteerContext);
   const item = route.params.item;
-
+  console.log('singleList');
+  console.log(singleList);
   const handlePress = (status) => {
-    let lists = [...assignedLists];
-    let selectedList = lists.find((list) => {
-      return list.listId === item.listId;
-    });
+    // let lists = [...assignedLists];
+
     const updatedList = {
       status,
-      items: selectedList.items,
-      id: selectedList.at_risk_user_id,
+      items: item.data.attributes.items,
+      at_risk_user_id: item.id,
     };
     updateList(updatedList).then((response) => {
-      // const index = lists.indexOf(selectedList);
-      // lists[index].status = response.data.attributes.status;
-      // setAssignedLists(lists);
+      console.log(response);
+      console.log(item.at_risk_user_id);
+      setSingleList({
+        ...response,
+        id: item.id,
+        userDetails: item.userDetails,
+      });
+
+      const newVolunteersLists = [...volunteersLists];
+      const selectedList = newVolunteersLists.find((list) => {
+        return list.id === item.id;
+      });
+      const index = newVolunteersLists.indexOf(selectedList);
+      newVolunteersLists[index].status = status;
+      setVolunteersLists(newVolunteersLists);
       goBack();
     });
   };
+  useEffect(() => {
+    console.log('volunteersLists');
+    console.log(volunteersLists);
+  }, [volunteersLists]);
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
