@@ -78,7 +78,7 @@ const VolunteerTask = ({ navigation }) => {
                 status={singleList.data.attributes.status}
                 onPress={() =>
                   navigation.navigate('Change Status', {
-                    // item: selectedList,
+                    item: singleList,
                   })
                 }
               />
@@ -96,7 +96,7 @@ const VolunteerTask = ({ navigation }) => {
               }}
               onPress={() =>
                 navigation.navigate('Change Status', {
-                  // item: selectedList,
+                  item: singleList,
                 })
               }
             />
