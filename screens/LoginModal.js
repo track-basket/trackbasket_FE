@@ -113,6 +113,7 @@ const LoginModal = ({ navigation }) => {
             label="Zip Code"
             keyboardType="numeric"
             placeholder="Zip Code"
+            maxLength={5}
             onChangeText={setZip}
             value={zip}
           />
