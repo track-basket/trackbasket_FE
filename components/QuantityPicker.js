@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 import { MaterialIcons } from 'react-native-vector-icons';
 
-const QuantityPicker = ({ quantity, upc, quantityController }) => {
+const QuantityPicker = ({ quantity, quantityController }) => {
   return (
     <View style={styles.quantity}>
       <MaterialIcons
@@ -34,10 +34,6 @@ const styles = StyleSheet.create({
   quantity: {
     flexDirection: 'row',
   },
-  // buttons: {
-  //   paddingLeft: 5,
-  //   paddingRight: 5,
-  // },
 });
 
 export default QuantityPicker;

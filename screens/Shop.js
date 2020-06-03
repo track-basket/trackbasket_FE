@@ -16,8 +16,8 @@ const Shop = () => {
       (item) => item.upc === upc,
     );
     if (cart.items.find((item) => item.upc === upc)) {
-      selectedItem.quantity = 1;
       removeFromCart(selectedItem);
+      selectedItem.quantity = 1;
     } else {
       selectedItem.quantity = quantity;
       addToCart(selectedItem);
@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
+    paddingBottom: 100,
   },
   innercontainer: {
     width: 350,

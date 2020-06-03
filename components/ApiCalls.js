@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert } from 'react-native';
 
 const BASE = 'https://trackbasket.herokuapp.com';
 
@@ -19,10 +20,9 @@ export const atRiskProfileHandler = (user, methodType) => {
     body: raw,
     redirect: 'follow',
   };
-  fetch(BASE + '/atriskuser/' + user.id, requestOptions)
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.log('error', error));
+  return fetch(BASE + '/atriskuser/' + user.id, requestOptions).catch((error) =>
+    console.log('error', error),
+  );
 };
 
 export const volunteerProfileHandler = (user, methodType) => {

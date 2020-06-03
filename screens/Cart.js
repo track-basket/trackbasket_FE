@@ -22,7 +22,7 @@ const Cart = ({ navigation, route }) => {
     let selectedItem = cart.items.find((item) => item.upc === upc);
     if (cart.items.find((item) => item.upc === upc)) {
       removeFromCart(selectedItem);
-      selectedItem.quantity = quantity;
+      selectedItem.quantity = 1;
     } else {
       selectedItem.quantity = quantity;
       addToCart(selectedItem);

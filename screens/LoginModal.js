@@ -55,13 +55,34 @@ const LoginModal = ({ navigation }) => {
         state,
         id: Date.now(),
       };
-      setNewUser(info);
       if (!user) {
-        atRiskProfileHandler(info, 'POST');
+        atRiskProfileHandler(info, 'POST')
+          .then((res) => res.json())
+          .then((result) => {
+            if (result.data.attributes.error) {
+              Alert.alert(
+                'No nearby locations',
+                'There are no nearby Kroger stores near your zip code. Sorry!',
+                [
+                  {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                  },
+                  { text: 'OK', onPress: () => console.log('OK Pressed') },
+                ],
+                { cancelable: false },
+              );
+            } else {
+              setNewUser(info);
+              navigation.navigate('Home');
+            }
+          });
       } else {
         atRiskProfileHandler(info, 'PATCH');
+        setNewUser(info);
+        navigation.navigate('Home');
       }
-      navigation.navigate('Home');
     }
   };
   function handleNameValue(type) {
@@ -113,6 +134,7 @@ const LoginModal = ({ navigation }) => {
             label="Zip Code"
             keyboardType="numeric"
             placeholder="Zip Code"
+            maxLength={5}
             onChangeText={setZip}
             value={zip}
           />
