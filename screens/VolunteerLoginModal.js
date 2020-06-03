@@ -57,7 +57,8 @@ const VolunteerLoginModal = ({ navigation }) => {
       if (!volunteer) {
         volunteerProfileHandler(postInfo, 'POST').then((response) => {
           setVolunteer({
-            ...response.data.attributes,
+            phone: response.data.attributes['phone number'],
+            name: response.data.attributes.name,
             installationId,
             location,
           });
@@ -65,7 +66,8 @@ const VolunteerLoginModal = ({ navigation }) => {
       } else {
         volunteerProfileHandler(postInfo, 'PATCH').then((response) => {
           setVolunteer({
-            ...response.data.attributes,
+            phone: response.data.attributes['phone number'],
+            name: response.data.attributes.name,
             installationId,
             location,
           });

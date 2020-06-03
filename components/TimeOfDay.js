@@ -4,11 +4,9 @@ const TimeOfDay = () => {
   let greeting;
   if (hour < 12) {
     greeting = 'Good morning';
-  }
-  if (hour >= 18) {
+  } else if (hour > 18) {
     greeting = 'Good evening';
-  }
-  if (hour >= 12 && hour < 18) {
+  } else {
     greeting = 'Good afternoon';
   }
   return greeting;

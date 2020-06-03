@@ -75,7 +75,7 @@ const Cart = ({ navigation, route }) => {
               >
                 <Button
                   style={styles.btnText}
-                  text="Submit Order"
+                  text="Submit order"
                   onPress={submitShoppingList}
                 />
               </TouchableOpacity>
@@ -85,7 +85,7 @@ const Cart = ({ navigation, route }) => {
                 onPress={() => submitShoppingList()}
                 style={styles.submitBtn}
               >
-                <Button text="Save Order" onPress={editShoppingList} />
+                <Button text="Save order" onPress={editShoppingList} />
               </TouchableOpacity>
             )}
           </View>
