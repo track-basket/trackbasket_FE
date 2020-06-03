@@ -6,25 +6,24 @@ import { updateList } from '../components/ApiCalls';
 
 const ConfirmDelete = ({ navigation, route }) => {
   const { item } = route.params;
-  const { assignedLists, setAssignedLists, setSingleList } = useContext(
-    VolunteerContext,
-  );
+  const {
+    setSingleList,
+    singleList,
+    assignedLists,
+    setAssignedLists,
+  } = useContext(VolunteerContext);
   const handlePress = (status) => {
-    let lists = [...assignedLists];
-    let selectedList = lists.find((list) => {
-      return list.at_risk_user_id === item.at_risk_user_id;
-    });
     const updatedList = {
       status: 'pending',
-      items: selectedList.items,
-      id: selectedList.at_risk_user_id,
+      items: singleList.data.attributes.items,
+      id: singleList.id,
     };
     updateList(updatedList);
-
-    // let filteredLists = lists.filter((list) => {
-    //   return list.at_risk_user_id !== item.at_risk_user_id;
-    // });
-    // setAssignedLists(filteredLists);
+    let assignedListsCopy = [...assignedLists];
+    let filteredLists = assignedListsCopy.filter((list) => {
+      return list !== singleList.id;
+    });
+    setAssignedLists(filteredLists);
     setSingleList(null);
     navigation.navigate('VolunteerHome');
   };
