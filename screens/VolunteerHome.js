@@ -38,8 +38,13 @@ function toRad(Value) {
 }
 
 const VolunteerHome = ({ navigation }) => {
-  const { volunteer, assignedLists, formatDate } = useContext(VolunteerContext);
-  const [volunteersLists, setVolunteersLists] = useState([]);
+  const {
+    volunteer,
+    assignedLists,
+    formatDate,
+    volunteersLists,
+    setVolunteersLists,
+  } = useContext(VolunteerContext);
   const getName = () => {
     if (volunteer) {
       return volunteer.name;
@@ -59,6 +64,10 @@ const VolunteerHome = ({ navigation }) => {
     });
     Promise.all(fetchedLists).then((data) => setVolunteersLists(data));
   }, [assignedLists]);
+
+  useEffect(() => {
+    console.log('mounted');
+  }, []);
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
