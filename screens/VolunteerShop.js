@@ -22,8 +22,6 @@ const VolunteerShop = ({ route }) => {
       getAtRiskUser(singleListId).then((user) => {
         setSingleList({ ...data, userDetails: user.data.attributes });
       });
-
-      setSingleList(data);
     });
   }, []);
 
@@ -51,24 +49,25 @@ const VolunteerShop = ({ route }) => {
   });
 
   const handleClick = (upc, type) => {
-    const items = [...assignedLists];
+    const singleListCopy = { ...singleList };
+    const selectedList = singleListCopy.data.attributes;
     // const selectedList = items.find((list) => list.listId === singleListId);
-    // const selectedItem = selectedList.items.find((item) => item.upc === upc);
-    // const index = selectedList.items.indexOf(selectedItem);
-    // if (type === 'acquired') {
-    //   selectedList.items[index].acquired = !selectedItem.acquired;
-    // }
-    // if (type === 'acquired' && selectedItem.unavailable) {
-    //   selectedList.items[index].unavailable = false;
-    // }
-    // if (type === 'unavailable') {
-    //   selectedList.items[index].unavailable = !selectedItem.unavailable;
-    //   if (type === 'unavailable' && selectedItem.acquired) {
-    //     selectedList.items[index].acquired = false;
-    //   }
-    // }
-
-    setAssignedLists(items);
+    const selectedItem = selectedList.items.find((item) => item.upc === upc);
+    const index = selectedList.items.indexOf(selectedItem);
+    if (type === 'acquired') {
+      selectedList.items[index].acquired = !selectedItem.acquired;
+    }
+    if (type === 'acquired' && selectedItem.unavailable) {
+      selectedList.items[index].unavailable = false;
+    }
+    if (type === 'unavailable') {
+      selectedList.items[index].unavailable = !selectedItem.unavailable;
+      if (type === 'unavailable' && selectedItem.acquired) {
+        selectedList.items[index].acquired = false;
+      }
+    }
+    singleListCopy.data.attributes = selectedList;
+    setSingleList(singleListCopy);
   };
   return (
     <View style={styles.container}>
