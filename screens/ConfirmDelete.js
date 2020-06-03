@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import VolunteerContext from '../volunteer-context';
 import { Button } from '../components/Button';
+import { updateList } from '../components/ApiCalls';
 
 const ConfirmDelete = ({ navigation, route }) => {
   const { item } = route.params;
@@ -10,6 +11,16 @@ const ConfirmDelete = ({ navigation, route }) => {
   );
   const handlePress = (status) => {
     let lists = [...assignedLists];
+    let selectedList = lists.find((list) => {
+      return list.at_risk_user_id === item.at_risk_user_id;
+    });
+    const updatedList = {
+      status: 'pending',
+      items: selectedList.items,
+      id: selectedList.at_risk_user_id,
+    };
+    updateList(updatedList);
+
     let filteredLists = lists.filter((list) => {
       return list.at_risk_user_id !== item.at_risk_user_id;
     });
