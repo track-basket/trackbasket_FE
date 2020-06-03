@@ -164,11 +164,12 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
+    alignSelf: 'center',
     backgroundColor: '#59DE7E',
     marginTop: 45,
     marginBottom: 10,
     height: 90,
-    width: 200,
+    width: 250,
     shadowOffset: {
       width: 3,
       height: 5,
@@ -181,7 +182,7 @@ const styles = StyleSheet.create({
     fontFamily: 'HelveticaNeue-Bold',
     fontSize: 26,
     textAlign: 'center',
-    width: 150,
+    width: 180,
     color: 'white',
   },
   greeting: {
