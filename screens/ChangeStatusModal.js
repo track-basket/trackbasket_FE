@@ -26,8 +26,6 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
       at_risk_user_id: item.id,
     };
     updateList(updatedList).then((response) => {
-      console.log(response);
-      console.log(item.at_risk_user_id);
       setSingleList({
         ...response,
         id: item.id,
@@ -39,15 +37,12 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
         return list.id === item.id;
       });
       const index = newVolunteersLists.indexOf(selectedList);
-      newVolunteersLists[index].status = status;
+      newVolunteersLists[index].data.attributes.status = status;
       setVolunteersLists(newVolunteersLists);
       goBack();
     });
   };
-  useEffect(() => {
-    console.log('volunteersLists');
-    console.log(volunteersLists);
-  }, [volunteersLists]);
+
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
@@ -57,7 +52,7 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
         <View style={styles.statusContainer}>
           <StatusBadge
             status="pending"
-            highlighted={item.status === 'pending'}
+            highlighted={item.data.attributes.status === 'pending'}
             onPress={() => {
               handlePress('pending');
             }}
@@ -67,7 +62,7 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
         <View style={styles.statusContainer}>
           <StatusBadge
             status="assigned"
-            highlighted={item.status === 'assigned'}
+            highlighted={item.data.attributes.status === 'assigned'}
             onPress={() => {
               handlePress('assigned');
             }}
@@ -77,7 +72,7 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
         <View style={styles.statusContainer}>
           <StatusBadge
             status="at store"
-            highlighted={item.status === 'at store'}
+            highlighted={item.data.attributes.status === 'at store'}
             onPress={() => {
               handlePress('at store');
             }}
@@ -87,7 +82,7 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
         <View style={styles.statusContainer}>
           <StatusBadge
             status="on way"
-            highlighted={item.status === 'on way'}
+            highlighted={item.data.attributes.status === 'on way'}
             onPress={() => {
               handlePress('on way');
             }}
@@ -97,7 +92,7 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
         <View style={styles.statusContainer}>
           <StatusBadge
             status="delivered"
-            highlighted={item.status === 'delivered'}
+            highlighted={item.data.attributes.status === 'delivered'}
             onPress={() => {
               handlePress('delivered');
             }}
