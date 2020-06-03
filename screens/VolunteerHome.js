@@ -65,10 +65,6 @@ const VolunteerHome = ({ navigation }) => {
     Promise.all(fetchedLists).then((data) => setVolunteersLists(data));
   }, [assignedLists]);
 
-  useEffect(() => {
-    console.log('mounted');
-  }, []);
-
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
       <View style={styles.container}>
@@ -103,16 +99,20 @@ const VolunteerHome = ({ navigation }) => {
                       <View style={styles.numAge}>
                         <Text style={styles.detailsText}>
                           Submitted:{' '}
-                          {moment(formatDate(item.data.attributes.created_date))
-                            .subtract(6, 'hours')
-                            .fromNow()}
+                          {item.data.attributes.created_date &&
+                            moment(
+                              formatDate(item.data.attributes.created_date),
+                            )
+                              .subtract(6, 'hours')
+                              .fromNow()}
                         </Text>
                         <Text style={styles.detailsText}>
                           Items:{' '}
-                          {item.data.attributes.items.reduce((acc, el) => {
-                            acc += el.quantity;
-                            return acc;
-                          }, 0)}
+                          {item.data.attributes.items &&
+                            item.data.attributes.items.reduce((acc, el) => {
+                              acc += el.quantity;
+                              return acc;
+                            }, 0)}
                         </Text>
                       </View>
                     </View>
