@@ -85,7 +85,7 @@ const App = () => {
       return item.upc === selectedItem.upc;
     });
     let index = items.indexOf(desiredItem);
-    items[index].quantity = 0;
+    items[index].quantity = 1;
     setCart({
       items: items.filter((item) => item.upc !== selectedItem.upc),
       status: 'not submitted',
