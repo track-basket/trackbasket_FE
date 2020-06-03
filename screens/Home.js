@@ -36,7 +36,6 @@ const Home = ({ navigation, route }) => {
       screen: 'Cart',
     });
   };
-  console.log('date ' + cart.created_date);
   return (
     <View style={styles.container}>
       {!user && (
