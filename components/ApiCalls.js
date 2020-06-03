@@ -98,7 +98,6 @@ export const getAtRiskUser = (id) => {
 };
 
 export const updateList = (list) => {
-  console.log(list.id);
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   let data = {
