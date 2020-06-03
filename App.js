@@ -157,6 +157,7 @@ const App = () => {
   const [assignedLists, setAssignedLists] = useState([]);
   const [singleList, setSingleList] = useState(null);
   const [allLists, setAllLists] = useState(null);
+  const [volunteersLists, setVolunteersLists] = useState([]);
 
   const retrieveData = async () => {
     try {
@@ -205,6 +206,8 @@ const App = () => {
         setSingleList,
         singleList,
         formatDate,
+        volunteersLists,
+        setVolunteersLists,
       }}
     >
       <UserProvider

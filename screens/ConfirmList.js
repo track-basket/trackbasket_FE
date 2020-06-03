@@ -23,18 +23,13 @@ const ConfirmList = ({ navigation, route }) => {
     });
   }, []);
 
-  useEffect(() => {
-    'list changed';
-  }, [list]);
-
   const { assignedLists, setAssignedLists, formatDate } = useContext(
     VolunteerContext,
   );
   const handleSubmit = () => {
-    list.id = list.at_risk_user_id;
     updateList(list).then((response) => {
-      list.status = response.data.attributes.status;
-      setAssignedLists([list, ...assignedLists]);
+      console.log(response);
+      setAssignedLists([list.at_risk_user_id, ...assignedLists]);
       navigation.navigate('VolunteerHome');
     });
   };

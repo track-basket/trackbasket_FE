@@ -1,32 +1,31 @@
 /* eslint-disable no-shadow */
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, View, Text, SectionList } from 'react-native';
 import VolunteerContext from '../volunteer-context';
 import VolunteerItems from '../components/VolunteerItems';
+import { getList, getAtRiskUser } from '../components/ApiCalls';
 
 const VolunteerShop = ({ route }) => {
-  const { assignedLists, setSingleList, setAssignedLists } = useContext(
-    VolunteerContext,
-  );
-  if (assignedLists) {
-    assignedLists.map((list) =>
-      list.items.sort((a, b) => {
-        return a.aisleNumber - b.aisleNumber;
-      }),
-    );
-  }
+  const {
+    assignedLists,
+    setSingleList,
+    singleList,
+    setAssignedLists,
+  } = useContext(VolunteerContext);
+
   if (route) {
     var singleListId = route.params.selectedList;
-    setSingleList(singleListId);
+    // console.log(singleListId);
   }
-  if (assignedLists) {
-    var selectedList = assignedLists.find(
-      (item) => item.listId === singleListId,
-    );
-  }
-  if (selectedList) {
-    selectedList = selectedList.items;
-  } else {
+  useEffect(() => {
+    getList(singleListId).then((data) => {
+      getAtRiskUser(singleListId).then((user) => {
+        setSingleList({ ...data, userDetails: user.data.attributes });
+      });
+    });
+  }, []);
+
+  if (!singleList) {
     return (
       <View>
         <Text>No selected list</Text>
@@ -34,7 +33,7 @@ const VolunteerShop = ({ route }) => {
     );
   }
 
-  const aisles = selectedList.reduce((acc, el) => {
+  const aisles = singleList.data.attributes.items.reduce((acc, el) => {
     if (!acc.includes(el.aisle_number)) {
       acc.push(el.aisle_number);
     }
@@ -43,13 +42,16 @@ const VolunteerShop = ({ route }) => {
   const DATA = aisles.map((aisle) => {
     return {
       title: 'Aisle ' + aisle,
-      data: selectedList.filter((item) => item.aisle_number === aisle),
+      data: singleList.data.attributes.items.filter(
+        (item) => item.aisle_number === aisle,
+      ),
     };
   });
 
   const handleClick = (upc, type) => {
-    const items = [...assignedLists];
-    const selectedList = items.find((list) => list.listId === singleListId);
+    const singleListCopy = { ...singleList };
+    const selectedList = singleListCopy.data.attributes;
+    // const selectedList = items.find((list) => list.listId === singleListId);
     const selectedItem = selectedList.items.find((item) => item.upc === upc);
     const index = selectedList.items.indexOf(selectedItem);
     if (type === 'acquired') {
@@ -64,8 +66,8 @@ const VolunteerShop = ({ route }) => {
         selectedList.items[index].acquired = false;
       }
     }
-
-    setAssignedLists(items);
+    singleListCopy.data.attributes = selectedList;
+    setSingleList(singleListCopy);
   };
   return (
     <View style={styles.container}>

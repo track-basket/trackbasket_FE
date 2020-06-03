@@ -88,6 +88,7 @@ export const getLists = () => {
 export const getList = (id) => {
   return fetch(BASE + '/shoppinglist/' + id)
     .then((response) => response.json())
+    .then((data) => ({ ...data, id }))
     .catch((error) => console.log('error', error));
 };
 
@@ -118,7 +119,7 @@ export const updateList = (list) => {
     body: raw,
     redirect: 'follow',
   };
-  return fetch(BASE + '/shoppinglist/' + list.id, requestOptions)
+  return fetch(BASE + '/shoppinglist/' + list.at_risk_user_id, requestOptions)
     .then((response) => response.json())
     .catch((error) => console.log('error', error));
 };

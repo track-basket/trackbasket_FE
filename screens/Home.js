@@ -120,9 +120,9 @@ const Home = ({ navigation, route }) => {
                 </Text>
                 {cart.created_date ? (
                   <Text style={styles.detailsText}>
-                    Submitted: {' '}
+                    Submitted:{' '}
                     {moment(formatDate(cart.created_date)).format(
-                      'h:m a, MMMM D',
+                      'h:mm a, MMMM D',
                     )}
                   </Text>
                 ) : (
