@@ -9,15 +9,11 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
 const VolunteerTask = ({ navigation }) => {
   // const [selectedValue, setSelectedValue] = useState('Pending');
-  const {
-    volunteer,
-    assignedLists,
-    setAssignedLists,
-    singleList,
-    formatDate,
-  } = useContext(VolunteerContext);
-  const selectedList = assignedLists.find((list) => list.listId === singleList);
-  if (!selectedList) {
+  const { assignedLists, singleList, formatDate } = useContext(
+    VolunteerContext,
+  );
+
+  if (!singleList) {
     return (
       <View>
         <Text>No selected list</Text>
@@ -34,33 +30,33 @@ const VolunteerTask = ({ navigation }) => {
             <View style={styles.infoField}>
               <Text style={styles.detailsKind}>
                 <Text style={styles.infoKind}>Name: </Text>
-                {selectedList.userDetails.name}
+                {singleList.userDetails.name}
               </Text>
             </View>
             <View style={styles.infoField}>
               <Text style={styles.detailsKind}>
                 <Text style={styles.infoKind}>Delivery Address: </Text>
-                {`${selectedList.userDetails.address}, ${
-                  selectedList.userDetails.city
-                } ${selectedList.userDetails.state.toUpperCase()}`}
+                {`${singleList.userDetails.address}, ${
+                  singleList.userDetails.city
+                } ${singleList.userDetails.state.toUpperCase()}`}
               </Text>
             </View>
             <View style={styles.infoField}>
               <Text style={styles.detailsKind}>
                 <Text style={styles.infoKind}>Store: </Text>
                 {`${
-                  selectedList.name === 'KINGSOOPERS'
+                  singleList.data.attributes.name === 'KINGSOOPERS'
                     ? 'King Soopers'
-                    : selectedList.name
-                }, ${selectedList.address}, ${
-                  selectedList.city
-                } ${selectedList.state.toUpperCase()}`}
+                    : singleList.data.attributes.name
+                }, ${singleList.data.attributes.address}, ${
+                  singleList.data.attributes.city
+                } ${singleList.data.attributes.state.toUpperCase()}`}
               </Text>
             </View>
             <View style={styles.infoField}>
               <Text style={styles.detailsKind}>
                 <Text style={styles.infoKind}>Ordered at: </Text>
-                {moment(formatDate(selectedList.created_date))
+                {moment(formatDate(singleList.data.attributes.created_date))
                   .subtract(6, 'hours')
                   .format('h:m a MMM. D, YYYY')}
               </Text>
@@ -68,7 +64,10 @@ const VolunteerTask = ({ navigation }) => {
             <View style={styles.infoField}>
               <Text style={styles.detailsKind}>
                 <Text style={styles.infoKind}>Items: </Text>
-                {selectedList.item_count}
+                {singleList.data.attributes.items.reduce((acc, el) => {
+                  acc += el.quantity;
+                  return acc;
+                }, 0)}
               </Text>
             </View>
           </View>
@@ -76,10 +75,10 @@ const VolunteerTask = ({ navigation }) => {
             <View style={styles.statusRow}>
               <Text style={[styles.infoKind, styles.detailsKind]}>Status:</Text>
               <StatusBadge
-                status={selectedList.status}
+                status={singleList.data.attributes.status}
                 onPress={() =>
                   navigation.navigate('Change Status', {
-                    item: selectedList,
+                    item: singleList,
                   })
                 }
               />
@@ -97,7 +96,7 @@ const VolunteerTask = ({ navigation }) => {
               }}
               onPress={() =>
                 navigation.navigate('Change Status', {
-                  item: selectedList,
+                  item: singleList,
                 })
               }
             />
@@ -107,7 +106,7 @@ const VolunteerTask = ({ navigation }) => {
             text="Abandon Task"
             onPress={() =>
               navigation.navigate('Confirm Delete', {
-                item: selectedList,
+                item: singleList,
               })
             }
             customStyles={{ backgroundColor: 'red', width: 250 }}
