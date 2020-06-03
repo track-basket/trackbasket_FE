@@ -38,6 +38,7 @@ const Home = ({ navigation, route }) => {
   };
   return (
     <View style={styles.container}>
+      {!!cart.items.length && <View style={styles.padding}></View>}
       {!user && (
         <View style={styles.innerContainer}>
           <Logo />
@@ -90,7 +91,7 @@ const Home = ({ navigation, route }) => {
           )}
           {!!cart.items.length && (
             <ScrollView
-              contentContainerStyle={styles.currentOrder}
+              contentContainerStyle={styles.refresh}
               refreshControl={
                 <RefreshControl
                   refreshing={isRefreshing}
@@ -133,7 +134,7 @@ const Home = ({ navigation, route }) => {
           {!cart.items.length && (
             <TouchableOpacity onPress={() => navigation.navigate('AtRiskTabs')}>
               <View style={styles.button}>
-                <Text style={styles.buttonText}>Start Shopping</Text>
+                <Text style={styles.buttonText}>Start shopping</Text>
               </View>
             </TouchableOpacity>
           )}
@@ -183,7 +184,7 @@ const styles = StyleSheet.create({
   innerContainer: {
     marginBottom: 68,
     alignItems: 'center',
-    marginTop: 100,
+    // marginTop: 100,
   },
   secondaryText: {
     fontSize: 18,
@@ -233,7 +234,6 @@ const styles = StyleSheet.create({
   },
   editBtn: {
     backgroundColor: 'lightgray',
-    borderRadius: 30,
     paddingVertical: 10,
     paddingHorizontal: 20,
     alignItems: 'center',
@@ -259,6 +259,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     alignItems: 'center',
     color: 'lightgray',
+  },
+  padding: {
+    height: 100,
   },
 });
 
