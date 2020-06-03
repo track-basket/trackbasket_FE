@@ -11,9 +11,13 @@ import GroceryItem from '../components/GroceryItem';
 import { Button } from '../components/Button';
 
 const Cart = ({ navigation, route }) => {
-  const { removeFromCart, addToCart, cart, submitOrder } = useContext(
-    UserContext,
-  );
+  const {
+    removeFromCart,
+    addToCart,
+    cart,
+    submitOrder,
+    editOrder,
+  } = useContext(UserContext);
   const toggleCartItem = (upc, quantity) => {
     let selectedItem = cart.items.find((item) => item.upc === upc);
     if (cart.items.find((item) => item.upc === upc)) {
@@ -34,6 +38,11 @@ const Cart = ({ navigation, route }) => {
   const submitShoppingList = () => {
     //apicalls method to post shopping list
     submitOrder();
+    navigation.navigate('Home', { msg: 'Your order has been submitted!' });
+  };
+  const editShoppingList = () => {
+    //apicalls method to post shopping list
+    editOrder();
     navigation.navigate('Home', { msg: 'Your order has been submitted!' });
   };
   if (cart && cart.items.length > 0) {
@@ -76,7 +85,7 @@ const Cart = ({ navigation, route }) => {
                 onPress={() => submitShoppingList()}
                 style={styles.submitBtn}
               >
-                <Button text="Save Order" onPress={submitShoppingList} />
+                <Button text="Save Order" onPress={editShoppingList} />
               </TouchableOpacity>
             )}
           </View>
