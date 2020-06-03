@@ -28,9 +28,9 @@ const VolunteerTabs = ({ navigation, route }) => {
     if (!totalItemsLeft && !list.completed) {
       navigation.navigate('CompletedModal');
       const items = [...assignedLists];
-      items.find(
-        (list) => list.listId === route.params.params.selectedList,
-      ).completed = true;
+      // items.find(
+      //   (list) => list.listId === route.params.params.selectedList,
+      // ).completed = true;
       setAssignedLists(items);
     }
   }
