@@ -8,10 +8,8 @@ const GroceryItem = ({
   price,
   image_url,
   description,
-  aisleNumber,
   clickHandler,
   quantity,
-  qc,
 }) => {
   const { cart, updateCart } = useContext(UserContext);
   const [itemCount, setItemCount] = useState(quantity);
@@ -87,9 +85,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   imgBorder: {
-    // borderWidth: 1,
-    // borderRadius: 2,
-    // borderColor: '#DEE078',
     marginRight: 20,
     backgroundColor: 'white',
   },
