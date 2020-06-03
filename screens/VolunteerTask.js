@@ -106,7 +106,7 @@ const VolunteerTask = ({ navigation }) => {
             text="Abandon Task"
             onPress={() =>
               navigation.navigate('Confirm Delete', {
-                // item: selectedList,
+                item: singleList,
               })
             }
             customStyles={{ backgroundColor: 'red', width: 250 }}
