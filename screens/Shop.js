@@ -16,8 +16,8 @@ const Shop = () => {
       (item) => item.upc === upc,
     );
     if (cart.items.find((item) => item.upc === upc)) {
-      selectedItem.quantity = 1;
       removeFromCart(selectedItem);
+      selectedItem.quantity = 1;
     } else {
       selectedItem.quantity = quantity;
       addToCart(selectedItem);
