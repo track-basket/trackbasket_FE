@@ -27,7 +27,9 @@ const ConfirmList = ({ navigation, route }) => {
     'list changed';
   }, [list]);
 
-  const { assignedLists, setAssignedLists } = useContext(VolunteerContext);
+  const { assignedLists, setAssignedLists, formatDate } = useContext(
+    VolunteerContext,
+  );
   const handleSubmit = () => {
     list.id = list.at_risk_user_id;
     updateList(list).then((response) => {
@@ -47,6 +49,7 @@ const ConfirmList = ({ navigation, route }) => {
       return route.params.infoType;
     }
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.containerInner}>
@@ -78,7 +81,10 @@ const ConfirmList = ({ navigation, route }) => {
           <View style={styles.orderInfo}>
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Ordered:</Text>{' '}
-              {list.userDetails && moment(list.created_at).format('MMM D')}
+              {list.userDetails &&
+                moment(formatDate(list.created_at))
+                  .subtract(6, 'hours')
+                  .format('MMM. D h:mm a')}
             </Text>
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Items:</Text>{' '}

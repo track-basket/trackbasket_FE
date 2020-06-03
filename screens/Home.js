@@ -16,7 +16,7 @@ import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
 
 const Home = ({ navigation, route }) => {
-  const { user, cart, setCart } = useContext(UserContext);
+  const { user, cart, setCart, formatDate } = useContext(UserContext);
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const handleRefresh = useCallback(async () => {
@@ -24,9 +24,6 @@ const Home = ({ navigation, route }) => {
     getList(user.id).then((result) => {
       if (result.message !== 'Internal Server Error') {
         let resultCart = result.data.attributes;
-        const [date, time] = resultCart.created_date.split(' ');
-        const [day, month, year] = date.split('/');
-        resultCart.created_date = `${year}-${month}-${day} ${time}`;
         setCart(resultCart);
       }
     });
@@ -39,9 +36,9 @@ const Home = ({ navigation, route }) => {
       screen: 'Cart',
     });
   };
-
   return (
     <View style={styles.container}>
+      {!!cart.items.length && <View style={styles.padding}></View>}
       {!user && (
         <View style={styles.innerContainer}>
           <Logo />
@@ -87,14 +84,14 @@ const Home = ({ navigation, route }) => {
             onPress={() => navigation.navigate('Your Profile')}
             style={styles.editProfile}
           >
-            <Text style={styles.editProfileText}>Edit Profile</Text>
+            <Text style={styles.editProfileText}>Edit profile</Text>
           </TouchableOpacity>
           {!cart.items.length && (
-            <Text style={styles.orders}>No Current Orders</Text>
+            <Text style={styles.orders}>No current order</Text>
           )}
           {!!cart.items.length && (
             <ScrollView
-              contentContainerStyle={styles.currentOrder}
+              contentContainerStyle={styles.refresh}
               refreshControl={
                 <RefreshControl
                   refreshing={isRefreshing}
@@ -102,14 +99,16 @@ const Home = ({ navigation, route }) => {
                 />
               }
             >
-              <Text style={styles.orders}>Current Order</Text>
+              <Text style={styles.orders}>Current order</Text>
               <View style={styles.orderStatus}>
                 <StatusBadge status={cart.status} />
-                <TouchableOpacity style={styles.editBtn}>
-                  <Text style={styles.editBtnText} onPress={handleEditOrder}>
-                    Edit Order
-                  </Text>
-                </TouchableOpacity>
+                {cart.status === 'pending' && (
+                  <TouchableOpacity style={styles.editBtn}>
+                    <Text style={styles.editBtnText} onPress={handleEditOrder}>
+                      Edit order
+                    </Text>
+                  </TouchableOpacity>
+                )}
               </View>
               <View style={styles.details}>
                 <Text style={styles.detailsText}>
@@ -121,7 +120,10 @@ const Home = ({ navigation, route }) => {
                 </Text>
                 <Text style={styles.detailsText}>
                   Submitted:{' '}
-                  {moment(cart.created_date).format('h:m a MMM. D, YYYY')}
+                  {cart.created_date &&
+                    moment(formatDate(cart.created_date)).format(
+                      'h:m a, MMMM D',
+                    )}
                 </Text>
               </View>
               <Text style={styles.pullToRefresh}>
@@ -132,7 +134,7 @@ const Home = ({ navigation, route }) => {
           {!cart.items.length && (
             <TouchableOpacity onPress={() => navigation.navigate('AtRiskTabs')}>
               <View style={styles.button}>
-                <Text style={styles.buttonText}>Start Shopping</Text>
+                <Text style={styles.buttonText}>Start shopping</Text>
               </View>
             </TouchableOpacity>
           )}
@@ -200,7 +202,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginTop: 10,
     alignItems: 'center',
-    borderRadius: 30,
   },
   editProfileText: {
     color: '#59DE7E',
@@ -233,7 +234,6 @@ const styles = StyleSheet.create({
   },
   editBtn: {
     backgroundColor: 'lightgray',
-    borderRadius: 30,
     paddingVertical: 10,
     paddingHorizontal: 20,
     alignItems: 'center',
@@ -259,6 +259,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     alignItems: 'center',
     color: 'lightgray',
+  },
+  padding: {
+    height: 100,
   },
 });
 

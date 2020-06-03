@@ -59,7 +59,6 @@ const Shop = () => {
       return false;
     }
   };
-  console.log(currentSearch);
   return (
     <View style={styles.container}>
       <View style={styles.innercontainer}>

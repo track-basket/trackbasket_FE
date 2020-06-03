@@ -52,12 +52,12 @@ exports[`renders correctly 1`] = `
             items={
               Array [
                 Object {
-                  "label": "Items (most to least)",
+                  "label": "Items (most to fewest)",
                   "textColor": undefined,
                   "value": "quantity-ascending",
                 },
                 Object {
-                  "label": "Items (least to most)",
+                  "label": "Items (fewest to most)",
                   "textColor": undefined,
                   "value": "quantity-descending",
                 },
@@ -72,12 +72,12 @@ exports[`renders correctly 1`] = `
                   "value": "distance-descending",
                 },
                 Object {
-                  "label": "Days Old (oldest to newest)",
+                  "label": "Days old (oldest to newest)",
                   "textColor": undefined,
                   "value": "daysold-ascending",
                 },
                 Object {
-                  "label": "Days Old (newest to oldest)",
+                  "label": "Days old (newest to oldest)",
                   "textColor": undefined,
                   "value": "daysold-descending",
                 },

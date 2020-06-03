@@ -55,10 +55,10 @@ const VolunteerHome = ({ navigation }) => {
             onPress={() => navigation.navigate('Volunteer Profile')}
             style={styles.editProfile}
           >
-            <Text style={styles.editProfileText}>Edit Profile</Text>
+            <Text style={styles.editProfileText}>Edit profile</Text>
           </TouchableOpacity>
           <Button
-            text="Find New List"
+            text="Find new list"
             onPress={() => navigation.navigate('SelectList')}
             customStyles={{ marginTop: 20, width: 250 }}
           />
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   },
   orders: {
     fontSize: 26,
-    marginBottom: 20,
+    // marginBottom: 20,
     textAlign: 'center',
     fontWeight: 'bold',
   },
@@ -255,7 +255,6 @@ const styles = StyleSheet.create({
   },
   volunteerOpportunitiesSubtitle: {
     fontSize: 20,
-    fontWeight: 'bold',
     textAlign: 'center',
   },
   numAge: {

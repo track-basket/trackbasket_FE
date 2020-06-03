@@ -53,7 +53,7 @@ const LoginModal = ({ navigation }) => {
         phone,
         cart,
         state,
-        id: Constants.deviceId,
+        id: Date.now(),
       };
       setNewUser(info);
       if (!user) {
