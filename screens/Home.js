@@ -16,7 +16,7 @@ import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
 
 const Home = ({ navigation, route }) => {
-  const { user, cart, setCart } = useContext(UserContext);
+  const { user, cart, setCart, formatDate } = useContext(UserContext);
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const handleRefresh = useCallback(async () => {
@@ -24,9 +24,6 @@ const Home = ({ navigation, route }) => {
     getList(user.id).then((result) => {
       if (result.message !== 'Internal Server Error') {
         let resultCart = result.data.attributes;
-        const [date, time] = resultCart.created_date.split(' ');
-        const [day, month, year] = date.split('/');
-        resultCart.created_date = `${year}-${month}-${day} ${time}`;
         setCart(resultCart);
       }
     });
@@ -39,7 +36,7 @@ const Home = ({ navigation, route }) => {
       screen: 'Cart',
     });
   };
-
+  console.log('date ' + cart.created_date);
   return (
     <View style={styles.container}>
       {!user && (
@@ -121,7 +118,10 @@ const Home = ({ navigation, route }) => {
                 </Text>
                 <Text style={styles.detailsText}>
                   Submitted:{' '}
-                  {moment(cart.created_date).format('h:m a MMM. D, YYYY')}
+                  {cart.created_date &&
+                    moment(formatDate(cart.created_date)).format(
+                      'h:m a MMM. D, YYYY',
+                    )}
                 </Text>
               </View>
               <Text style={styles.pullToRefresh}>
