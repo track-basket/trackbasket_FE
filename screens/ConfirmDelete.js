@@ -16,7 +16,7 @@ const ConfirmDelete = ({ navigation, route }) => {
     const updatedList = {
       status: 'pending',
       items: singleList.data.attributes.items,
-      id: singleList.id,
+      at_risk_user_id: singleList.id,
     };
     updateList(updatedList);
     let assignedListsCopy = [...assignedLists];
