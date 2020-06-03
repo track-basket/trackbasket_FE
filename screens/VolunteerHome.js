@@ -1,8 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import VolunteerContext from '../volunteer-context';
 import { Button } from '../components/Button';
 import StatusBadge from '../components/StatusBadge';
+import moment from 'moment';
 import {
   StyleSheet,
   Text,
@@ -12,6 +13,8 @@ import {
 } from 'react-native';
 import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
+import { getList } from '../components/ApiCalls';
+
 // import { AsyncStorage } from 'react-native';
 
 function calcCrow(lat1, lon1, lat2, lon2) {
@@ -35,7 +38,8 @@ function toRad(Value) {
 }
 
 const VolunteerHome = ({ navigation }) => {
-  const { volunteer, assignedLists } = useContext(VolunteerContext);
+  const { volunteer, assignedLists, formatDate } = useContext(VolunteerContext);
+  const [volunteersLists, setVolunteersLists] = useState([]);
   const getName = () => {
     if (volunteer) {
       return volunteer.name;
@@ -43,6 +47,19 @@ const VolunteerHome = ({ navigation }) => {
       return '';
     }
   };
+  const handlePress = (item) => {
+    navigation.navigate('VolunteerTabs', {
+      screen: 'Volunteer Shop',
+      params: { selectedList: item.id },
+    });
+  };
+  useEffect(() => {
+    const fetchedLists = assignedLists.map((list) => {
+      return getList(list);
+    });
+    Promise.all(fetchedLists).then((data) => setVolunteersLists(data));
+  }, [assignedLists]);
+
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
       <View style={styles.container}>
@@ -62,24 +79,31 @@ const VolunteerHome = ({ navigation }) => {
             onPress={() => navigation.navigate('SelectList')}
             customStyles={{ marginTop: 20, width: 250 }}
           />
-          {assignedLists && (
+          {volunteersLists && (
             <View style={styles.assignedLists}>
               <Text style={styles.orders}>Your lists</Text>
-              {assignedLists.map((item, i) => {
+              {volunteersLists.map((item, i) => {
                 return (
                   <View key={i} style={styles.item}>
                     <View style={styles.details}>
                       <Text
                         style={[styles.detailsText, styles.detailsTextName]}
                       >
-                        Name: {item.userDetails.name}
+                        Store: {item.data.attributes.address}
                       </Text>
                       <View style={styles.numAge}>
                         <Text style={styles.detailsText}>
-                          Submitted: {item.age}
+                          Submitted:{' '}
+                          {moment(formatDate(item.data.attributes.created_date))
+                            .subtract(6, 'hours')
+                            .fromNow()}
                         </Text>
                         <Text style={styles.detailsText}>
-                          Items: {item.item_count}
+                          Items:{' '}
+                          {item.data.attributes.items.reduce((acc, el) => {
+                            acc += el.quantity;
+                            return acc;
+                          }, 0)}
                         </Text>
                       </View>
                     </View>
@@ -88,16 +112,11 @@ const VolunteerHome = ({ navigation }) => {
                         onPress={() =>
                           navigation.navigate('Change Status', { item })
                         }
-                        status={item.status}
+                        status={item.data.attributes.status}
                       />
                       <TouchableOpacity
                         style={styles.editBtn}
-                        onPress={() =>
-                          navigation.navigate('VolunteerTabs', {
-                            screen: 'Volunteer Shop',
-                            params: { selectedList: item.listId },
-                          })
-                        }
+                        onPress={() => handlePress(item)}
                       >
                         <Text style={styles.editBtnText}>SHOP ORDER</Text>
                       </TouchableOpacity>
