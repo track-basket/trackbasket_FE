@@ -3,7 +3,6 @@ import { Text, TouchableOpacity, StyleSheet, View } from 'react-native';
 import VolunteerContext from '../volunteer-context';
 
 const StatusBadge = ({ onPress, status, customStyles, highlighted }) => {
-  const { assignedLists, setAssignedLists } = useContext(VolunteerContext);
   let color;
   let highlightStyle;
   if (status === 'pending') {
