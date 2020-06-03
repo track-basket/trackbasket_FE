@@ -122,7 +122,7 @@ const Home = ({ navigation, route }) => {
                   Submitted:{' '}
                   {cart.created_date &&
                     moment(formatDate(cart.created_date)).format(
-                      'h:m a, MMMM D',
+                      'h:mm a, MMMM D',
                     )}
                 </Text>
               </View>
