@@ -40,9 +40,9 @@ const GroceryItem = ({
   };
   const getButtonText = () => {
     if (cart && cart.items.find((item) => item.upc === upc)) {
-      return 'Remove From Cart';
+      return 'Remove from cart';
     } else {
-      return 'Add To Cart';
+      return 'Add to cart';
     }
   };
   return (
