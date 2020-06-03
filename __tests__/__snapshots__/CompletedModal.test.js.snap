@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "flex": 1,
+      "justifyContent": "center",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "marginBottom": 50,
+        "width": 300,
+      }
+    }
+  >
+    <View>
+      <Text />
+    </View>
+    <Text
+      style={
+        Object {
+          "fontSize": 30,
+          "marginBottom": 20,
+          "textAlign": "center",
+        }
+      }
+    >
+      You have shopped all items on this list!
+    </Text>
+    <View
+      accessible={true}
+      focusable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "alignSelf": "center",
+          "backgroundColor": "#59DE7E",
+          "marginTop": 20,
+          "opacity": 1,
+          "paddingHorizontal": 40,
+          "paddingVertical": 10,
+          "width": 220,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "white",
+              "fontFamily": "HelveticaNeue-Bold",
+              "fontSize": 24,
+              "textAlign": "center",
+            },
+            undefined,
+          ]
+        }
+      >
+        CLOSE
+      </Text>
+    </View>
+  </View>
+</View>
+`;

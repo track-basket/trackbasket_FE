@@ -95,6 +95,7 @@ exports[`renders correctly 1`] = `
             Store:
           </Text>
            
+          undefined, undefined, undefined undefined
         </Text>
         <Text
           style={
@@ -134,7 +135,6 @@ exports[`renders correctly 1`] = `
             Ordered:
           </Text>
            
-          Jun 1
         </Text>
         <Text
           style={
@@ -153,7 +153,6 @@ exports[`renders correctly 1`] = `
             Items:
           </Text>
            
-          ;
         </Text>
       </View>
     </View>
