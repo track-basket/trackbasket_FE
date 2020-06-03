@@ -20,7 +20,7 @@ import { UserProvider } from './user-context';
 import { VolunteerProvider } from './volunteer-context';
 import * as Location from 'expo-location';
 import moment from 'moment';
-import { postList } from './components/ApiCalls';
+import { postList, updateList } from './components/ApiCalls';
 
 const RootStack = createStackNavigator();
 const MainStack = createStackNavigator();
@@ -76,8 +76,8 @@ const App = () => {
   const addToCart = (newItem) =>
     setCart(
       cart.items.length
-        ? { items: [...cart.items, newItem], status: 'not submitted' }
-        : { items: [newItem], status: 'not submitted' },
+        ? { items: [...cart.items, newItem], status: cart.status }
+        : { items: [newItem], status: cart.status },
     );
   const removeFromCart = (selectedItem) => {
     let items = [...cart.items];
@@ -90,6 +90,15 @@ const App = () => {
       items: items.filter((item) => item.upc !== selectedItem.upc),
       status: 'not submitted',
     });
+  };
+  const formatDate = (malformedDate) => {
+    if (malformedDate.charAt(2) === '/') {
+      const [date, time] = malformedDate.split(' ');
+      const [day, month, year] = date.split('/');
+      return `${year}-${month}-${day} ${time}`;
+    } else {
+      return malformedDate;
+    }
   };
   const updateCart = (updatedItem, operator) => {
     let items = [...cart.items];
@@ -109,6 +118,23 @@ const App = () => {
   const setNewUser = (user) => setUser(user);
   const submitOrder = () => {
     postList({
+      items: cart.items,
+      status: 'pending',
+      id: user.id,
+    }).then((res) => {
+      let resultCart = res.data.attributes;
+      let [date, time] = resultCart.created_date.split(' ');
+
+      const [day, month, year] = date.split('/');
+      const newTime = moment(`${year}-${month}-${day} ${time}`)
+        .subtract(6, 'hours')
+        .format('YYYY-MM-DD HH:mm');
+      resultCart.created_date = newTime;
+      setCart(resultCart);
+    });
+  };
+  const editOrder = () => {
+    updateList({
       items: cart.items,
       status: 'pending',
       id: user.id,
@@ -178,6 +204,7 @@ const App = () => {
         setAllLists,
         setSingleList,
         singleList,
+        formatDate,
       }}
     >
       <UserProvider
@@ -191,8 +218,10 @@ const App = () => {
           installationId,
           setInstallationId,
           submitOrder,
+          editOrder,
           updateCart,
           setCart,
+          formatDate,
         }}
       >
         <NavigationContainer>
