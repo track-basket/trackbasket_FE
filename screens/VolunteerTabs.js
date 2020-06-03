@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import VolunteerContext from '../volunteer-context';
 import { MaterialIcons } from 'react-native-vector-icons';
@@ -9,29 +9,31 @@ import VolunteerTask from './VolunteerTask';
 const Tab = createBottomTabNavigator();
 
 const VolunteerTabs = ({ navigation, route }) => {
-  const { singleList, assignedLists, setAssignedLists } = useContext(
-    VolunteerContext,
-  );
+  const {
+    singleList,
+    setSingleList,
+    assignedLists,
+    setAssignedLists,
+  } = useContext(VolunteerContext);
+  useEffect(() => {
+    console.log('singleList');
+    console.log(singleList);
+  }, [singleList]);
 
-  const list = assignedLists.find(
-    (list) => list.listId === route.params.params.selectedList,
-  );
   let totalItemsLeft;
-  if (list) {
-    let itemsLeft = list.items.filter(
+  if (singleList) {
+    let itemsLeft = singleList.data.attributes.items.filter(
       (item) => !item.acquired && !item.unavailable,
     );
     totalItemsLeft = itemsLeft.reduce((acc, el) => {
       acc += el.quantity;
       return acc;
     }, 0);
-    if (!totalItemsLeft && !list.completed) {
+    if (!totalItemsLeft && !singleList.completed) {
       navigation.navigate('CompletedModal');
-      const items = [...assignedLists];
-      // items.find(
-      //   (list) => list.listId === route.params.params.selectedList,
-      // ).completed = true;
-      setAssignedLists(items);
+      const list = { ...singleList };
+      list.completed = true;
+      setSingleList(list);
     }
   }
 
