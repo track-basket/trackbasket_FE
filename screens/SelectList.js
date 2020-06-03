@@ -28,7 +28,7 @@ function toRad(Value) {
 const SelectList = ({ navigation }) => {
   const [listData, setListData] = useState([]);
   const [sort, setSort] = useState('quantity-ascending');
-  const { volunteer, assignedLists, formatDate } = useContext(VolunteerContext);
+  const { volunteer, formatDate } = useContext(VolunteerContext);
 
   useEffect(() => {
     getLists().then((response) => {
@@ -140,7 +140,6 @@ const SelectList = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    // justifyContent: 'center',
     flex: 1,
     backgroundColor: 'white',
     marginTop: 0,

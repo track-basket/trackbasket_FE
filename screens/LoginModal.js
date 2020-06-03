@@ -117,18 +117,18 @@ const LoginModal = ({ navigation }) => {
             value={name}
           />
           <TextField
-            label="Delivery Address"
-            placeholder="Delivery Address"
-            onChangeText={setAddress}
-            value={address}
-          />
-          <TextField
             label="Phone Number"
             placeholder="Phone Number"
             keyboardType="numeric"
             onChangeText={setPhone}
             value={initiateFormatter()}
             maxLength={14}
+          />
+          <TextField
+            label="Delivery Address"
+            placeholder="Delivery Address"
+            onChangeText={setAddress}
+            value={address}
           />
           <TextField
             label="Zip Code"

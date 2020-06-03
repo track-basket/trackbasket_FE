@@ -17,7 +17,6 @@ import TimeOfDay from '../components/TimeOfDay';
 
 const Home = ({ navigation, route }) => {
   const { user, cart, setCart, formatDate } = useContext(UserContext);
-
   const [isRefreshing, setIsRefreshing] = useState(false);
   const handleRefresh = useCallback(async () => {
     setIsRefreshing(true);
