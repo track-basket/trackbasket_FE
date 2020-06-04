@@ -13,6 +13,7 @@ Front end:
 
 * React Native
 * React Navigation
+* React Hooks/Context API
 * Expo
 * React Native Testing Library 
 * Jest
