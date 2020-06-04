@@ -6,7 +6,7 @@ import moment from 'moment';
 import { getLists } from '../components/ApiCalls';
 
 function calcCrow(lat1, lon1, lat2, lon2) {
-  var R = 6371; // km
+  var R = 6371;
   var dLat = toRad(lat2 - lat1);
   var dLon = toRad(lon2 - lon1);
   var lat1 = toRad(lat1);
@@ -150,7 +150,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-    // marginBottom: 10,
   },
   sortTitle: {
     textAlign: 'center',
@@ -162,8 +161,6 @@ const styles = StyleSheet.create({
   picker: {
     width: 200,
     height: 44,
-    // borderColor: 'black',
-    // borderWidth: 1,
   },
   onePickerItem: {
     height: 44,

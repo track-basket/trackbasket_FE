@@ -7,10 +7,9 @@ import { getList, getAtRiskUser } from '../components/ApiCalls';
 
 const VolunteerShop = ({ route }) => {
   const { setSingleList, singleList } = useContext(VolunteerContext);
-
+  let singleListId;
   if (route) {
-    var singleListId = route.params.selectedList;
-    // console.log(singleListId);
+    singleListId = route.params.selectedList;
   }
   useEffect(() => {
     getList(singleListId).then((data) => {

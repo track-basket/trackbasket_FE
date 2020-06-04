@@ -20,6 +20,9 @@ const VolunteerTabs = ({ navigation, route }) => {
       acc += el.quantity;
       return acc;
     }, 0);
+    if (!!singleList.completed) {
+      totalItemsLeft = 0;
+    }
     if (!totalItemsLeft && !singleList.completed) {
       navigation.navigate('CompletedModal');
       const list = { ...singleList };

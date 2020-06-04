@@ -151,7 +151,6 @@ const App = () => {
     try {
       const value = await AsyncStorage.getItem('assignedLists');
       if (value !== null) {
-        // We have data!!
         console.log('retrieving: ' + JSON.parse(value).lists);
         setAssignedLists(JSON.parse(value).lists);
       }

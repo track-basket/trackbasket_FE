@@ -163,7 +163,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
     marginTop: 10,
-    // justifyContent: 'center',
   },
   statusText: {
     fontSize: 16,

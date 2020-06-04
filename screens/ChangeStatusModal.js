@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import StatusBadge from '../components/StatusBadge';
 import VolunteerContext from '../volunteer-context';
@@ -24,6 +24,7 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
         ...response,
         id: item.id,
         userDetails: item.userDetails,
+        completed: singleList && !!singleList.completed,
       });
 
       const newVolunteersLists = [...volunteersLists];

@@ -52,7 +52,7 @@ const LoginModal = ({ navigation }) => {
         phone,
         cart,
         state,
-        id: Date.now(),
+        id: phone + address,
       };
       if (!user) {
         atRiskProfileHandler(info, 'POST')
@@ -65,10 +65,8 @@ const LoginModal = ({ navigation }) => {
                 [
                   {
                     text: 'Cancel',
-                    onPress: () => console.log('Cancel Pressed'),
                     style: 'cancel',
                   },
-                  { text: 'OK', onPress: () => console.log('OK Pressed') },
                 ],
                 { cancelable: false },
               );

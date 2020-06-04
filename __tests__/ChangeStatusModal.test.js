@@ -3,7 +3,6 @@ import ChangeStatusModal from '../screens/ChangeStatusModal';
 import renderer from 'react-test-renderer';
 
 test('renders correctly', () => {
-  // const navigation = jest.fn();
   const tree = renderer
     .create(
       <ChangeStatusModal
