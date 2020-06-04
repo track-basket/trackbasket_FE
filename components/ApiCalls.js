@@ -1,9 +1,9 @@
 const BASE = 'https://trackbasket.herokuapp.com';
 
 export const atRiskProfileHandler = (user, methodType) => {
-  var myHeaders = new Headers();
+  let myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
-  var raw = JSON.stringify({
+  let raw = JSON.stringify({
     name: user.name,
     address: user.address,
     phone_number: user.phone,
@@ -11,7 +11,7 @@ export const atRiskProfileHandler = (user, methodType) => {
     city: user.city,
     state: user.state,
   });
-  var requestOptions = {
+  let requestOptions = {
     method: methodType,
     headers: myHeaders,
     body: raw,
@@ -23,13 +23,13 @@ export const atRiskProfileHandler = (user, methodType) => {
 };
 
 export const volunteerProfileHandler = (user, methodType) => {
-  var myHeaders = new Headers();
+  let myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
-  var raw = JSON.stringify({
+  let raw = JSON.stringify({
     name: user.name,
     phone_number: user.phone,
   });
-  var requestOptions = {
+  let requestOptions = {
     method: methodType,
     headers: myHeaders,
     body: raw,
@@ -41,9 +41,9 @@ export const volunteerProfileHandler = (user, methodType) => {
 };
 
 export const fetchItems = (item, userId) => {
-  var myHeaders = new Headers();
+  let myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
-  var requestOptions = {
+  let requestOptions = {
     method: 'GET',
     headers: myHeaders,
     redirect: 'follow',
@@ -55,13 +55,13 @@ export const fetchItems = (item, userId) => {
 };
 
 export const postVolunteer = async (user) => {
-  var myHeaders = new Headers();
+  let myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
-  var raw = JSON.stringify({
+  let raw = JSON.stringify({
     name: user.name,
     phone_number: user.phone,
   });
-  var requestOptions = {
+  let requestOptions = {
     method: 'POST',
     headers: myHeaders,
     body: raw,
@@ -93,7 +93,7 @@ export const getAtRiskUser = (id) => {
 };
 
 export const updateList = (list) => {
-  var myHeaders = new Headers();
+  let myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   let data = {
     status: list.status,
@@ -106,8 +106,8 @@ export const updateList = (list) => {
       upc: item.upc,
     })),
   };
-  var raw = JSON.stringify(data);
-  var requestOptions = {
+  let raw = JSON.stringify(data);
+  let requestOptions = {
     method: 'PATCH',
     headers: myHeaders,
     body: raw,
@@ -119,13 +119,13 @@ export const updateList = (list) => {
 };
 
 export const postList = (list) => {
-  var myHeaders = new Headers();
+  let myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
-  var raw = JSON.stringify({
+  let raw = JSON.stringify({
     status: list.status,
     items: list.items,
   });
-  var requestOptions = {
+  let requestOptions = {
     method: 'POST',
     headers: myHeaders,
     body: raw,
