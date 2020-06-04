@@ -65,10 +65,8 @@ const LoginModal = ({ navigation }) => {
                 [
                   {
                     text: 'Cancel',
-                    onPress: () => console.log('Cancel Pressed'),
                     style: 'cancel',
                   },
-                  { text: 'OK', onPress: () => console.log('OK Pressed') },
                 ],
                 { cancelable: false },
               );
