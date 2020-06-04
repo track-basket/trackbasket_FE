@@ -9,16 +9,7 @@ import VolunteerTask from './VolunteerTask';
 const Tab = createBottomTabNavigator();
 
 const VolunteerTabs = ({ navigation, route }) => {
-  const {
-    singleList,
-    setSingleList,
-    assignedLists,
-    setAssignedLists,
-  } = useContext(VolunteerContext);
-  useEffect(() => {
-    console.log('singleList');
-    console.log(singleList);
-  }, [singleList]);
+  const { singleList, setSingleList } = useContext(VolunteerContext);
 
   let totalItemsLeft;
   if (singleList) {
