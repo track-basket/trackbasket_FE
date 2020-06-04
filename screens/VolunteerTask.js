@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import VolunteerContext from '../volunteer-context';
 import StatusBadge from '../components/StatusBadge';
 import { Button } from '../components/Button';
@@ -8,10 +8,7 @@ import moment from 'moment';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
 const VolunteerTask = ({ navigation }) => {
-  // const [selectedValue, setSelectedValue] = useState('Pending');
-  const { assignedLists, singleList, formatDate } = useContext(
-    VolunteerContext,
-  );
+  const { singleList, formatDate } = useContext(VolunteerContext);
 
   if (!singleList) {
     return (
