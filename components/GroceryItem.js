@@ -17,7 +17,7 @@ const GroceryItem = ({
     if (cart && cart.items.find((item) => item.upc === upc)) {
       return quantity;
     } else {
-      return 1;
+      return itemCount;
     }
   };
   const quantityController = (operator) => {
