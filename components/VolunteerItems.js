@@ -137,9 +137,6 @@ const styles = StyleSheet.create({
   },
   bottomBlock: {
     marginHorizontal: 10,
-    // flexDirection: 'row',
-    // justifyContent: 'center',
-    // alignItems: 'center',
   },
   options: {
     flexDirection: 'row',
@@ -150,6 +147,9 @@ const styles = StyleSheet.create({
   iconContainer: {
     padding: 5,
     borderRadius: 100,
+  },
+  quantityText: {
+    fontSize: 18,
   },
 });
 
