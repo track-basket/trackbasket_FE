@@ -44,10 +44,13 @@ This GIF shows the at-risk user path, including registration, editing registrati
 
 ![vbzzGYtMUq](https://user-images.githubusercontent.com/4350550/83814951-7fe39c00-a67c-11ea-9c76-34716eaa330b.gif)
 
-This GIF shows an at-risk user submitting a cart. It also shows the volunteer path, including searching and sorting volunteer opportunities, choosing a list, shopping a list, changing its status and abandoning a task.
+This GIF shows an at-risk user submitting a cart. It also shows the volunteer path, including searching and sorting volunteer opportunities and choosing a list, 
 
 ![Fq4vHJEapy](https://user-images.githubusercontent.com/4350550/83815530-a0f8bc80-a67d-11ea-9929-0c6490f93b93.gif)
 
+This GIF shows shopping a list, changing its status and abandoning a task.
+
+![O95mxzU79J](https://user-images.githubusercontent.com/4350550/83820663-7fea9880-a68a-11ea-9125-764f164d6763.gif)
 
 
 ## How to use
