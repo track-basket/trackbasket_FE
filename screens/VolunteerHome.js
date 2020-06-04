@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import VolunteerContext from '../volunteer-context';
 import { Button } from '../components/Button';
 import StatusBadge from '../components/StatusBadge';
@@ -14,28 +14,6 @@ import {
 import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
 import { getList } from '../components/ApiCalls';
-
-// import { AsyncStorage } from 'react-native';
-
-function calcCrow(lat1, lon1, lat2, lon2) {
-  var R = 6371; // km
-  var dLat = toRad(lat2 - lat1);
-  var dLon = toRad(lon2 - lon1);
-  var lat1 = toRad(lat1);
-  var lat2 = toRad(lat2);
-
-  var a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  var d = R * c;
-  return d;
-}
-
-// Converts numeric degrees to radians
-function toRad(Value) {
-  return (Value * Math.PI) / 180;
-}
 
 const VolunteerHome = ({ navigation }) => {
   const {
@@ -154,7 +132,6 @@ const styles = StyleSheet.create({
   },
   container: {
     alignItems: 'center',
-    // justifyContent: 'center',
     flex: 1,
     backgroundColor: 'white',
     marginTop: 0,
@@ -189,7 +166,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   innerContainer: {
-    // marginBottom: 68,
     alignItems: 'center',
     width: 600,
     marginTop: 100,
@@ -217,7 +193,6 @@ const styles = StyleSheet.create({
   },
   orders: {
     fontSize: 26,
-    // marginBottom: 20,
     textAlign: 'center',
     fontWeight: 'bold',
   },
