@@ -1,4 +1,4 @@
-import React, { useContext, useState, useCallback, useEffect } from 'react';
+import React, { useContext, useState, useCallback } from 'react';
 import UserContext from '../user-context';
 import { getList } from '../components/ApiCalls';
 import moment from 'moment';
@@ -36,9 +36,7 @@ const Home = ({ navigation, route }) => {
     });
   };
   let draft = cart.items.length && cart.status === 'not submitted';
-  useEffect(() => {
-    console.log(cart);
-  }, [cart]);
+
   return (
     <View style={styles.container}>
       {!user && (
@@ -123,9 +121,9 @@ const Home = ({ navigation, route }) => {
                 {cart.created_date ? (
                   <Text style={styles.detailsText}>
                     Submitted:{' '}
-                    {moment(formatDate(cart.created_date)).format(
-                      'h:mm a, MMMM D',
-                    )}
+                    {moment(formatDate(cart.created_date))
+                      .subtract(6, 'hours')
+                      .format('h:mm a, MMMM D')}
                   </Text>
                 ) : (
                   <TouchableOpacity

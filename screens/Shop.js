@@ -40,6 +40,7 @@ const Shop = () => {
       .then((response) => response.json())
       .then((result) => setCurrentSearch(result))
       .catch((error) => console.log('error', error));
+    setText('');
   };
 
   const validator = () => {
@@ -67,6 +68,7 @@ const Shop = () => {
           style={styles.searchBar}
           onChangeText={(text) => setText(text)}
           onSubmitEditing={() => handleSearch(text)}
+          value={text}
         />
         {validator() === 'item found' && (
           <Text>{currentSearch.data.attributes.length} Items Found</Text>

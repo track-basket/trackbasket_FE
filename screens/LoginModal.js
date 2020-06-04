@@ -23,7 +23,6 @@ const LoginModal = ({ navigation }) => {
   const [zip, setZip] = useState(handleNameValue('zip'));
   const [state, setState] = useState(handleNameValue('state'));
   const [phone, setPhone] = useState(handleNameValue('phone'));
-  // const [phone, setPhone] = useState('');
 
   const [cart] = useState();
 

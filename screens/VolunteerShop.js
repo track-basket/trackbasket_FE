@@ -1,17 +1,12 @@
 /* eslint-disable no-shadow */
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { StyleSheet, View, Text, SectionList } from 'react-native';
 import VolunteerContext from '../volunteer-context';
 import VolunteerItems from '../components/VolunteerItems';
 import { getList, getAtRiskUser } from '../components/ApiCalls';
 
 const VolunteerShop = ({ route }) => {
-  const {
-    assignedLists,
-    setSingleList,
-    singleList,
-    setAssignedLists,
-  } = useContext(VolunteerContext);
+  const { setSingleList, singleList } = useContext(VolunteerContext);
 
   if (route) {
     var singleListId = route.params.selectedList;
@@ -33,12 +28,14 @@ const VolunteerShop = ({ route }) => {
     );
   }
 
-  const aisles = singleList.data.attributes.items.reduce((acc, el) => {
-    if (!acc.includes(el.aisle_number)) {
-      acc.push(el.aisle_number);
-    }
-    return acc;
-  }, []);
+  const aisles = singleList.data.attributes.items
+    .reduce((acc, el) => {
+      if (!acc.includes(el.aisle_number)) {
+        acc.push(el.aisle_number);
+      }
+      return acc;
+    }, [])
+    .sort((a, b) => a - b);
   const DATA = aisles.map((aisle) => {
     return {
       title: 'Aisle ' + aisle,
@@ -51,7 +48,6 @@ const VolunteerShop = ({ route }) => {
   const handleClick = (upc, type) => {
     const singleListCopy = { ...singleList };
     const selectedList = singleListCopy.data.attributes;
-    // const selectedList = items.find((list) => list.listId === singleListId);
     const selectedItem = selectedList.items.find((item) => item.upc === upc);
     const index = selectedList.items.indexOf(selectedItem);
     if (type === 'acquired') {

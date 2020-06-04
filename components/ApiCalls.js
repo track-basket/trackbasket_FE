@@ -1,6 +1,3 @@
-import React from 'react';
-import { Alert } from 'react-native';
-
 const BASE = 'https://trackbasket.herokuapp.com';
 
 export const atRiskProfileHandler = (user, methodType) => {
@@ -54,10 +51,7 @@ export const fetchItems = (item, userId) => {
   return fetch(
     BASE + '/items?product=' + item + '&at_risk_user_id=' + userId,
     requestOptions,
-  );
-  // .then((response) => response.text())
-  // .then((result) => console.log(result))
-  // .catch((error) => console.log('error', error));
+  ).catch((error) => console.log('error', error));
 };
 
 export const postVolunteer = async (user) => {
