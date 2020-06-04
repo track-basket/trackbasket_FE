@@ -5,7 +5,6 @@ import { Button } from '../components/Button';
 import { updateList } from '../components/ApiCalls';
 
 const ConfirmDelete = ({ navigation, route }) => {
-  const { item } = route.params;
   const {
     setSingleList,
     singleList,
