@@ -7,7 +7,22 @@
 
 As the threat of COVID-19 continues to loom, it's not safe for some people to leave their house, even to buy essentials. Trackbasket allows this at-risk population to create grocery lists, and connects them with volunteers who shop for and deliver their items.
 
-The tech stack for this project included React Native, React Navigation, Expo, React Native Testing Library and Jest on the front end and Python and Flask on the back end. The app consumes the Kroger API.
+The tech stack for this project included:
+
+Front end:
+
+* React Native
+* React Navigation
+* Expo
+* React Native Testing Library 
+* Jest
+
+Back end: 
+
+* Python 
+* Flask 
+
+The app consumes the Kroger API.
 
 In the app, an at-risk user can:
 * Register
