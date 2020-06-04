@@ -123,13 +123,7 @@ const App = () => {
       id: user.id,
     }).then((res) => {
       let resultCart = res.data.attributes;
-      let [date, time] = resultCart.created_date.split(' ');
 
-      const [day, month, year] = date.split('/');
-      const newTime = moment(`${year}-${month}-${day} ${time}`)
-        .subtract(6, 'hours')
-        .format('YYYY-MM-DD HH:mm');
-      resultCart.created_date = newTime;
       setCart(resultCart);
     });
   };
@@ -137,16 +131,10 @@ const App = () => {
     updateList({
       items: cart.items,
       status: 'pending',
-      id: user.id,
+      at_risk_user_id: user.id,
     }).then((res) => {
       let resultCart = res.data.attributes;
-      let [date, time] = resultCart.created_date.split(' ');
 
-      const [day, month, year] = date.split('/');
-      const newTime = moment(`${year}-${month}-${day} ${time}`)
-        .subtract(6, 'hours')
-        .format('YYYY-MM-DD HH:mm');
-      resultCart.created_date = newTime;
       setCart(resultCart);
     });
   };
