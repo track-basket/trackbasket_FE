@@ -35,9 +35,12 @@ const Home = ({ navigation, route }) => {
       screen: 'Cart',
     });
   };
+  let draft = cart.items.length && cart.status === 'not submitted';
+  useEffect(() => {
+    console.log(cart);
+  }, [cart]);
   return (
     <View style={styles.container}>
-      {!!cart.items.length && <View style={styles.padding}></View>}
       {!user && (
         <View style={styles.innerContainer}>
           <Logo />
@@ -88,7 +91,7 @@ const Home = ({ navigation, route }) => {
           {!cart.items.length && (
             <Text style={styles.orders}>No current order</Text>
           )}
-          {!!cart.items.length && (
+          {cart.status !== 'not submitted' && (
             <ScrollView
               contentContainerStyle={styles.refresh}
               refreshControl={
@@ -138,6 +141,46 @@ const Home = ({ navigation, route }) => {
                 Pull to refresh order status
               </Text>
             </ScrollView>
+          )}
+          {!!draft && (
+            <View>
+              <Text style={styles.orders}>Current order</Text>
+              <View style={styles.orderStatus}>
+                <StatusBadge status={cart.status} />
+                {cart.status === 'pending' && (
+                  <TouchableOpacity style={styles.editBtn}>
+                    <Text style={styles.editBtnText} onPress={handleEditOrder}>
+                      Edit order
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+              <View style={styles.details}>
+                <Text style={styles.detailsText}>
+                  Items:{' '}
+                  {cart.items.reduce((itemCount, item) => {
+                    itemCount += item.quantity;
+                    return itemCount;
+                  }, 0)}
+                </Text>
+                {cart.created_date ? (
+                  <Text style={styles.detailsText}>
+                    Submitted:{' '}
+                    {moment(formatDate(cart.created_date)).format(
+                      'h:mm a, MMMM D',
+                    )}
+                  </Text>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('AtRiskTabs')}
+                  >
+                    <View style={styles.button}>
+                      <Text style={styles.buttonText}>Continue shopping</Text>
+                    </View>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
           )}
           {!cart.items.length && (
             <TouchableOpacity onPress={() => navigation.navigate('AtRiskTabs')}>
