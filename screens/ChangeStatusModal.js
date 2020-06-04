@@ -13,8 +13,6 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
     setVolunteersLists,
   } = useContext(VolunteerContext);
   const item = route.params.item;
-  console.log('singleList');
-  console.log(singleList);
   const handlePress = (status) => {
     const updatedList = {
       status,
