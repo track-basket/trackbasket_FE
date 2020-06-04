@@ -234,7 +234,6 @@ const styles = StyleSheet.create({
   innerContainer: {
     marginBottom: 68,
     alignItems: 'center',
-    // marginTop: 100,
   },
   secondaryText: {
     fontSize: 18,
