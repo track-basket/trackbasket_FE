@@ -52,7 +52,7 @@ const LoginModal = ({ navigation }) => {
         phone,
         cart,
         state,
-        id: Date.now(),
+        id: phone + address,
       };
       if (!user) {
         atRiskProfileHandler(info, 'POST')
