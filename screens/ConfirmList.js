@@ -39,17 +39,19 @@ const ConfirmList = ({ navigation, route }) => {
         <View style={styles.orderContainer}>
           <View style={styles.userDetails}>
             <Text style={styles.introtext}>Order details</Text>
-            <Text style={styles.orderText}>
-              <Text style={styles.orderTextBold}>Name: </Text>
-              {list.userDetails && list.userDetails.name}
-            </Text>
-            <Text style={styles.orderText}>
-              <Text style={styles.orderTextBold}>Delivery address: </Text>
-              {list.userDetails &&
-                `${list.userDetails.address}, ${
-                  list.userDetails.city
-                } ${list.userDetails.state.toUpperCase()}`}
-            </Text>
+            <View style={styles.orderGroup}>
+              <Text style={styles.orderText}>
+                <Text style={styles.orderTextBold}>Name: </Text>
+                {list.userDetails && list.userDetails.name}
+              </Text>
+              <Text style={styles.orderText}>
+                <Text style={styles.orderTextBold}>Delivery address: </Text>
+                {list.userDetails &&
+                  `${list.userDetails.address}, ${
+                    list.userDetails.city
+                  } ${list.userDetails.state.toUpperCase()}`}
+              </Text>
+            </View>
             <Text style={styles.orderText}>
               <Text style={styles.orderTextBold}>Store:</Text>{' '}
               {`${list.name === 'KINGSOOPERS' ? 'King Soopers' : list.name}, ${
@@ -57,7 +59,9 @@ const ConfirmList = ({ navigation, route }) => {
               }, ${list.city} ${list.state}`}
             </Text>
             <Text style={styles.orderText}>
-              <Text style={styles.orderTextBold}>Distance from you:</Text>{' '}
+              <Text style={styles.orderTextBold}>
+                Distance from you to store:
+              </Text>{' '}
               {list.userDetails && list.distance.toFixed(2)} miles
             </Text>
           </View>
@@ -114,6 +118,9 @@ const styles = StyleSheet.create({
   },
   orderTextBold: {
     fontWeight: 'bold',
+  },
+  orderGroup: {
+    marginBottom: 10,
   },
 });
 
