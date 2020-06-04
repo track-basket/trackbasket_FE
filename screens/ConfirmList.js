@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useLayoutEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Button } from '../components/Button';
 import { getList, getAtRiskUser } from '../components/ApiCalls';
@@ -28,21 +28,9 @@ const ConfirmList = ({ navigation, route }) => {
   );
   const handleSubmit = () => {
     updateList(list).then((response) => {
-      console.log(response);
       setAssignedLists([list.at_risk_user_id, ...assignedLists]);
       navigation.navigate('VolunteerHome');
     });
-  };
-
-  const getInfo = (infoType) => {
-    if (route) {
-      return route.params.userDetails.infoType;
-    }
-  };
-  const getOrderInfo = (infoType) => {
-    if (route) {
-      return route.params.infoType;
-    }
   };
 
   return (
