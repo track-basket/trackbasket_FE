@@ -1,17 +1,12 @@
 /* eslint-disable no-shadow */
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { StyleSheet, View, Text, SectionList } from 'react-native';
 import VolunteerContext from '../volunteer-context';
 import VolunteerItems from '../components/VolunteerItems';
 import { getList, getAtRiskUser } from '../components/ApiCalls';
 
 const VolunteerShop = ({ route }) => {
-  const {
-    assignedLists,
-    setSingleList,
-    singleList,
-    setAssignedLists,
-  } = useContext(VolunteerContext);
+  const { setSingleList, singleList } = useContext(VolunteerContext);
 
   if (route) {
     var singleListId = route.params.selectedList;
