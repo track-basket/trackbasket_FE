@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import StatusBadge from '../components/StatusBadge';
 import VolunteerContext from '../volunteer-context';
@@ -7,8 +7,6 @@ import { updateList } from '../components/ApiCalls';
 
 const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
   const {
-    assignedLists,
-    setAssignedLists,
     setSingleList,
     singleList,
     volunteersLists,
@@ -18,8 +16,6 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
   console.log('singleList');
   console.log(singleList);
   const handlePress = (status) => {
-    // let lists = [...assignedLists];
-
     const updatedList = {
       status,
       items: item.data.attributes.items,
