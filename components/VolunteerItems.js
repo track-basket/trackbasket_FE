@@ -109,8 +109,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'lightgray',
     padding: 10,
-    // borderRadius: 5,
-    // height: 25,
   },
   buttonText: {
     color: 'black',
