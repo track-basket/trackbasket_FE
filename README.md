@@ -1,7 +1,7 @@
 # Trackbasket
 
 + **Front End**: [Cody Smith](https://github.com/monstaro), [Ed Stoner](https://github.com/edlsto)
-+ **Back End** [Maria Ronauli](https://github.com/mronauli) [Alexis Dumortier](https://github.com/adumortier)
++ **Back End**: [Maria Ronauli](https://github.com/mronauli) [Alexis Dumortier](https://github.com/adumortier)
 
 ## About
 
