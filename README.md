@@ -10,19 +10,19 @@ As the threat of COVID-19 continues to loom, it's not safe for some people to le
 The tech stack for this project included React Native, React Navigation, Expo, React Native Testing Library and Jest on the front end and Python and Flask on the back end. The app consumes the Kroger API.
 
 In the app, an at-risk user can:
-• Register
-• Shop for a list
-• Submit the list
-• Edit the list
-• See the updated status of the list
+* Register
+* Shop for a list
+* Submit the list
+* Edit the list
+* See the updated status of the list
 
 A volunteer can:
-• Register
-• See all pending lists, sorted by distance, number of items or age
-• Adopt a list
-• Change the status of a list
-• Shop the list
-• Un-adopt the list, if needed.
+* Register
+* See all pending lists, sorted by distance, number of items or age
+* Adopt a list
+* Change the status of a list
+* Shop the list
+* Un-adopt the list, if needed.
 
 This GIF shows the at-risk user path, including registration, editing registration info, searching for items, and putting items in the cart
 
