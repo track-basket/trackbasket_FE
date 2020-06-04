@@ -7,19 +7,22 @@
 
 As the threat of COVID-19 continues to loom, it's not safe for some people to leave their house, even to buy essentials. Trackbasket allows this at-risk population to create grocery lists, and connects them with volunteers who shop for and deliver their items.
 
-An at-risk user can:
-Register
-Shop for a list
-Submit the list
-Edit the list
-See the updated status of the list
+The tech stack for this project included React Native, React Navigation, Expo, React Native Testing Library and Jest on the front end and Python and Flask on the back end. The app consumes the Kroger API.
+
+In the app, an at-risk user can:
+• Register
+• Shop for a list
+• Submit the list
+• Edit the list
+• See the updated status of the list
 
 A volunteer can:
-See all pending lists, sorted by distance, number of items or age
-Adopt a list
-Change the status of a list
-Shop the list
-Un-adopt the list, if needed.
+• Register
+• See all pending lists, sorted by distance, number of items or age
+• Adopt a list
+• Change the status of a list
+• Shop the list
+• Un-adopt the list, if needed.
 
 This GIF shows the at-risk user path, including registration, editing registration info, searching for items, and putting items in the cart
 
@@ -29,7 +32,6 @@ This GIF shows an at-risk user submitting a cart. It also shows the volunteer pa
 
 ![Fq4vHJEapy](https://user-images.githubusercontent.com/4350550/83815530-a0f8bc80-a67d-11ea-9929-0c6490f93b93.gif)
 
-The tech stack for this project included React Native, React Navigation, Expo, React Native Testing Library and Jest on the front end and Python and Flask on the back end. The app consumes the Kroger API.
 
 
 ## How to use
