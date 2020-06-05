@@ -44,40 +44,48 @@ exports[`renders correctly 1`] = `
         >
           Order details
         </Text>
-        <Text
+        <View
           style={
             Object {
-              "fontSize": 20,
+              "marginBottom": 10,
             }
           }
         >
           <Text
             style={
               Object {
-                "fontWeight": "bold",
+                "fontSize": 20,
               }
             }
           >
-            Name: 
+            <Text
+              style={
+                Object {
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              Name: 
+            </Text>
           </Text>
-        </Text>
-        <Text
-          style={
-            Object {
-              "fontSize": 20,
-            }
-          }
-        >
           <Text
             style={
               Object {
-                "fontWeight": "bold",
+                "fontSize": 20,
               }
             }
           >
-            Delivery address: 
+            <Text
+              style={
+                Object {
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              Delivery address: 
+            </Text>
           </Text>
-        </Text>
+        </View>
         <Text
           style={
             Object {
@@ -111,7 +119,7 @@ exports[`renders correctly 1`] = `
               }
             }
           >
-            Distance from you:
+            Distance from you to store:
           </Text>
            
            miles
