@@ -109,6 +109,16 @@ const Home = ({ navigation, route }) => {
                     </Text>
                   </TouchableOpacity>
                 )}
+                {cart.status === 'at store' && (
+                  <TouchableOpacity style={styles.editBtn}>
+                    <Text
+                      style={styles.editBtnText}
+                      onPress={() => navigation.navigate('AtRiskChat')}
+                    >
+                      Chat
+                    </Text>
+                  </TouchableOpacity>
+                )}
               </View>
               <View style={styles.details}>
                 <Text style={styles.detailsText}>
