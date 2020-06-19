@@ -100,11 +100,7 @@ const VolunteerTask = ({ navigation }) => {
           </View>
           <Button
             text="Chat"
-            onPress={() =>
-              navigation.navigate('Chat', {
-                item: singleList,
-              })
-            }
+            onPress={() => navigation.navigate('Chat')}
             customStyles={{
               backgroundColor: 'green',
               width: 250,
