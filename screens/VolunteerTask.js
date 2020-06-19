@@ -98,7 +98,20 @@ const VolunteerTask = ({ navigation }) => {
               }
             />
           </View>
-
+          <Button
+            text="Chat"
+            onPress={() =>
+              navigation.navigate('Chat', {
+                item: singleList,
+              })
+            }
+            customStyles={{
+              backgroundColor: 'green',
+              width: 250,
+              marginBottom: 20,
+            }}
+            customTextStyles={{ fontSize: 20 }}
+          />
           <Button
             text="Abandon Task"
             onPress={() =>
