@@ -1,30 +1,17 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import UserContext from '../user-context';
-import io from 'socket.io-client';
-let socket;
 
 const AtRiskChat = () => {
-  const { user } = useContext(UserContext);
-  console.log(user);
-  const [allMessages, setAllMessages] = useState([]);
+  const { allMessages, setNewMessage } = useContext(UserContext);
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    socket = io('http://10.3.13.6:3000');
-    socket.emit('joinRoom', user.id);
-    socket.on('chat message', (msg) => {
-      setAllMessages((allMessages) => [...allMessages, msg]);
-    });
-  }, []);
-
-  const chatMessages = allMessages.map((chatMessage) => {
-    return <Text key={chatMessage + Date.now()}>{chatMessage}</Text>;
+  const chatMessages = allMessages.map((chatMessage, i) => {
+    return <Text key={i}>{chatMessage}</Text>;
   });
 
   const submitChatMessage = () => {
-    socket.emit('chat message', user.name + ': ' + message);
-
+    setNewMessage(message);
     setMessage('');
   };
 
