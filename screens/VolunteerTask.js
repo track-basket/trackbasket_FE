@@ -1,14 +1,39 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import VolunteerContext from '../volunteer-context';
 import StatusBadge from '../components/StatusBadge';
 import { Button } from '../components/Button';
 import moment from 'moment';
+import io from 'socket.io-client';
+
+let socket;
 
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
 const VolunteerTask = ({ navigation }) => {
-  const { singleList, formatDate } = useContext(VolunteerContext);
+  const {
+    singleList,
+    formatDate,
+    allMessages,
+    setAllMessages,
+    newMessageVolunteer,
+    volunteer,
+  } = useContext(VolunteerContext);
+
+  useEffect(() => {
+    socket = io('http://10.3.13.6:3000');
+    socket.emit('joinRoom', singleList.id);
+    socket.on('chat message', (msg) => {
+      setAllMessages((allMessages) => [...allMessages, msg]);
+    });
+  }, [singleList.id]);
+
+  useEffect(() => {
+    if (newMessageVolunteer) {
+      console.log(newMessageVolunteer);
+      socket.emit('chat message', volunteer.name + ': ' + newMessageVolunteer);
+    }
+  }, [newMessageVolunteer]);
 
   if (!singleList) {
     return (
@@ -99,7 +124,7 @@ const VolunteerTask = ({ navigation }) => {
             />
           </View>
           <Button
-            text="Chat"
+            text={`Chat(${allMessages.length})`}
             onPress={() => navigation.navigate('Chat')}
             customStyles={{
               backgroundColor: 'green',
