@@ -1,30 +1,21 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import VolunteerContext from '../volunteer-context';
-import io from 'socket.io-client';
-let socket;
 
 const Chat = () => {
-  const { singleList, volunteer } = useContext(VolunteerContext);
+  const { singleList, allMessages, setNewMessageVolunteer } = useContext(
+    VolunteerContext,
+  );
 
-  const [allMessages, setAllMessages] = useState([]);
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    socket = io('http://10.3.13.6:3000');
-    socket.emit('joinRoom', singleList.id);
-    socket.on('chat message', (msg) => {
-      setAllMessages((allMessages) => [...allMessages, msg]);
-    });
-  }, []);
-
-  const chatMessages = allMessages.map((chatMessage) => {
-    return <Text key={chatMessage + Date.now()}>{chatMessage}</Text>;
+  const chatMessages = allMessages.map((chatMessage, i) => {
+    return <Text key={i}>{chatMessage}</Text>;
   });
 
   const submitChatMessage = () => {
-    socket.emit('chat message', volunteer.name + ': ' + message);
-
+    // socket.emit('chat message', volunteer.name + ': ' + message);
+    setNewMessageVolunteer(message);
     setMessage('');
   };
 
