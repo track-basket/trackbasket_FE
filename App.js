@@ -148,6 +148,9 @@ const App = () => {
   const [singleList, setSingleList] = useState(null);
   const [allLists, setAllLists] = useState(null);
   const [volunteersLists, setVolunteersLists] = useState([]);
+  const [allMessages, setAllMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState('');
+  const [newMessageVolunteer, setNewMessageVolunteer] = useState('');
 
   const retrieveData = async () => {
     try {
@@ -197,6 +200,10 @@ const App = () => {
         formatDate,
         volunteersLists,
         setVolunteersLists,
+        allMessages,
+        setAllMessages,
+        newMessageVolunteer,
+        setNewMessageVolunteer,
       }}
     >
       <UserProvider
@@ -214,6 +221,10 @@ const App = () => {
           updateCart,
           setCart,
           formatDate,
+          allMessages,
+          setAllMessages,
+          newMessage,
+          setNewMessage,
         }}
       >
         <NavigationContainer>
