@@ -1,8 +1,9 @@
-import React, { useContext, useState, useCallback } from 'react';
+import React, { useContext, useState, useCallback, useEffect } from 'react';
 import UserContext from '../user-context';
 import { getList } from '../components/ApiCalls';
 import moment from 'moment';
 import StatusBadge from '../components/StatusBadge';
+import io from 'socket.io-client';
 
 import {
   StyleSheet,
@@ -15,8 +16,18 @@ import {
 import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
 
+let socket;
+
 const Home = ({ navigation, route }) => {
-  const { user, cart, setCart, formatDate } = useContext(UserContext);
+  const {
+    user,
+    cart,
+    setCart,
+    formatDate,
+    setAllMessages,
+    allMessages,
+    newMessage,
+  } = useContext(UserContext);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const handleRefresh = useCallback(async () => {
     setIsRefreshing(true);
@@ -30,11 +41,35 @@ const Home = ({ navigation, route }) => {
       setIsRefreshing(false);
     }, 1000);
   });
+
   const handleEditOrder = () => {
     navigation.navigate('AtRiskTabs', {
       screen: 'Cart',
     });
   };
+
+  useEffect(() => {
+    if (user) {
+      socket = io('http://10.3.13.6:3000');
+      socket.emit('joinRoom', user.id);
+      socket.on('chat message', (msg) => {
+        setAllMessages((allMessages) => [...allMessages, msg]);
+      });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (newMessage) {
+      console.log(newMessage);
+      socket.emit('chat message', user.name + ': ' + newMessage);
+    }
+  }, [newMessage]);
+
+  useEffect(() => {
+    return () => {
+      console.log('unmounted');
+    };
+  }, []);
   let draft = cart.items.length && cart.status === 'not submitted';
 
   return (
@@ -115,7 +150,7 @@ const Home = ({ navigation, route }) => {
                       style={styles.editBtnText}
                       onPress={() => navigation.navigate('AtRiskChat')}
                     >
-                      Chat
+                      {`Chat(${allMessages.length})`}
                     </Text>
                   </TouchableOpacity>
                 )}
