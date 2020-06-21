@@ -149,6 +149,7 @@ const App = () => {
   const [allLists, setAllLists] = useState(null);
   const [volunteersLists, setVolunteersLists] = useState([]);
   const [allMessages, setAllMessages] = useState([]);
+  const [allMessagesVolunteer, setAllMessagesVolunteer] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [newMessageVolunteer, setNewMessageVolunteer] = useState('');
 
@@ -200,8 +201,8 @@ const App = () => {
         formatDate,
         volunteersLists,
         setVolunteersLists,
-        allMessages,
-        setAllMessages,
+        allMessagesVolunteer,
+        setAllMessagesVolunteer,
         newMessageVolunteer,
         setNewMessageVolunteer,
       }}
