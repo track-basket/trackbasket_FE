@@ -28,19 +28,6 @@ const Home = ({ navigation, route }) => {
     allMessages,
     newMessage,
   } = useContext(UserContext);
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const handleRefresh = useCallback(async () => {
-    setIsRefreshing(true);
-    getList(user.id).then((result) => {
-      if (result.message !== 'Internal Server Error') {
-        let resultCart = result.data.attributes;
-        setCart(resultCart);
-      }
-    });
-    setTimeout(() => {
-      setIsRefreshing(false);
-    }, 1000);
-  });
 
   const handleEditOrder = () => {
     navigation.navigate('AtRiskTabs', {
@@ -55,21 +42,23 @@ const Home = ({ navigation, route }) => {
       socket.on('chat message', (msg) => {
         setAllMessages((allMessages) => [...allMessages, msg]);
       });
+      socket.on('status change', (msg) => {
+        getList(user.id).then((result) => {
+          if (result.message !== 'Internal Server Error') {
+            let resultCart = result.data.attributes;
+            setCart(resultCart);
+          }
+        });
+      });
     }
   }, [user]);
 
   useEffect(() => {
     if (newMessage) {
-      console.log(newMessage);
       socket.emit('chat message', user.name + ': ' + newMessage);
     }
   }, [newMessage]);
 
-  useEffect(() => {
-    return () => {
-      console.log('unmounted');
-    };
-  }, []);
   let draft = cart.items.length && cart.status === 'not submitted';
 
   return (
@@ -125,15 +114,7 @@ const Home = ({ navigation, route }) => {
             <Text style={styles.orders}>No current order</Text>
           )}
           {cart.status !== 'not submitted' && (
-            <ScrollView
-              contentContainerStyle={styles.refresh}
-              refreshControl={
-                <RefreshControl
-                  refreshing={isRefreshing}
-                  onRefresh={handleRefresh}
-                />
-              }
-            >
+            <ScrollView>
               <Text style={styles.orders}>Current order</Text>
               <View style={styles.orderStatus}>
                 <StatusBadge status={cart.status} />
@@ -144,7 +125,7 @@ const Home = ({ navigation, route }) => {
                     </Text>
                   </TouchableOpacity>
                 )}
-                {cart.status === 'at store' && (
+                {cart.status !== 'pending' && (
                   <TouchableOpacity style={styles.editBtn}>
                     <Text
                       style={styles.editBtnText}
@@ -180,9 +161,6 @@ const Home = ({ navigation, route }) => {
                   </TouchableOpacity>
                 )}
               </View>
-              <Text style={styles.pullToRefresh}>
-                Pull to refresh order status
-              </Text>
             </ScrollView>
           )}
           {!!draft && (
@@ -351,13 +329,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginTop: 20,
   },
-  pullToRefresh: {
-    marginTop: 50,
-    fontSize: 18,
-    alignItems: 'center',
-    color: 'lightgray',
-    textAlign: 'center',
-  },
+
   padding: {
     height: 100,
   },
