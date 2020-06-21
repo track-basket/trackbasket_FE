@@ -11,29 +11,9 @@ let socket;
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
 const VolunteerTask = ({ navigation }) => {
-  const {
-    singleList,
-    formatDate,
-    allMessages,
-    setAllMessages,
-    newMessageVolunteer,
-    volunteer,
-  } = useContext(VolunteerContext);
-
-  useEffect(() => {
-    socket = io('http://10.3.13.6:3000');
-    socket.emit('joinRoom', singleList.id);
-    socket.on('chat message', (msg) => {
-      setAllMessages((allMessages) => [...allMessages, msg]);
-    });
-  }, [singleList.id]);
-
-  useEffect(() => {
-    if (newMessageVolunteer) {
-      console.log(newMessageVolunteer);
-      socket.emit('chat message', volunteer.name + ': ' + newMessageVolunteer);
-    }
-  }, [newMessageVolunteer]);
+  const { singleList, formatDate, allMessagesVolunteer } = useContext(
+    VolunteerContext,
+  );
 
   if (!singleList) {
     return (
@@ -124,7 +104,7 @@ const VolunteerTask = ({ navigation }) => {
             />
           </View>
           <Button
-            text={`Chat(${allMessages.length})`}
+            text={`Chat(${allMessagesVolunteer.length})`}
             onPress={() => navigation.navigate('Chat')}
             customStyles={{
               backgroundColor: 'green',
