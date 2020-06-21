@@ -29,7 +29,7 @@ const ConfirmList = ({ navigation, route }) => {
   const handleSubmit = () => {
     updateList(list).then((response) => {
       setAssignedLists([list.at_risk_user_id, ...assignedLists]);
-      navigation.navigate('VolunteerHome');
+      navigation.navigate('VolunteerHome', { id: list.at_risk_user_id });
     });
   };
 
