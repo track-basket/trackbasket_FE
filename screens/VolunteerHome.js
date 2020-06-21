@@ -14,15 +14,23 @@ import {
 import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
 import { getList } from '../components/ApiCalls';
+import io from 'socket.io-client';
 
-const VolunteerHome = ({ navigation }) => {
+let socket;
+
+const VolunteerHome = ({ navigation, route }) => {
   const {
+    singleList,
     volunteer,
     assignedLists,
     formatDate,
     volunteersLists,
     setVolunteersLists,
+    allMessagesVolunteer,
+    setAllMessagesVolunteer,
+    newMessageVolunteer,
   } = useContext(VolunteerContext);
+  // const { allMessages, setAllMessages } = useContext(UserContext);
   const getName = () => {
     if (volunteer) {
       return volunteer.name;
@@ -42,6 +50,40 @@ const VolunteerHome = ({ navigation }) => {
     });
     Promise.all(fetchedLists).then((data) => setVolunteersLists(data));
   }, [assignedLists]);
+
+  const addMessage = (msg) => {
+    setAllMessagesVolunteer((allMessagesVolunteer) => [
+      ...allMessagesVolunteer,
+      msg,
+    ]);
+  };
+
+  useEffect(() => {
+    socket = io('http://10.3.13.6:3000');
+
+    if (singleList) {
+      socket.emit('joinRoom', singleList.id);
+      socket.on('chat message', (msg) => {
+        addMessage(msg);
+      });
+    }
+  }, [singleList]);
+
+  useEffect(() => {
+    if (newMessageVolunteer) {
+      socket.emit('chat message', volunteer.name + ': ' + newMessageVolunteer);
+    }
+  }, [newMessageVolunteer]);
+
+  useEffect(() => {
+    socket = io('http://10.3.13.6:3000');
+
+    if (route.params) {
+      socket.emit('joinRoom', route.params.id);
+      socket.emit('statusChange', 'Change');
+      socket.emit('leaveRoom', route.params.id);
+    }
+  }, [route.params]);
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
