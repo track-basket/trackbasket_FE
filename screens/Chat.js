@@ -1,20 +1,22 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import VolunteerContext from '../volunteer-context';
+import UserContext from '../user-context';
 
 const Chat = () => {
-  const { singleList, allMessages, setNewMessageVolunteer } = useContext(
-    VolunteerContext,
-  );
+  const {
+    singleList,
+    allMessagesVolunteer,
+    setNewMessageVolunteer,
+  } = useContext(VolunteerContext);
 
   const [message, setMessage] = useState('');
 
-  const chatMessages = allMessages.map((chatMessage, i) => {
+  const chatMessages = allMessagesVolunteer.map((chatMessage, i) => {
     return <Text key={i}>{chatMessage}</Text>;
   });
 
   const submitChatMessage = () => {
-    // socket.emit('chat message', volunteer.name + ': ' + message);
     setNewMessageVolunteer(message);
     setMessage('');
   };
