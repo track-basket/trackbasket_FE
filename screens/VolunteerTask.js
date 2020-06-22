@@ -97,7 +97,7 @@ const VolunteerTask = ({ navigation }) => {
                 <Text style={styles.infoKind}>Ordered at: </Text>
                 {moment(formatDate(singleList.data.attributes.created_date))
                   .subtract(6, 'hours')
-                  .format('h:m a MMM. D, YYYY')}
+                  .format('h:mm a MMM. D, YYYY')}
               </Text>
             </View>
             <View style={styles.infoField}>
