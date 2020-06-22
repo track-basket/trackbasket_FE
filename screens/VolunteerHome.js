@@ -54,8 +54,6 @@ const VolunteerHome = ({ navigation, route }) => {
   }, []);
 
   useEffect(() => {
-    socket = io('http://10.3.13.6:3000');
-
     if (route.params) {
       socket.emit('joinRoom', route.params.id);
       socket.emit('statusChange', 'Change');
