@@ -11,9 +11,46 @@ let socket;
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
 const VolunteerTask = ({ navigation }) => {
-  const { singleList, formatDate, allMessagesVolunteer } = useContext(
-    VolunteerContext,
-  );
+  const {
+    singleList,
+    formatDate,
+    allMessagesVolunteer,
+    setAllMessagesVolunteer,
+    newMessageVolunteer,
+    volunteer,
+    setNewMessageVolunteer,
+  } = useContext(VolunteerContext);
+
+  useEffect(() => {
+    setAllMessagesVolunteer([]);
+    socket = io('http://10.3.13.6:3000');
+    socket.emit('joinRoom', singleList.id);
+    socket.on('chat message', (msg) => {
+      setAllMessagesVolunteer((allMessagesVolunteer) => [
+        ...allMessagesVolunteer,
+        msg,
+      ]);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (singleList) {
+      socket.emit('statusChange', 'change');
+    }
+  }, [singleList]);
+
+  useEffect(() => {
+    if (newMessageVolunteer) {
+      socket.emit('chat message', volunteer.name + ': ' + newMessageVolunteer);
+    }
+    setNewMessageVolunteer('');
+  }, [newMessageVolunteer]);
+
+  useEffect(() => {
+    return () => {
+      socket.emit('leaveRoom', singleList.id);
+    };
+  }, []);
 
   if (!singleList) {
     return (
