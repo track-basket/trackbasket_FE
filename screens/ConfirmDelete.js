@@ -24,7 +24,7 @@ const ConfirmDelete = ({ navigation, route }) => {
     });
     setAssignedLists(filteredLists);
     setSingleList(null);
-    navigation.navigate('VolunteerHome');
+    navigation.navigate('VolunteerHome', { id: updatedList.at_risk_user_id });
   };
   return (
     <View style={styles.container}>
