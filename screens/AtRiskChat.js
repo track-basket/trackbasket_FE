@@ -1,11 +1,18 @@
 import React, { useEffect, useContext, useState, useRef } from 'react';
-import { View, Text, TextInput, StyleSheet, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  ScrollView,
+  SafeAreaView,
+  KeyboardAvoidingView,
+} from 'react-native';
 import UserContext from '../user-context';
 
 const AtRiskChat = () => {
   const { allMessages, setNewMessage, user } = useContext(UserContext);
   const [message, setMessage] = useState('');
-  console.log(user.name);
   const scrollViewRef = useRef();
 
   const chatMessages = allMessages.map((chatMessage, i) => {
@@ -31,30 +38,34 @@ const AtRiskChat = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView
-        ref={scrollViewRef}
-        onContentSizeChange={(contentWidth, contentHeight) => {
-          scrollViewRef.current.scrollToEnd({ animated: true });
-        }}
-      >
-        <View style={styles.innerContainer}>
-          <Text style={styles.title}>{`Chat with your volunteer shopper`}</Text>
-          {chatMessages}
-        </View>
-      </ScrollView>
-      <View style={styles.textContainer}>
-        <TextInput
-          style={styles.textInput}
-          value={message}
-          onSubmitEditing={() => submitChatMessage()}
-          autoCorrect={false}
-          onChangeText={(chatMessage) => {
-            setMessage(chatMessage);
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={50}>
+        <Text style={styles.title}>{`Chat with your volunteer shopper`}</Text>
+        <ScrollView
+          ref={scrollViewRef}
+          onContentSizeChange={(contentWidth, contentHeight) => {
+            scrollViewRef.current.scrollToEnd({ animated: true });
           }}
-        />
-      </View>
-    </View>
+          onLayout={() => {
+            scrollViewRef.current.scrollToEnd({ animated: true });
+          }}
+        >
+          <View style={styles.innerContainer}>{chatMessages}</View>
+        </ScrollView>
+        <View style={styles.textContainer}>
+          <TextInput
+            style={styles.textInput}
+            value={message}
+            onSubmitEditing={() => submitChatMessage()}
+            autoCorrect={true}
+            onChangeText={(chatMessage) => {
+              setMessage(chatMessage);
+            }}
+            placeholder="Type your message"
+          />
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 
@@ -76,14 +87,17 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     height: 40,
     fontSize: 20,
+    padding: 5,
   },
   textContainer: {
     width: 400,
     marginBottom: 50,
     marginTop: 20,
+    alignItems: 'center',
   },
   title: {
     fontSize: 20,
+    marginTop: 10,
   },
   msgLeft: {
     alignSelf: 'flex-start',
