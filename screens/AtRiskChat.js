@@ -16,8 +16,6 @@ const AtRiskChat = () => {
   const scrollViewRef = useRef();
 
   const chatMessages = allMessages.map((chatMessage, i) => {
-    console.log(chatMessage.split(': ')[0]);
-
     return (
       <View
         key={i}
