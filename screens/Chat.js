@@ -24,8 +24,6 @@ const Chat = () => {
   const scrollViewRef = useRef();
 
   const chatMessages = allMessagesVolunteer.map((chatMessage, i) => {
-    console.log(chatMessage.split(': ')[0]);
-
     return (
       <View
         key={i}
