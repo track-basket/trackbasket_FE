@@ -50,14 +50,16 @@ const VolunteerHome = ({ navigation, route }) => {
   }, [assignedLists]);
 
   useEffect(() => {
-    socket = io('http://10.3.13.6:3000');
+    socket = io('https://trackbasket.herokuapp.com/', {
+      transports: ['websocket'],
+    });
   }, []);
 
   useEffect(() => {
     if (route.params) {
-      socket.emit('joinRoom', route.params.id);
-      socket.emit('statusChange', 'Change');
-      socket.emit('leaveRoom', route.params.id);
+      socket.emit('joinRoom', { id: route.params.id });
+      socket.emit('statusChange', { id: route.params.id, message: 'Change' });
+      socket.emit('leaveRoom', { id: route.params.id });
     }
   }, [route.params]);
 
