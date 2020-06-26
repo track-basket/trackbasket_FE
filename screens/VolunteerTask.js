@@ -23,8 +23,10 @@ const VolunteerTask = ({ navigation }) => {
 
   useEffect(() => {
     setAllMessagesVolunteer([]);
-    socket = io('http://10.3.13.6:3000');
-    socket.emit('joinRoom', singleList.id);
+    socket = io('https://trackbasket.herokuapp.com', {
+      transports: ['websocket'],
+    });
+    socket.emit('joinRoom', { id: singleList.id });
     socket.on('chat message', (msg) => {
       setAllMessagesVolunteer((allMessagesVolunteer) => [
         ...allMessagesVolunteer,
@@ -35,20 +37,23 @@ const VolunteerTask = ({ navigation }) => {
 
   useEffect(() => {
     if (singleList) {
-      socket.emit('statusChange', 'change');
+      socket.emit('statusChange', { id: singleList.id, message: 'Change' });
     }
   }, [singleList]);
 
   useEffect(() => {
     if (newMessageVolunteer) {
-      socket.emit('chat message', volunteer.name + ': ' + newMessageVolunteer);
+      socket.emit('chat message', {
+        id: singleList.id,
+        message: volunteer.name + ': ' + newMessageVolunteer,
+      });
     }
     setNewMessageVolunteer('');
   }, [newMessageVolunteer]);
 
   useEffect(() => {
     return () => {
-      socket.emit('leaveRoom', singleList.id);
+      socket.emit('leaveRoom', { id: singleList.id });
     };
   }, []);
 
