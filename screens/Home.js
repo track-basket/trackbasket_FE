@@ -37,7 +37,7 @@ const Home = ({ navigation, route }) => {
 
   useEffect(() => {
     if (user) {
-      socket = io('https://trackbasket.herokuapp.com'), {
+      socket = io('https://trackbasket.herokuapp.com', {
         transports: ['websocket'],
       });
       socket.emit('joinRoom', { id: user.id });
