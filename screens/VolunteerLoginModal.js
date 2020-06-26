@@ -62,6 +62,7 @@ const VolunteerLoginModal = ({ navigation }) => {
             name: response.data.attributes.name,
             installationId,
             location,
+            id: response.data.attributes.id,
           });
         });
       } else {
