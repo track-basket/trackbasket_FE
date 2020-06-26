@@ -97,6 +97,7 @@ export const updateList = (list) => {
   myHeaders.append('Content-Type', 'application/json');
   let data = {
     status: list.status,
+    volunteer_id: list.volunteerId,
     items: list.items.map((item) => ({
       aisle_number: item.aisle_number,
       description: item.description,
