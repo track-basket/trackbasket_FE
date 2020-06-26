@@ -10,6 +10,10 @@ const ConfirmList = ({ navigation, route }) => {
   const [list, setList] = useState({});
   const selectedList = route.params;
 
+  const { assignedLists, setAssignedLists, formatDate, volunteer } = useContext(
+    VolunteerContext,
+  );
+
   useEffect(() => {
     getAtRiskUser(selectedList.at_risk_user_id).then((response) => {
       selectedList.userDetails = response.data.attributes;
@@ -18,14 +22,12 @@ const ConfirmList = ({ navigation, route }) => {
           ...selectedList,
           ...res.data.attributes,
           status: 'assigned',
+          volunteerId: volunteer.id,
         });
       });
     });
   }, []);
 
-  const { assignedLists, setAssignedLists, formatDate } = useContext(
-    VolunteerContext,
-  );
   const handleSubmit = () => {
     updateList(list).then((response) => {
       setAssignedLists([list.at_risk_user_id, ...assignedLists]);
