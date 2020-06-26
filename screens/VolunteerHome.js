@@ -50,7 +50,7 @@ const VolunteerHome = ({ navigation, route }) => {
   }, [assignedLists]);
 
   useEffect(() => {
-    socket = io('https://trackbasket.herokuapp.com/', {
+    socket = io('https://trackbasket.herokuapp.com', {
       transports: ['websocket'],
     });
   }, []);
