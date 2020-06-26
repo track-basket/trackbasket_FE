@@ -60,6 +60,7 @@ const Home = ({ navigation, route }) => {
       socket.emit('chat message', {
         id: user.id,
         message: user.name + ': ' + newMessage,
+        volunteer_id: cart.volunteer_id,
       });
     }
   }, [newMessage]);
