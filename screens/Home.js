@@ -37,8 +37,10 @@ const Home = ({ navigation, route }) => {
 
   useEffect(() => {
     if (user) {
-      socket = io('http://10.3.13.6:3000');
-      socket.emit('joinRoom', user.id);
+      socket = io('https://trackbasket.herokuapp.com'), {
+        transports: ['websocket'],
+      });
+      socket.emit('joinRoom', { id: user.id });
       socket.on('chat message', (msg) => {
         setAllMessages((allMessages) => [...allMessages, msg]);
       });
@@ -55,7 +57,10 @@ const Home = ({ navigation, route }) => {
 
   useEffect(() => {
     if (newMessage) {
-      socket.emit('chat message', user.name + ': ' + newMessage);
+      socket.emit('chat message', {
+        id: user.id,
+        message: user.name + ': ' + newMessage,
+      });
     }
   }, [newMessage]);
 
