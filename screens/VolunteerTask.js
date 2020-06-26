@@ -46,6 +46,7 @@ const VolunteerTask = ({ navigation }) => {
       socket.emit('chat message', {
         id: singleList.id,
         message: volunteer.name + ': ' + newMessageVolunteer,
+        volunteer_id: volunteer.id,
       });
     }
     setNewMessageVolunteer('');
