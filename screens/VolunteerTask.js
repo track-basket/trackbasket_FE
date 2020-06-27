@@ -55,6 +55,7 @@ const VolunteerTask = ({ navigation }) => {
         id: singleList.id,
         message: volunteer.name + ': ' + newMessageVolunteer,
         volunteer_id: volunteer.id,
+        author: 'volunteer',
       });
     }
     setNewMessageVolunteer('');
