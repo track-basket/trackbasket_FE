@@ -61,6 +61,7 @@ const Home = ({ navigation, route }) => {
         id: user.id,
         message: user.name + ': ' + newMessage,
         volunteer_id: cart.volunteer_id,
+        author: 'at_risk_user',
       });
     }
   }, [newMessage]);
