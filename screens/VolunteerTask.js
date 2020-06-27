@@ -55,6 +55,7 @@ const VolunteerTask = ({ navigation }) => {
   useEffect(() => {
     return () => {
       socket.emit('leaveRoom', { id: singleList.id });
+      socket.removeAllListeners();
     };
   }, []);
 
