@@ -62,7 +62,7 @@ const Home = ({ navigation, route }) => {
         volunteer_id: cart.volunteer_id,
         message: {
           text: user.name + ': ' + newMessage,
-          timestamp: moment().format('h:mm a MMM. D, YYYY'),
+          timestamp: moment().format('YYYY-MM-DD HH:mm'),
           author: 'at_risk_user',
         },
       });
@@ -141,7 +141,7 @@ const Home = ({ navigation, route }) => {
                       style={styles.editBtnText}
                       onPress={() => navigation.navigate('AtRiskChat')}
                     >
-                      {`Chat(${allMessages.length})`}
+                      {`Chat (${allMessages.length})`}
                     </Text>
                   </TouchableOpacity>
                 )}
