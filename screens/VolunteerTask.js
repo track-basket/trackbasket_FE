@@ -26,9 +26,7 @@ const VolunteerTask = ({ navigation }) => {
     setAllMessagesVolunteer([]);
     getConversation(singleList.id, volunteer.id).then((response) => {
       if (response.data.attributes.messages) {
-        setAllMessagesVolunteer(
-          response.data.attributes.messages.map((message) => message.text),
-        );
+        setAllMessagesVolunteer(response.data.attributes.messages);
       }
     });
     socket = io('https://trackbasket.herokuapp.com', {
@@ -53,9 +51,12 @@ const VolunteerTask = ({ navigation }) => {
     if (newMessageVolunteer) {
       socket.emit('chat message', {
         id: singleList.id,
-        message: volunteer.name + ': ' + newMessageVolunteer,
         volunteer_id: volunteer.id,
-        author: 'volunteer',
+        message: {
+          text: volunteer.name + ': ' + newMessageVolunteer,
+          timestamp: moment().format('h:mm a MMM. D, YYYY'),
+          author: 'volunteer',
+        },
       });
     }
     setNewMessageVolunteer('');
