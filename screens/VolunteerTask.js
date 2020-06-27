@@ -5,6 +5,7 @@ import StatusBadge from '../components/StatusBadge';
 import { Button } from '../components/Button';
 import moment from 'moment';
 import io from 'socket.io-client';
+import { getConversation } from '../components/ApiCalls';
 
 let socket;
 
@@ -22,7 +23,13 @@ const VolunteerTask = ({ navigation }) => {
   } = useContext(VolunteerContext);
 
   useEffect(() => {
-    setAllMessagesVolunteer([]);
+    getConversation(singleList.id, volunteer.id).then((response) => {
+      if (response.data.attributes.messages) {
+        setAllMessagesVolunteer(
+          response.data.attributes.messages.map((message) => message.text),
+        );
+      }
+    });
     socket = io('https://trackbasket.herokuapp.com', {
       transports: ['websocket'],
     });
