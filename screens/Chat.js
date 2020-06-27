@@ -28,12 +28,12 @@ const Chat = () => {
       <View
         key={i}
         style={
-          chatMessage.split(': ')[0] === singleList.userDetails.name
+          chatMessage.author === 'at_risk_user'
             ? styles.msgRight
             : styles.msgLeft
         }
       >
-        <Text style={styles.msgText}>{chatMessage}</Text>
+        <Text style={styles.msgText}>{chatMessage.text}</Text>
       </View>
     );
   });
