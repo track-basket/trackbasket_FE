@@ -157,16 +157,42 @@ const VolunteerTask = ({ navigation }) => {
               }
             />
           </View>
-          <Button
-            text={`Chat (${allMessagesVolunteer.length})`}
-            onPress={() => navigation.navigate('Chat')}
-            customStyles={{
-              backgroundColor: 'green',
-              width: 250,
-              marginBottom: 20,
-            }}
-            customTextStyles={{ fontSize: 20 }}
-          />
+          <View>
+            <Button
+              text="Chat"
+              customTextStyles={{
+                color: 'black',
+                fontSize: 20,
+              }}
+              onPress={() => navigation.navigate('Chat')}
+              customStyles={{
+                backgroundColor: 'lightgray',
+                width: 250,
+                marginBottom: 20,
+              }}
+            />
+            {allMessagesVolunteer.length > 0 && (
+              <View
+                style={{
+                  position: 'absolute',
+                  right: 10,
+                  top: -12,
+                  backgroundColor: 'red',
+                  borderRadius: 14,
+                  width: 28,
+                  height: 28,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Text
+                  style={{ color: 'white', fontSize: 14, fontWeight: 'bold' }}
+                >
+                  {allMessagesVolunteer.length}
+                </Text>
+              </View>
+            )}
+          </View>
           <Button
             text="Abandon Task"
             onPress={() =>
