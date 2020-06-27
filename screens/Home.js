@@ -48,7 +48,7 @@ const Home = ({ navigation, route }) => {
         getList(user.id).then((result) => {
           if (result.message !== 'Internal Server Error') {
             let resultCart = result.data.attributes;
-            setCart(resultCart);
+            setCart({ ...resultCart, volunteer_id: result.data.volunteer_id });
           }
         });
       });
