@@ -136,14 +136,41 @@ const Home = ({ navigation, route }) => {
                   </TouchableOpacity>
                 )}
                 {cart.status !== 'pending' && (
-                  <TouchableOpacity style={styles.editBtn}>
-                    <Text
-                      style={styles.editBtnText}
-                      onPress={() => navigation.navigate('AtRiskChat')}
-                    >
-                      {`Chat (${allMessages.length})`}
-                    </Text>
-                  </TouchableOpacity>
+                  <View>
+                    <TouchableOpacity style={styles.editBtn}>
+                      <Text
+                        style={styles.editBtnText}
+                        onPress={() => navigation.navigate('AtRiskChat')}
+                      >
+                        Chat
+                      </Text>
+                    </TouchableOpacity>
+                    {allMessages.length > 0 && (
+                      <View
+                        style={{
+                          position: 'absolute',
+                          right: 10,
+                          top: -12,
+                          backgroundColor: 'red',
+                          borderRadius: 14,
+                          width: 28,
+                          height: 28,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: 'white',
+                            fontSize: 14,
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          {allMessages.length}
+                        </Text>
+                      </View>
+                    )}
+                  </View>
                 )}
               </View>
               <View style={styles.details}>
@@ -323,6 +350,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignItems: 'center',
     alignSelf: 'center',
+    marginRight: 20,
   },
   editBtnText: {
     fontSize: 20,
