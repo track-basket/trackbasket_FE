@@ -54,7 +54,7 @@ const VolunteerTask = ({ navigation }) => {
         volunteer_id: volunteer.id,
         message: {
           text: volunteer.name + ': ' + newMessageVolunteer,
-          timestamp: moment().format('h:mm a MMM. D, YYYY'),
+          timestamp: moment().format('YYYY-MM-DD HH:mm'),
           author: 'volunteer',
         },
       });
@@ -158,7 +158,7 @@ const VolunteerTask = ({ navigation }) => {
             />
           </View>
           <Button
-            text={`Chat(${allMessagesVolunteer.length})`}
+            text={`Chat (${allMessagesVolunteer.length})`}
             onPress={() => navigation.navigate('Chat')}
             customStyles={{
               backgroundColor: 'green',
