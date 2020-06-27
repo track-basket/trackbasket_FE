@@ -23,6 +23,7 @@ const VolunteerTask = ({ navigation }) => {
   } = useContext(VolunteerContext);
 
   useEffect(() => {
+    setAllMessagesVolunteer([]);
     getConversation(singleList.id, volunteer.id).then((response) => {
       if (response.data.attributes.messages) {
         setAllMessagesVolunteer(
