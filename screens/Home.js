@@ -59,9 +59,12 @@ const Home = ({ navigation, route }) => {
     if (newMessage) {
       socket.emit('chat message', {
         id: user.id,
-        message: user.name + ': ' + newMessage,
         volunteer_id: cart.volunteer_id,
-        author: 'at_risk_user',
+        message: {
+          text: user.name + ': ' + newMessage,
+          timestamp: moment().format('h:mm a MMM. D, YYYY'),
+          author: 'at_risk_user',
+        },
       });
     }
   }, [newMessage]);
