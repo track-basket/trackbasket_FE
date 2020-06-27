@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   KeyboardAvoidingView,
 } from 'react-native';
+import moment from 'moment';
 import UserContext from '../user-context';
 
 const AtRiskChat = () => {
@@ -15,17 +16,55 @@ const AtRiskChat = () => {
   const [message, setMessage] = useState('');
   const scrollViewRef = useRef();
 
+  const showDate = (i) => {
+    const show =
+      i === 0 ||
+      moment(allMessages[i].timestamp).format('MM/DD/YY') !==
+        moment(allMessages[i - 1].timestamp).format('MM/DD/YY');
+    return show;
+  };
+
   const chatMessages = allMessages.map((chatMessage, i) => {
     return (
       <View
         key={i}
         style={
           chatMessage.author === 'at_risk_user'
-            ? styles.msgLeft
-            : styles.msgRight
+            ? styles.msgRight
+            : styles.msgLeft
         }
       >
-        <Text style={styles.msgText}>{chatMessage.text}</Text>
+        {showDate(i) && (
+          <Text style={styles.date}>
+            {moment(chatMessage.timestamp).format('dddd, MMMM D')}
+          </Text>
+        )}
+        <View
+          style={
+            chatMessage.author === 'at_risk_user'
+              ? styles.msgInnerRight
+              : styles.msgInnerLeft
+          }
+        >
+          <Text
+            style={
+              chatMessage.author === 'at_risk_user'
+                ? styles.msgTextRight
+                : styles.msgTextLeft
+            }
+          >
+            {chatMessage.text}
+          </Text>
+          <Text
+            style={
+              chatMessage.author === 'at_risk_user'
+                ? styles.msgTimeRight
+                : styles.msgTimeLeft
+            }
+          >
+            {moment(chatMessage.timestamp).format('h:mm a')}
+          </Text>
+        </View>
       </View>
     );
   });
@@ -39,17 +78,24 @@ const AtRiskChat = () => {
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={50}>
         <Text style={styles.title}>{`Chat with your volunteer shopper`}</Text>
-        <ScrollView
-          ref={scrollViewRef}
-          onContentSizeChange={(contentWidth, contentHeight) => {
-            scrollViewRef.current.scrollToEnd({ animated: true });
-          }}
-          onLayout={() => {
-            scrollViewRef.current.scrollToEnd({ animated: true });
-          }}
-        >
-          <View style={styles.innerContainer}>{chatMessages}</View>
-        </ScrollView>
+        {!!allMessages.length && (
+          <ScrollView
+            ref={scrollViewRef}
+            onContentSizeChange={(contentWidth, contentHeight) => {
+              scrollViewRef.current.scrollToEnd({ animated: true });
+            }}
+            onLayout={() => {
+              scrollViewRef.current.scrollToEnd({ animated: true });
+            }}
+          >
+            <View style={styles.innerContainer}>{chatMessages}</View>
+          </ScrollView>
+        )}
+        {!allMessages.length && (
+          <View style={styles.noMessagesContainer}>
+            <Text style={styles.noMessages}>No messages</Text>
+          </View>
+        )}
         <View style={styles.textContainer}>
           <TextInput
             style={styles.textInput}
@@ -77,7 +123,6 @@ const styles = StyleSheet.create({
   innerContainer: {
     alignItems: 'center',
     width: 400,
-    marginTop: 20,
     flex: 1,
   },
   textInput: {
@@ -96,25 +141,61 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     marginTop: 10,
+    alignSelf: 'center',
   },
   msgLeft: {
-    alignSelf: 'flex-start',
     marginTop: 20,
-    backgroundColor: 'lightgreen',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 20,
+    alignSelf: 'stretch',
   },
   msgRight: {
-    alignSelf: 'flex-end',
+    alignSelf: 'stretch',
     marginTop: 20,
-    backgroundColor: 'lightblue',
+  },
+  msgInnerLeft: {
+    backgroundColor: 'lightgreen',
+    borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 20,
+    alignSelf: 'flex-start',
   },
-  msgText: {
+  msgInnerRight: {
+    backgroundColor: 'lightblue',
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    alignSelf: 'flex-end',
+  },
+  msgTextLeft: {
     fontSize: 18,
+    textAlign: 'left',
+  },
+  msgTimeLeft: {
+    fontSize: 12,
+    textAlign: 'left',
+  },
+  msgTextRight: {
+    fontSize: 18,
+    textAlign: 'right',
+  },
+  msgTimeRight: {
+    fontSize: 12,
+    textAlign: 'right',
+  },
+  date: {
+    paddingLeft: 10,
+    alignSelf: 'center',
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  noMessages: {
+    fontSize: 18,
+    color: 'gray',
+  },
+  noMessagesContainer: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    flexGrow: 1,
+    marginBottom: 40,
   },
 });
 
