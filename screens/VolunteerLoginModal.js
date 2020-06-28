@@ -117,7 +117,7 @@ const VolunteerLoginModal = ({ navigation }) => {
             maxLength={14}
           />
           <View style={styles.btnContainer}>
-            <Button onPress={handleSubmit} text="SUBMIT" />
+            <Button onPress={handleSubmit} text="Submit" />
           </View>
         </View>
       </KeyboardAwareScrollView>
