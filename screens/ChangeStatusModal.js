@@ -46,16 +46,6 @@ const ChangeStatusModal = ({ route, navigation: { goBack } }) => {
         </View>
         <View style={styles.statusContainer}>
           <StatusBadge
-            status="pending"
-            highlighted={item.data.attributes.status === 'pending'}
-            onPress={() => {
-              handlePress('pending');
-            }}
-            customStyles={{ width: 200 }}
-          />
-        </View>
-        <View style={styles.statusContainer}>
-          <StatusBadge
             status="assigned"
             highlighted={item.data.attributes.status === 'assigned'}
             onPress={() => {

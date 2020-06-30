@@ -92,11 +92,23 @@ export const getAtRiskUser = (id) => {
     .catch((error) => console.log('error', error));
 };
 
+export const getConversation = (atRiskUserId, volunteerId) => {
+  return fetch(
+    BASE +
+      `/conversations?at_risk_user_id=${atRiskUserId}&volunteer_id=${volunteerId}`,
+  )
+    .then((response) => {
+      return response.json();
+    })
+    .catch((error) => console.log('error', error));
+};
+
 export const updateList = (list) => {
   let myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   let data = {
     status: list.status,
+    volunteer_id: list.volunteerId,
     items: list.items.map((item) => ({
       aisle_number: item.aisle_number,
       description: item.description,

@@ -1,14 +1,73 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import VolunteerContext from '../volunteer-context';
 import StatusBadge from '../components/StatusBadge';
 import { Button } from '../components/Button';
 import moment from 'moment';
+import io from 'socket.io-client';
+import { getConversation } from '../components/ApiCalls';
+
+let socket;
 
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
 const VolunteerTask = ({ navigation }) => {
-  const { singleList, formatDate } = useContext(VolunteerContext);
+  const {
+    singleList,
+    formatDate,
+    allMessagesVolunteer,
+    setAllMessagesVolunteer,
+    newMessageVolunteer,
+    volunteer,
+    setNewMessageVolunteer,
+  } = useContext(VolunteerContext);
+
+  useEffect(() => {
+    setAllMessagesVolunteer([]);
+    getConversation(singleList.id, volunteer.id).then((response) => {
+      if (response.data.attributes.messages) {
+        setAllMessagesVolunteer(response.data.attributes.messages);
+      }
+    });
+    socket = io('https://trackbasket.herokuapp.com', {
+      transports: ['websocket'],
+    });
+    socket.emit('joinRoom', { id: singleList.id });
+    socket.on('chat message', (msg) => {
+      setAllMessagesVolunteer((allMessagesVolunteer) => [
+        ...allMessagesVolunteer,
+        msg,
+      ]);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (singleList) {
+      socket.emit('statusChange', { id: singleList.id, message: 'Change' });
+    }
+  }, [singleList]);
+
+  useEffect(() => {
+    if (newMessageVolunteer) {
+      socket.emit('chat message', {
+        id: singleList.id,
+        volunteer_id: volunteer.id,
+        message: {
+          text: volunteer.name + ': ' + newMessageVolunteer,
+          timestamp: moment().format('YYYY-MM-DD HH:mm'),
+          author: 'volunteer',
+        },
+      });
+    }
+    setNewMessageVolunteer('');
+  }, [newMessageVolunteer]);
+
+  useEffect(() => {
+    return () => {
+      socket.emit('leaveRoom', { id: singleList.id });
+      socket.removeAllListeners();
+    };
+  }, []);
 
   if (!singleList) {
     return (
@@ -55,7 +114,7 @@ const VolunteerTask = ({ navigation }) => {
                 <Text style={styles.infoKind}>Ordered at: </Text>
                 {moment(formatDate(singleList.data.attributes.created_date))
                   .subtract(6, 'hours')
-                  .format('h:m a MMM. D, YYYY')}
+                  .format('h:mm a MMM. D')}
               </Text>
             </View>
             <View style={styles.infoField}>
@@ -98,7 +157,42 @@ const VolunteerTask = ({ navigation }) => {
               }
             />
           </View>
-
+          <View>
+            <Button
+              text="Chat"
+              customTextStyles={{
+                color: 'black',
+                fontSize: 20,
+              }}
+              onPress={() => navigation.navigate('Chat')}
+              customStyles={{
+                backgroundColor: 'lightgray',
+                width: 250,
+                marginBottom: 20,
+              }}
+            />
+            {allMessagesVolunteer.length > 0 && (
+              <View
+                style={{
+                  position: 'absolute',
+                  right: 10,
+                  top: -12,
+                  backgroundColor: 'red',
+                  borderRadius: 14,
+                  width: 28,
+                  height: 28,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Text
+                  style={{ color: 'white', fontSize: 14, fontWeight: 'bold' }}
+                >
+                  {allMessagesVolunteer.length}
+                </Text>
+              </View>
+            )}
+          </View>
           <Button
             text="Abandon Task"
             onPress={() =>

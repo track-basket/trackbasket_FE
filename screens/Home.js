@@ -1,8 +1,9 @@
-import React, { useContext, useState, useCallback } from 'react';
+import React, { useContext, useState, useCallback, useEffect } from 'react';
 import UserContext from '../user-context';
 import { getList } from '../components/ApiCalls';
 import moment from 'moment';
 import StatusBadge from '../components/StatusBadge';
+import io from 'socket.io-client';
 
 import {
   StyleSheet,
@@ -15,26 +16,59 @@ import {
 import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
 
+let socket;
+
 const Home = ({ navigation, route }) => {
-  const { user, cart, setCart, formatDate } = useContext(UserContext);
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const handleRefresh = useCallback(async () => {
-    setIsRefreshing(true);
-    getList(user.id).then((result) => {
-      if (result.message !== 'Internal Server Error') {
-        let resultCart = result.data.attributes;
-        setCart(resultCart);
-      }
-    });
-    setTimeout(() => {
-      setIsRefreshing(false);
-    }, 1000);
-  });
+  const {
+    user,
+    cart,
+    setCart,
+    formatDate,
+    setAllMessages,
+    allMessages,
+    newMessage,
+  } = useContext(UserContext);
+
   const handleEditOrder = () => {
     navigation.navigate('AtRiskTabs', {
       screen: 'Cart',
     });
   };
+
+  useEffect(() => {
+    if (user) {
+      socket = io('https://trackbasket.herokuapp.com', {
+        transports: ['websocket'],
+      });
+      socket.emit('joinRoom', { id: user.id });
+      socket.on('chat message', (msg) => {
+        setAllMessages((allMessages) => [...allMessages, msg]);
+      });
+      socket.on('status change', (msg) => {
+        getList(user.id).then((result) => {
+          if (result.message !== 'Internal Server Error') {
+            let resultCart = result.data.attributes;
+            setCart({ ...resultCart, volunteer_id: result.data.volunteer_id });
+          }
+        });
+      });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (newMessage) {
+      socket.emit('chat message', {
+        id: user.id,
+        volunteer_id: cart.volunteer_id,
+        message: {
+          text: user.name + ': ' + newMessage,
+          timestamp: moment().format('YYYY-MM-DD HH:mm'),
+          author: 'at_risk_user',
+        },
+      });
+    }
+  }, [newMessage]);
+
   let draft = cart.items.length && cart.status === 'not submitted';
 
   return (
@@ -90,15 +124,7 @@ const Home = ({ navigation, route }) => {
             <Text style={styles.orders}>No current order</Text>
           )}
           {cart.status !== 'not submitted' && (
-            <ScrollView
-              contentContainerStyle={styles.refresh}
-              refreshControl={
-                <RefreshControl
-                  refreshing={isRefreshing}
-                  onRefresh={handleRefresh}
-                />
-              }
-            >
+            <ScrollView>
               <Text style={styles.orders}>Current order</Text>
               <View style={styles.orderStatus}>
                 <StatusBadge status={cart.status} />
@@ -108,6 +134,43 @@ const Home = ({ navigation, route }) => {
                       Edit order
                     </Text>
                   </TouchableOpacity>
+                )}
+                {cart.status !== 'pending' && (
+                  <View>
+                    <TouchableOpacity style={styles.editBtn}>
+                      <Text
+                        style={styles.editBtnText}
+                        onPress={() => navigation.navigate('AtRiskChat')}
+                      >
+                        Chat
+                      </Text>
+                    </TouchableOpacity>
+                    {allMessages.length > 0 && (
+                      <View
+                        style={{
+                          position: 'absolute',
+                          right: 10,
+                          top: -12,
+                          backgroundColor: 'red',
+                          borderRadius: 14,
+                          width: 28,
+                          height: 28,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: 'white',
+                            fontSize: 14,
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          {allMessages.length}
+                        </Text>
+                      </View>
+                    )}
+                  </View>
                 )}
               </View>
               <View style={styles.details}>
@@ -135,9 +198,6 @@ const Home = ({ navigation, route }) => {
                   </TouchableOpacity>
                 )}
               </View>
-              <Text style={styles.pullToRefresh}>
-                Pull to refresh order status
-              </Text>
             </ScrollView>
           )}
           {!!draft && (
@@ -290,6 +350,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignItems: 'center',
     alignSelf: 'center',
+    marginRight: 20,
   },
   editBtnText: {
     fontSize: 20,
@@ -306,13 +367,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginTop: 20,
   },
-  pullToRefresh: {
-    marginTop: 50,
-    fontSize: 18,
-    alignItems: 'center',
-    color: 'lightgray',
-    textAlign: 'center',
-  },
+
   padding: {
     height: 100,
   },

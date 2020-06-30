@@ -13,6 +13,8 @@ import ConfirmDelete from './screens/ConfirmDelete';
 import ConfirmList from './screens/ConfirmList';
 import SelectList from './screens/SelectList';
 import CompletedModal from './screens/CompletedModal';
+import Chat from './screens/Chat';
+import AtRiskChat from './screens/AtRiskChat';
 import VolunteerLoginModal from './screens/VolunteerLoginModal';
 import AtRiskTabs from './screens/AtRiskTabs';
 import VolunteerTabs from './screens/VolunteerTabs';
@@ -146,6 +148,10 @@ const App = () => {
   const [singleList, setSingleList] = useState(null);
   const [allLists, setAllLists] = useState(null);
   const [volunteersLists, setVolunteersLists] = useState([]);
+  const [allMessages, setAllMessages] = useState([]);
+  const [allMessagesVolunteer, setAllMessagesVolunteer] = useState([]);
+  const [newMessage, setNewMessage] = useState('');
+  const [newMessageVolunteer, setNewMessageVolunteer] = useState('');
 
   const retrieveData = async () => {
     try {
@@ -195,6 +201,10 @@ const App = () => {
         formatDate,
         volunteersLists,
         setVolunteersLists,
+        allMessagesVolunteer,
+        setAllMessagesVolunteer,
+        newMessageVolunteer,
+        setNewMessageVolunteer,
       }}
     >
       <UserProvider
@@ -212,6 +222,10 @@ const App = () => {
           updateCart,
           setCart,
           formatDate,
+          allMessages,
+          setAllMessages,
+          newMessage,
+          setNewMessage,
         }}
       >
         <NavigationContainer>
@@ -234,6 +248,16 @@ const App = () => {
             <MainStack.Screen
               name="CompletedModal"
               component={CompletedModal}
+              options={{ title: '' }}
+            />
+            <RootStack.Screen
+              name="Chat"
+              component={Chat}
+              options={{ title: '' }}
+            />
+            <RootStack.Screen
+              name="AtRiskChat"
+              component={AtRiskChat}
               options={{ title: '' }}
             />
             <RootStack.Screen name="Confirm Delete" component={ConfirmDelete} />

@@ -14,15 +14,20 @@ import {
 import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
 import { getList } from '../components/ApiCalls';
+import io from 'socket.io-client';
 
-const VolunteerHome = ({ navigation }) => {
+let socket;
+
+const VolunteerHome = ({ navigation, route }) => {
   const {
+    singleList,
     volunteer,
     assignedLists,
     formatDate,
     volunteersLists,
     setVolunteersLists,
   } = useContext(VolunteerContext);
+  // const { allMessages, setAllMessages } = useContext(UserContext);
   const getName = () => {
     if (volunteer) {
       return volunteer.name;
@@ -35,6 +40,7 @@ const VolunteerHome = ({ navigation }) => {
       screen: 'Volunteer Shop',
       params: { selectedList: item.id },
     });
+    socket.emit('disconnect', 'disconnect');
   };
   useEffect(() => {
     const fetchedLists = assignedLists.map((list) => {
@@ -42,6 +48,20 @@ const VolunteerHome = ({ navigation }) => {
     });
     Promise.all(fetchedLists).then((data) => setVolunteersLists(data));
   }, [assignedLists]);
+
+  useEffect(() => {
+    socket = io('https://trackbasket.herokuapp.com', {
+      transports: ['websocket'],
+    });
+  }, []);
+
+  useEffect(() => {
+    if (route.params) {
+      socket.emit('joinRoom', { id: route.params.id });
+      socket.emit('statusChange', { id: route.params.id, message: 'Change' });
+      socket.emit('leaveRoom', { id: route.params.id });
+    }
+  }, [route.params]);
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -96,9 +116,9 @@ const VolunteerHome = ({ navigation }) => {
                     </View>
                     <View style={styles.orderStatus}>
                       <StatusBadge
-                        onPress={() =>
-                          navigation.navigate('Change Status', { item })
-                        }
+                        // onPress={() =>
+                        //   navigation.navigate('Change Status', { item })
+                        // }
                         status={item.data.attributes.status}
                       />
                       <TouchableOpacity

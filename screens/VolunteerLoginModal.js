@@ -62,6 +62,7 @@ const VolunteerLoginModal = ({ navigation }) => {
             name: response.data.attributes.name,
             installationId,
             location,
+            id: response.data.attributes.id,
           });
         });
       } else {
@@ -71,6 +72,7 @@ const VolunteerLoginModal = ({ navigation }) => {
             name: response.data.attributes.name,
             installationId,
             location,
+            id: response.data.attributes.id,
           });
         });
       }
@@ -115,7 +117,7 @@ const VolunteerLoginModal = ({ navigation }) => {
             maxLength={14}
           />
           <View style={styles.btnContainer}>
-            <Button onPress={handleSubmit} text="SUBMIT" />
+            <Button onPress={handleSubmit} text="Submit" />
           </View>
         </View>
       </KeyboardAwareScrollView>
