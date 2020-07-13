@@ -71,13 +71,13 @@ const LoginModal = ({ navigation }) => {
                 { cancelable: false },
               );
             } else {
-              setNewUser(info);
+              setNewUser({ ...info, edited: false });
               navigation.navigate('Home');
             }
           });
       } else {
         atRiskProfileHandler(info, 'PATCH');
-        setNewUser(info);
+        setNewUser({ ...info, edited: true });
         navigation.navigate('Home');
       }
     }

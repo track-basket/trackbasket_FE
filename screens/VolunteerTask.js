@@ -26,7 +26,12 @@ const VolunteerTask = ({ navigation }) => {
     setAllMessagesVolunteer([]);
     getConversation(singleList.id, volunteer.id).then((response) => {
       if (response.data.attributes.messages) {
-        setAllMessagesVolunteer(response.data.attributes.messages);
+        const sortedMessages = response.data.attributes.messages.sort(
+          (a, b) => {
+            return moment(a.timestamp) - moment(b.timestamp);
+          },
+        );
+        setAllMessagesVolunteer(sortedMessages);
       }
     });
     socket = io('https://trackbasket.herokuapp.com', {

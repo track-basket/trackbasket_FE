@@ -1,18 +1,11 @@
-import React, { useContext, useState, useCallback, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import UserContext from '../user-context';
 import { getList } from '../components/ApiCalls';
 import moment from 'moment';
 import StatusBadge from '../components/StatusBadge';
 import io from 'socket.io-client';
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  RefreshControl,
-} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Logo from '../components/Logo';
 import TimeOfDay from '../components/TimeOfDay';
 
@@ -36,7 +29,7 @@ const Home = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    if (user) {
+    if (user && user.edited === false) {
       socket = io('https://trackbasket.herokuapp.com', {
         transports: ['websocket'],
       });
@@ -124,7 +117,7 @@ const Home = ({ navigation, route }) => {
             <Text style={styles.orders}>No current order</Text>
           )}
           {cart.status !== 'not submitted' && (
-            <ScrollView>
+            <View>
               <Text style={styles.orders}>Current order</Text>
               <View style={styles.orderStatus}>
                 <StatusBadge status={cart.status} />
@@ -198,7 +191,7 @@ const Home = ({ navigation, route }) => {
                   </TouchableOpacity>
                 )}
               </View>
-            </ScrollView>
+            </View>
           )}
           {!!draft && (
             <View>

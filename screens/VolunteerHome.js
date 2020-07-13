@@ -20,7 +20,6 @@ let socket;
 
 const VolunteerHome = ({ navigation, route }) => {
   const {
-    singleList,
     volunteer,
     assignedLists,
     formatDate,

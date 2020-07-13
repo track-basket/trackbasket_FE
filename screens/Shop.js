@@ -1,14 +1,23 @@
 /* eslint-disable no-shadow */
-import React, { useState, useContext } from 'react';
-import { StyleSheet, View, TextInput, ScrollView, Text } from 'react-native';
+import React, { useState, useContext, createRef } from 'react';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  ScrollView,
+  Text,
+  ActivityIndicator,
+} from 'react-native';
 import GroceryItem from '../components/GroceryItem';
 import UserContext from '../user-context';
 import { fetchItems } from '../components/ApiCalls';
 
 const Shop = () => {
+  const scrollViewRef = createRef();
   const [text, setText] = useState('');
   const [currentSearch, setCurrentSearch] = useState(null);
   const [currentItem, setCurrentItem] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const { removeFromCart, addToCart, cart, user } = useContext(UserContext);
   const toggleCartItem = (upc, quantity) => {
@@ -36,9 +45,13 @@ const Shop = () => {
   };
   const handleSearch = (item) => {
     setCurrentItem(item);
+    setLoading(true);
     fetchItems(item, user.id)
       .then((response) => response.json())
-      .then((result) => setCurrentSearch(result))
+      .then((result) => {
+        setCurrentSearch(result);
+        setLoading(false);
+      })
       .catch((error) => console.log('error', error));
     setText('');
   };
@@ -67,30 +80,40 @@ const Shop = () => {
           placeholder="Search Items..."
           style={styles.searchBar}
           onChangeText={(text) => setText(text)}
-          onSubmitEditing={() => handleSearch(text)}
+          onSubmitEditing={() => {
+            scrollViewRef.current.scrollTo({ x: 0, y: 0, animated: true });
+            return handleSearch(text);
+          }}
           value={text}
         />
-        {validator() === 'item found' && (
+        {loading && (
+          <View style={styles.activityIndicator}>
+            <ActivityIndicator size="large" />
+          </View>
+        )}
+        {validator() === 'item found' && !loading && (
           <Text>{currentSearch.data.attributes.length} Items Found</Text>
         )}
-        <ScrollView>
-          {validator() === 'item found' &&
-            currentSearch.data.attributes.map((item) => {
-              return (
-                <GroceryItem
-                  upc={item.upc}
-                  aisleNumber={item.aisle_number}
-                  description={item.description}
-                  image_url={item.image}
-                  price={item.unit_price}
-                  clickHandler={toggleCartItem}
-                  quantity={checkForCart(item.upc)}
-                  key={item.upc}
-                />
-              );
-            })}
-        </ScrollView>
-        {!validator() && (
+        {!loading && (
+          <ScrollView ref={scrollViewRef}>
+            {validator() === 'item found' &&
+              currentSearch.data.attributes.map((item) => {
+                return (
+                  <GroceryItem
+                    upc={item.upc}
+                    aisleNumber={item.aisle_number}
+                    description={item.description}
+                    image_url={item.image}
+                    price={item.unit_price}
+                    clickHandler={toggleCartItem}
+                    quantity={checkForCart(item.upc)}
+                    key={item.upc}
+                  />
+                );
+              })}
+          </ScrollView>
+        )}
+        {!validator() && !loading && (
           <Text style={styles.initialHeader}>Enter a search term.</Text>
         )}
         {validator() === 'not found' && (
@@ -138,6 +161,10 @@ const styles = StyleSheet.create({
   error: {
     color: 'red',
     textAlign: 'center',
+  },
+  activityIndicator: {
+    justifyContent: 'center',
+    height: 450,
   },
 });
 
