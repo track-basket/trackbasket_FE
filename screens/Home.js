@@ -36,7 +36,7 @@ const Home = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    if (user) {
+    if (user && user.edited === false) {
       socket = io('https://trackbasket.herokuapp.com', {
         transports: ['websocket'],
       });
