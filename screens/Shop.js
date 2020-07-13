@@ -88,7 +88,7 @@ const Shop = () => {
         />
         {loading && (
           <View style={styles.activityIndicator}>
-            <ActivityIndicator />
+            <ActivityIndicator size="large" />
           </View>
         )}
         {validator() === 'item found' && !loading && (
@@ -113,7 +113,7 @@ const Shop = () => {
               })}
           </ScrollView>
         )}
-        {!validator() && (
+        {!validator() && !loading && (
           <Text style={styles.initialHeader}>Enter a search term.</Text>
         )}
         {validator() === 'not found' && (
