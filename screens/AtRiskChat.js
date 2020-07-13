@@ -102,7 +102,7 @@ const AtRiskChat = () => {
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={50}>
-        <Text style={styles.title}>{`Chat with your volunteer shopper`}</Text>
+        <Text style={styles.title}>{'Chat with your volunteer shopper'}</Text>
         {!!allMessages.length && (
           <ScrollView
             ref={scrollViewRef}
