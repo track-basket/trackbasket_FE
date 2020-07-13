@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState, useRef } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -7,12 +7,9 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   SafeAreaView,
-  Keyboard,
 } from 'react-native';
 import moment from 'moment';
 import VolunteerContext from '../volunteer-context';
-import UserContext from '../user-context';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const Chat = () => {
   const {
