@@ -10,11 +10,36 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import UserContext from '../user-context';
+import { getConversation } from '../components/ApiCalls';
 
 const AtRiskChat = () => {
-  const { allMessages, setNewMessage, user } = useContext(UserContext);
+  const { allMessages, setNewMessage, setAllMessages, cart, user } = useContext(
+    UserContext,
+  );
   const [message, setMessage] = useState('');
   const scrollViewRef = useRef();
+
+  useEffect(() => {
+    setAllMessages([]);
+    getConversation(user.id, cart.volunteer_id).then((response) => {
+      if (response.data.attributes.messages) {
+        const sortedMessages = response.data.attributes.messages.sort(
+          (a, b) => {
+            return moment(a.timestamp) - moment(b.timestamp);
+          },
+        );
+        setAllMessages(sortedMessages);
+      }
+    });
+    return function cleanup() {
+      setAllMessages([]);
+      getConversation(user.id, cart.volunteer_id).then((response) => {
+        if (response.data.attributes.messages) {
+          setAllMessages(response.data.attributes.messages);
+        }
+      });
+    };
+  }, []);
 
   const showDate = (i) => {
     const show =
